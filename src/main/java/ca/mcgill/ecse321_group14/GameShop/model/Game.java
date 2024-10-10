@@ -3,10 +3,12 @@
 
 package ca.mcgill.ecse321_group14.GameShop.model;
 import java.util.*;
+import jakarta.persistence.*;
 
 
 // line 40 "model.ump"
 // line 152 "model.ump"
+@Entity
 public class Game
 {
 
@@ -22,6 +24,9 @@ public class Game
   //------------------------
 
   //Game Attributes
+  @Id
+  @GeneratedValue
+  private int id;
   private String name;
   private String description;
   private String category;
@@ -31,14 +36,20 @@ public class Game
   private String picture;
 
   //Game Associations
+  @ManyToOne
   private Order order;
+  @OneToOne(optional = true)
   private Promotion promotion;
+  @OneToMany
   private List<Review> reviews;
-  private List<Customer> customers;
+
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  // Hibernate requires a default constructor
+  protected Game() {}
 
   public Game(String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Rating aRating, String aPicture, Order aOrder)
   {
@@ -54,7 +65,6 @@ public class Game
       throw new RuntimeException("Unable to create Game due to aOrder. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     reviews = new ArrayList<Review>();
-    customers = new ArrayList<Customer>();
   }
 
   //------------------------
@@ -115,6 +125,11 @@ public class Game
     picture = aPicture;
     wasSet = true;
     return wasSet;
+  }
+
+  public int getId()
+  {
+    return id;
   }
 
   public String getName()
@@ -198,35 +213,7 @@ public class Game
     return index;
   }
   /* Code from template association_GetMany */
-  public Customer getCustomer(int index)
-  {
-    Customer aCustomer = customers.get(index);
-    return aCustomer;
-  }
 
-  public List<Customer> getCustomers()
-  {
-    List<Customer> newCustomers = Collections.unmodifiableList(customers);
-    return newCustomers;
-  }
-
-  public int numberOfCustomers()
-  {
-    int number = customers.size();
-    return number;
-  }
-
-  public boolean hasCustomers()
-  {
-    boolean has = customers.size() > 0;
-    return has;
-  }
-
-  public int indexOfCustomer(Customer aCustomer)
-  {
-    int index = customers.indexOf(aCustomer);
-    return index;
-  }
   /* Code from template association_SetUnidirectionalOne */
   public boolean setOrder(Order aNewOrder)
   {
@@ -338,62 +325,6 @@ public class Game
     return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfCustomers()
-  {
-    return 0;
-  }
-  /* Code from template association_AddUnidirectionalMany */
-  public boolean addCustomer(Customer aCustomer)
-  {
-    boolean wasAdded = false;
-    if (customers.contains(aCustomer)) { return false; }
-    customers.add(aCustomer);
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeCustomer(Customer aCustomer)
-  {
-    boolean wasRemoved = false;
-    if (customers.contains(aCustomer))
-    {
-      customers.remove(aCustomer);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addCustomerAt(Customer aCustomer, int index)
-  {  
-    boolean wasAdded = false;
-    if(addCustomer(aCustomer))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfCustomers()) { index = numberOfCustomers() - 1; }
-      customers.remove(aCustomer);
-      customers.add(index, aCustomer);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveCustomerAt(Customer aCustomer, int index)
-  {
-    boolean wasAdded = false;
-    if(customers.contains(aCustomer))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfCustomers()) { index = numberOfCustomers() - 1; }
-      customers.remove(aCustomer);
-      customers.add(index, aCustomer);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addCustomerAt(aCustomer, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
@@ -412,13 +343,13 @@ public class Game
       reviews.remove(aReview);
     }
     
-    customers.clear();
   }
 
 
   public String toString()
   {
     return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
             "name" + ":" + getName()+ "," +
             "description" + ":" + getDescription()+ "," +
             "category" + ":" + getCategory()+ "," +

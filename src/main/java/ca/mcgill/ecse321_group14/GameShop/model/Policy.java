@@ -2,9 +2,10 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
-
+import jakarta.persistence.*;
 // line 90 "model.ump"
 // line 183 "model.ump"
+@Entity
 public class Policy
 {
 
@@ -13,14 +14,21 @@ public class Policy
   //------------------------
 
   //Policy Attributes
+  @Id
+  @GeneratedValue
+  private int policyId;
   private String description;
 
   //Policy Associations
+  @ManyToOne
   private Manager manager;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  // Hibernate requires a default constructor
+  protected Policy() {}
 
   public Policy(String aDescription, Manager aManager)
   {
@@ -41,6 +49,11 @@ public class Policy
     description = aDescription;
     wasSet = true;
     return wasSet;
+  }
+
+  public int getPolicyId()
+  {
+    return policyId;
   }
 
   public String getDescription()
@@ -73,6 +86,7 @@ public class Policy
   public String toString()
   {
     return super.toString() + "["+
+            "policyId" + ":" + getPolicyId()+ "," +
             "description" + ":" + getDescription()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "manager = "+(getManager()!=null?Integer.toHexString(System.identityHashCode(getManager())):"null");
   }

@@ -3,9 +3,11 @@
 
 package ca.mcgill.ecse321_group14.GameShop.model;
 import java.sql.Date;
-
+import jakarta.persistence.*;
 // line 55 "model.ump"
 // line 160 "model.ump"
+@Entity
+@Table(name = "Orders")
 public class Order
 {
 
@@ -14,15 +16,21 @@ public class Order
   //------------------------
 
   //Order Attributes
+  @Id
+  @GeneratedValue
   private int id;
   private Date orderDate;
 
   //Order Associations
+  @ManyToOne
   private Customer customer;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  // Hibernate requires a default constructor
+  protected Order() {}
 
   public Order(int aId, Date aOrderDate, Customer aCustomer)
   {
@@ -38,13 +46,15 @@ public class Order
   // INTERFACE
   //------------------------
 
-  public boolean setId(int aId)
+  // Remove this method since id is generated automatically
+  /*public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
     wasSet = true;
     return wasSet;
   }
+  */
 
   public boolean setOrderDate(Date aOrderDate)
   {

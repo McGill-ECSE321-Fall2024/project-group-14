@@ -1,12 +1,14 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 package ca.mcgill.ecse321_group14.GameShop.model;
-
+import jakarta.persistence.*;
 import java.sql.Date;
 
 // line 15 "model.ump"
 // line 126 "model.ump"
-public class Customer extends Role
+@Entity
+@PrimaryKeyJoinColumn(name="person_id")
+public class Customer extends Person
 {
 
   //------------------------
@@ -14,22 +16,25 @@ public class Customer extends Role
   //------------------------
 
   //Customer Attributes
+
   private int cardNumber;
   private Date cardExpiryDate;
   private String address;
-  private String id;
+  
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Customer(User aUser, int aCardNumber, Date aCardExpiryDate, String aAddress, String aId)
+  // Hibernate requires a default constructor
+  protected Customer() {}
+
+  public Customer(int aId, String aPassword, String aEmail, String aUsername, int aCardNumber, Date aCardExpiryDate, String aAddress)
   {
-    super(aUser);
+    super(aId, aPassword, aEmail, aUsername);
     cardNumber = aCardNumber;
     cardExpiryDate = aCardExpiryDate;
     address = aAddress;
-    id = aId;
   }
 
   //------------------------
@@ -60,13 +65,6 @@ public class Customer extends Role
     return wasSet;
   }
 
-  public boolean setId(String aId)
-  {
-    boolean wasSet = false;
-    id = aId;
-    wasSet = true;
-    return wasSet;
-  }
 
   public int getCardNumber()
   {
@@ -83,11 +81,6 @@ public class Customer extends Role
     return address;
   }
 
-  public String getId()
-  {
-    return id;
-  }
-
   public void delete()
   {
     super.delete();
@@ -99,7 +92,7 @@ public class Customer extends Role
     return super.toString() + "["+
             "cardNumber" + ":" + getCardNumber()+ "," +
             "address" + ":" + getAddress()+ "," +
-            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            System.getProperties().getProperty("line.separator") +
             "  " + "cardExpiryDate" + "=" + (getCardExpiryDate() != null ? !getCardExpiryDate().equals(this)  ? getCardExpiryDate().toString().replaceAll("  ","    ") : "this" : "null");
   }
 }

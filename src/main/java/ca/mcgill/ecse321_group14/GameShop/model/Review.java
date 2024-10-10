@@ -3,8 +3,11 @@
 
 
 package ca.mcgill.ecse321_group14.GameShop.model;
+import jakarta.persistence.*;
+
 // line 75 "model.ump"
 // line 172 "model.ump"
+@Entity
 public class Review
 {
 
@@ -19,16 +22,23 @@ public class Review
   //------------------------
 
   //Review Attributes
+  @Id
+  @GeneratedValue
+  private int id;
   private Ranking ranking;
   private String description;
 
   //Review Associations
+  @ManyToOne
   private Customer customer;
+  @ManyToOne
   private Game game;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  protected Review() {}
 
   public Review(Ranking aRanking, String aDescription, Customer aCustomer, Game aGame)
   {
