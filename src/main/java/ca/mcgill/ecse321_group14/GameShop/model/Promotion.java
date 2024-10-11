@@ -2,9 +2,10 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
-
+import jakarta.persistence.*;
 // line 83 "model.ump"
 // line 178 "model.ump"
+@Entity
 public class Promotion
 {
 
@@ -13,15 +14,21 @@ public class Promotion
   //------------------------
 
   //Promotion Attributes
+  @Id
+  @GeneratedValue
+  private int id;
   private String description;
   private int discount;
 
   //Promotion Associations
+  @OneToOne
   private Game game;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  protected Promotion() {}
 
   public Promotion(String aDescription, int aDiscount, Game aGame)
   {

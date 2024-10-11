@@ -3,55 +3,49 @@
 
 package ca.mcgill.ecse321_group14.GameShop.model;
 
-// line 2 "model.ump"
-// line 110 "model.ump"
-public class User
+import jakarta.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "role_type")
+public class Person
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //User Attributes
-  private String id;
+  //Person Attributes
+  @Id
+  @GeneratedValue
+  private int id;
   private String password;
   private String email;
   private String username;
 
-  //User Associations
-  private Role role;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public User(String aId, String aPassword, String aEmail, String aUsername, Role aRole)
-  {
-    id = aId;
-    password = aPassword;
-    email = aEmail;
-    username = aUsername;
-    if (aRole == null || aRole.getUser() != null)
-    {
-      throw new RuntimeException("Unable to create User due to aRole. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    role = aRole;
-  }
+  protected Person() {}
 
-  public User(String aId, String aPassword, String aEmail, String aUsername)
+  public Person(int aId, String aPassword, String aEmail, String aUsername)
   {
     id = aId;
     password = aPassword;
     email = aEmail;
     username = aUsername;
-    role = new Role(this);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setId(String aId)
+  public boolean setId(int aId)
   {
     boolean wasSet = false;
     id = aId;
@@ -83,7 +77,7 @@ public class User
     return wasSet;
   }
 
-  public String getId()
+  public int getId()
   {
     return id;
   }
@@ -102,21 +96,9 @@ public class User
   {
     return username;
   }
-  /* Code from template association_GetOne */
-  public Role getRole()
-  {
-    return role;
-  }
 
   public void delete()
-  {
-    Role existingRole = role;
-    role = null;
-    if (existingRole != null)
-    {
-      existingRole.delete();
-    }
-  }
+  {}
 
 
   public String toString()
@@ -125,7 +107,6 @@ public class User
             "id" + ":" + getId()+ "," +
             "password" + ":" + getPassword()+ "," +
             "email" + ":" + getEmail()+ "," +
-            "username" + ":" + getUsername()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "role = "+(getRole()!=null?Integer.toHexString(System.identityHashCode(getRole())):"null");
+            "username" + ":" + getUsername()+ "]";
   }
 }

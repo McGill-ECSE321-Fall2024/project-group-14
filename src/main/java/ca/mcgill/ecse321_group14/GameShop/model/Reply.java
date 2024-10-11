@@ -2,9 +2,10 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
-
+import jakarta.persistence.*;
 // line 99 "model.ump"
 // line 188 "model.ump"
+@Entity
 public class Reply
 {
 
@@ -13,15 +14,22 @@ public class Reply
   //------------------------
 
   //Reply Attributes
+  @Id
+  @GeneratedValue
+  private int id;
   private String description;
 
   //Reply Associations
+  @ManyToOne
   private Review review;
+  @OneToOne
   private Manager manager;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  protected Reply() {}
 
   public Reply(String aDescription, Review aReview, Manager aManager)
   {

@@ -2,9 +2,10 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
-
+import jakarta.persistence.*;
 // line 63 "model.ump"
 // line 165 "model.ump"
+@Entity
 public class GameApprovalRequest
 {
 
@@ -19,6 +20,9 @@ public class GameApprovalRequest
   //------------------------
 
   //GameApprovalRequest Attributes
+  @Id
+  @GeneratedValue
+  private int id;
   private String name;
   private String description;
   private String category;
@@ -26,12 +30,17 @@ public class GameApprovalRequest
   private Status status;
 
   //GameApprovalRequest Associations
+  @ManyToOne
   private Employee requestCreator;
+  @ManyToOne
   private Manager requestApprover;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  // Hibernate requires a default constructor
+  protected GameApprovalRequest() {}
 
   public GameApprovalRequest(String aName, String aDescription, String aCategory, String aPicture, Status aStatus, Employee aRequestCreator, Manager aRequestApprover)
   {
@@ -92,6 +101,11 @@ public class GameApprovalRequest
     status = aStatus;
     wasSet = true;
     return wasSet;
+  }
+
+  public int getId()
+  {
+    return id;
   }
 
   public String getName()
@@ -161,6 +175,7 @@ public class GameApprovalRequest
   public String toString()
   {
     return super.toString() + "["+
+            "id" + ":" + getId()+ "," +
             "name" + ":" + getName()+ "," +
             "description" + ":" + getDescription()+ "," +
             "category" + ":" + getCategory()+ "," +

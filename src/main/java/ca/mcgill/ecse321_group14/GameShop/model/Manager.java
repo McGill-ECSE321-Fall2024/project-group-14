@@ -2,10 +2,11 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
+import jakarta.persistence.*;
 
-// line 32 "model.ump"
-// line 142 "model.ump"
-public class Manager extends Staff
+@Entity
+@PrimaryKeyJoinColumn(name="person_id")
+public class Manager extends Person
 {
 
   //------------------------
@@ -16,9 +17,12 @@ public class Manager extends Staff
   // CONSTRUCTOR
   //------------------------
 
-  public Manager(User aUser)
+  // Hibernate requires a default constructor
+  protected Manager() {}
+
+  public Manager(int aId, String aPassword, String aEmail, String aUsername)
   {
-    super(aUser);
+    super(aId, aPassword, aEmail, aUsername);
   }
 
   //------------------------
