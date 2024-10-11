@@ -21,9 +21,9 @@ public class Employee extends Person
   // Hibernate requires a default constructor
   protected Employee() {}
 
-  public Employee(int aId, String aPassword, String aEmail, String aUsername)
+  public Employee(String aPassword, String aEmail, String aUsername)
   {
-    super(aId, aPassword, aEmail, aUsername);
+    super(aPassword, aEmail, aUsername);
   }
 
   //------------------------
