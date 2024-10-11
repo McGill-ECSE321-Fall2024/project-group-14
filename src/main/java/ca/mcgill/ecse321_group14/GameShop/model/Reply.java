@@ -22,7 +22,7 @@ public class Reply
   //Reply Associations
   @ManyToOne
   private Review review;
-  @ManyToOne
+  @OneToOne
   private Manager manager;
 
   //------------------------

@@ -21,7 +21,7 @@ public class Promotion
   private int discount;
 
   //Promotion Associations
-  @ManyToOne
+  @OneToOne
   private Game game;
 
   //------------------------
