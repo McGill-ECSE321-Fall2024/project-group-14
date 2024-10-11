@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321_group14.GameShop.model;
-
 import java.io.Serializable;
-import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
@@ -9,14 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Wishlist
-{
+public class OrderItems {
     @EmbeddedId
     private Key key;
 
-    protected Wishlist () {}
+    protected OrderItems () {}
 
-    public Wishlist(Key key){
+    public OrderItems(Key key){
         this.key = key;
     }
 
@@ -27,37 +24,37 @@ public class Wishlist
     @Embeddable
     public static class Key implements Serializable {
         @ManyToOne
-        private Game wish;
+        private Game game;
         @ManyToOne
-        private Customer buyer;
+        private Order order;
 
         public Key(){
             super();
         }
 
-        public Key(Game wish, Customer buyer){
-            this.wish = wish;
-            this.buyer = buyer;
+        public Key(Game game, Order order){
+            this.game = game;
+            this.order = order;
         }
 
-        public Game getWish() {
-            return wish;
+        public Game getGame() {
+            return game;
         }
 
-        public Customer getBuyer() {
-            return buyer;
+        public Order getOrder() {
+            return order;
         }
-
+        
         @Override
         public boolean equals(Object o) {
             if (!(o instanceof Key)) return false;
             Key key = (Key) o;
-            return wish.equals(key.wish) && buyer.equals(key.buyer);
+            return game.equals(key.game) && order.equals(key.order);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(wish, buyer);
+            return game.hashCode() + order.hashCode();
         }
     }
 }

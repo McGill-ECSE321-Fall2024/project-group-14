@@ -4,6 +4,8 @@
 package ca.mcgill.ecse321_group14.GameShop.model;
 import java.sql.Date;
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 // line 55 "model.ump"
 // line 160 "model.ump"
 @Entity
@@ -32,9 +34,8 @@ public class Order
   // Hibernate requires a default constructor
   protected Order() {}
 
-  public Order(int aId, Date aOrderDate, Customer aCustomer)
+  public Order(Date aOrderDate, Customer aCustomer)
   {
-    id = aId;
     orderDate = aOrderDate;
     if (!setCustomer(aCustomer))
     {
@@ -45,16 +46,6 @@ public class Order
   //------------------------
   // INTERFACE
   //------------------------
-
-  // Remove this method since id is generated automatically
-  /*public boolean setId(int aId)
-  {
-    boolean wasSet = false;
-    id = aId;
-    wasSet = true;
-    return wasSet;
-  }
-  */
 
   public boolean setOrderDate(Date aOrderDate)
   {
@@ -89,12 +80,6 @@ public class Order
     }
     return wasSet;
   }
-
-  public void delete()
-  {
-    customer = null;
-  }
-
 
   public String toString()
   {

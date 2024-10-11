@@ -36,8 +36,6 @@ public class Game
   private String picture;
 
   //Game Associations
-  @ManyToOne
-  private Order order;
   @OneToOne(optional = true)
   private Promotion promotion;
   @OneToMany
@@ -51,7 +49,7 @@ public class Game
   // Hibernate requires a default constructor
   protected Game() {}
 
-  public Game(String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Rating aRating, String aPicture, Order aOrder)
+  public Game(String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Rating aRating, String aPicture)
   {
     name = aName;
     description = aDescription;
@@ -60,10 +58,6 @@ public class Game
     quantity = aQuantity;
     rating = aRating;
     picture = aPicture;
-    if (!setOrder(aOrder))
-    {
-      throw new RuntimeException("Unable to create Game due to aOrder. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
     reviews = new ArrayList<Review>();
   }
 
@@ -166,11 +160,7 @@ public class Game
   {
     return picture;
   }
-  /* Code from template association_GetOne */
-  public Order getOrder()
-  {
-    return order;
-  }
+ 
   /* Code from template association_GetOne */
   public Promotion getPromotion()
   {
@@ -214,17 +204,6 @@ public class Game
   }
   /* Code from template association_GetMany */
 
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setOrder(Order aNewOrder)
-  {
-    boolean wasSet = false;
-    if (aNewOrder != null)
-    {
-      order = aNewOrder;
-      wasSet = true;
-    }
-    return wasSet;
-  }
   /* Code from template association_SetOptionalOneToOne */
   public boolean setPromotion(Promotion aNewPromotion)
   {
@@ -328,7 +307,6 @@ public class Game
 
   public void delete()
   {
-    order = null;
     Promotion existingPromotion = promotion;
     promotion = null;
     if (existingPromotion != null)
@@ -357,7 +335,7 @@ public class Game
             "quantity" + ":" + getQuantity()+ "," +
             "picture" + ":" + getPicture()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "rating" + "=" + (getRating() != null ? !getRating().equals(this)  ? getRating().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "order = "+(getOrder()!=null?Integer.toHexString(System.identityHashCode(getOrder())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + System.getProperties().getProperty("line.separator") +
             "  " + "promotion = "+(getPromotion()!=null?Integer.toHexString(System.identityHashCode(getPromotion())):"null");
   }
 }

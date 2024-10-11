@@ -2,7 +2,7 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
-
+import java.util.Objects;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Collections;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "role_type")
-public class Person
+public abstract class Person
 {
 
   //------------------------
@@ -33,9 +33,8 @@ public class Person
 
   protected Person() {}
 
-  public Person(int aId, String aPassword, String aEmail, String aUsername)
+  public Person(String aPassword, String aEmail, String aUsername)
   {
-    id = aId;
     password = aPassword;
     email = aEmail;
     username = aUsername;
@@ -45,13 +44,6 @@ public class Person
   // INTERFACE
   //------------------------
 
-  public boolean setId(int aId)
-  {
-    boolean wasSet = false;
-    id = aId;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setPassword(String aPassword)
   {
@@ -100,6 +92,20 @@ public class Person
   public void delete()
   {}
 
+  @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id &&
+               Objects.equals(email, person.email) &&
+               Objects.equals(username, person.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, username);
+    }
 
   public String toString()
   {
