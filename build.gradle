@@ -27,5 +27,4 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-	tsstLogging.events = ["passed", "skipped", "failed"]
 }
