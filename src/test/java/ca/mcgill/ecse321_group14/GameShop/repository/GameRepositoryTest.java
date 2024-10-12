@@ -25,12 +25,12 @@ public class GameRepositoryTest {
     @Test
     public void testCreateAndReadGame() {
         // Arrange
-        Game game = new Game("Mario", null, null, 0, 0, null, null);
-        game = gameRepository.save(game);
-        int id = game.getId();
+        Game game = new Game("Mario", null, null, 0, 0, Game.Rating.R,null); // create a new game
+        game = gameRepository.save(game); // save the game to the database
+        int id = game.getId(); // get the id of the game
 
         // Act
-        Game readGame = gameRepository.findGameById(id);
+        Game readGame = gameRepository.findGameById(id); // read the game from the database
 
         // Assert
         assertNotNull(readGame);

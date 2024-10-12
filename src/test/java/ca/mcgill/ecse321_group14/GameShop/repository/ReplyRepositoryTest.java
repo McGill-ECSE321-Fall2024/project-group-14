@@ -2,17 +2,15 @@ package ca.mcgill.ecse321_group14.GameShop.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import ca.mcgill.ecse321_group14.GameShop.model.*;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class ReplyRepositoryTest {

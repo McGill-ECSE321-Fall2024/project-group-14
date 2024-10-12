@@ -25,12 +25,12 @@ public class CustomerRepositoryTest {
     @Test
     public void testCreateAndReadCustomer() {
         // Arrange
-        Customer customer = new Customer("password", "email", "username", 123456, null, "address");
-        customer = customerRepository.save(customer);
-        int id = customer.getId();
+        Customer customer = new Customer("password", "email", "username", 123456, null, "address"); // create a new customer
+        customer = customerRepository.save(customer); // save the customer to the database
+        int id = customer.getId(); // get the id of the customer
 
         // Act
-        Customer readCustomer = customerRepository.findCustomerById(id);
+        Customer readCustomer = customerRepository.findCustomerById(id); // read the customer from the database
 
         // Assert
         assertNotNull(readCustomer);

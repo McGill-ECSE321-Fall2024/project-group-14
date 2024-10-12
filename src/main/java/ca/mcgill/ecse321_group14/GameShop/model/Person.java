@@ -4,9 +4,6 @@
 package ca.mcgill.ecse321_group14.GameShop.model;
 import java.util.Objects;
 import jakarta.persistence.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

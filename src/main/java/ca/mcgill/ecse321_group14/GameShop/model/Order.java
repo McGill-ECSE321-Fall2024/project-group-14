@@ -4,8 +4,7 @@
 package ca.mcgill.ecse321_group14.GameShop.model;
 import java.sql.Date;
 import jakarta.persistence.*;
-import java.util.List;
-import java.util.ArrayList;
+
 // line 55 "model.ump"
 // line 160 "model.ump"
 @Entity

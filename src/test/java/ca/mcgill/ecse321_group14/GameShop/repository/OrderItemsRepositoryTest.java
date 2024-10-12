@@ -34,24 +34,24 @@ public class OrderItemsRepositoryTest {
     @Test
     public void testCreateAndReadOrderItems() {
         // Arrange
-        Game game = new Game("Mario", null, null, 0, 0, null, null);
+        Game game = new Game("Mario", null, null, 0, 0, null, null); // create a new game
         game = gameRepository.save(game);
 
-        Customer customer = new Customer("password", "email", "username", 123456, null, "address");
+        Customer customer = new Customer("password", "email", "username", 123456, null, "address"); // create a new customer
         customer = customerRepository.save(customer);
 
-        Order order = new Order(null, customer);
+        Order order = new Order(null, customer); // create a new order
         order = orderRepository.save(order);
 
         
 
-        OrderItems.Key key = new OrderItems.Key(game, order);
-        OrderItems orderItems = new OrderItems(key);
+        OrderItems.Key key = new OrderItems.Key(game, order); // create a new key
+        OrderItems orderItems = new OrderItems(key); // create a new orderItems
 
-        orderItems = orderItemsRepository.save(orderItems);
+        orderItems = orderItemsRepository.save(orderItems); // save the orderItems
 
         // Act
-        OrderItems readOrderItems = orderItemsRepository.findOrderItemsByKey(key);
+        OrderItems readOrderItems = orderItemsRepository.findOrderItemsByKey(key); // read the orderItems
 
         // Assert
         assertNotNull(readOrderItems);

@@ -2,7 +2,6 @@ package ca.mcgill.ecse321_group14.GameShop.repository;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
-import ca.mcgill.ecse321_group14.GameShop.model.Order;
 import ca.mcgill.ecse321_group14.GameShop.model.Review;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

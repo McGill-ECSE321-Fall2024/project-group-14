@@ -25,12 +25,12 @@ public class EmployeeRepositoryTest {
     @Test
     public void testCreateAndReadEmployee() {
         // Arrange
-        Employee employee = new Employee("password", "email", "username");
-        employee = repo.save(employee);
-        int id = employee.getId();
+        Employee employee = new Employee("password", "email", "username"); // create a new employee
+        employee = repo.save(employee); // save the employee to the database
+        int id = employee.getId(); // get the id of the employee
 
         // Act
-        Employee readEmployee = repo.findEmployeeById(id);
+        Employee readEmployee = repo.findEmployeeById(id); // read the employee from the database
 
         // Assert
         assertNotNull(readEmployee);

@@ -23,9 +23,9 @@ public class ManagerRepositoryTest {
 
     @Test
     public void testCreateAndReadManager() {
-        Manager manager = new Manager("password", "easy@mcgill.ca", "testManager");
-        managerRepository.save(manager);
-        int id = manager.getId();
+        Manager manager = new Manager("password", "easy@mcgill.ca", "testManager"); // create a new manager
+        managerRepository.save(manager); // save the manager to the database
+        int id = manager.getId(); // get the id of the manager
 
         Manager readManager = managerRepository.findManagerById(id);
         assertNotNull(readManager);

@@ -15,7 +15,7 @@ public class Game
   //------------------------
   // ENUMERATIONS
   //------------------------
-
+  
   public enum Rating { G, PG, PG_13, R }
   public enum Ranking { OneStar, TwoStar, ThreeStar, FourStar, FiveStar }
 
@@ -32,6 +32,7 @@ public class Game
   private String category;
   private int price;
   private int quantity;
+  @Enumerated(EnumType.STRING)
   private Rating rating;
   private String picture;
 

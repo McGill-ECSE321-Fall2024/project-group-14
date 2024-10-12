@@ -1,5 +1,4 @@
 package ca.mcgill.ecse321_group14.GameShop.repository;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterEach;
@@ -25,23 +24,26 @@ public class WishlistRepositoryTest {
     @AfterEach
     public void clearDatabase() {
         wishlistRepository.deleteAll();
+        customerRepository.deleteAll();
+        gameRepository.deleteAll();
     }
 
     @Test
     public void testCreateAndReadWishlist() {
         // Arrange
-        Customer customer = new Customer("password", "email", "username", 123456, null, "address");
+        Customer customer = new Customer("password", "email", "username", 123456, null, "address"); // create a new customer
         customer = customerRepository.save(customer);
-        Game game = new Game("Mario", null, null, 0, 0, null, null);
+
+        Game game = new Game("Mario", null, null, 0, 0, null, null); // create a new game
         game = gameRepository.save(game);
 
-        Wishlist.Key key = new Wishlist.Key(game,customer);
-        Wishlist wishlist = new Wishlist(key);
+        Wishlist.Key key = new Wishlist.Key(game,customer); // create a new key
+        Wishlist wishlist = new Wishlist(key); // create a new wishlist
 
-        wishlist = wishlistRepository.save(wishlist);
+        wishlist = wishlistRepository.save(wishlist); 
 
         // Act
-        Wishlist readWishlist = wishlistRepository.findWishlistByKey(key);
+        Wishlist readWishlist = wishlistRepository.findWishlistByKey(key); // read the wishlist
 
         // Assert
         assertNotNull(readWishlist);
