@@ -58,6 +58,10 @@ public class Review
   //------------------------
   // INTERFACE
   //------------------------
+  public int getId()
+  {
+    return id;
+  }
 
   public boolean setRanking(Ranking aRanking)
   {
