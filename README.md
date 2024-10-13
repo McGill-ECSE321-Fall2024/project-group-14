@@ -40,7 +40,7 @@ During the development process for this application, our team will follow the ma
 | Deniz Karakus  |Domain Model Drafting, Requirements, Use Case Diagram, Use Case Specifications |20 |
 | Cody Choo-Foo  |Domain Model Drafting, Requirements, Write Repo Files, Write Testing Files, Create Project, Create Issues, Repo and Test File Debugging |20 |
 | Sara Andari |Domain Model Drafting, Requirements, Use Case Diagram, Use Case Specifications |19 |
-| Alex Alberto Zhen |Domain Model Drafting, Create the Final Domain Model, Requirements, Write Repo Files, Write Testing Files, Repo and Test File Debugging|15 |
+| Alex Alberto Zhen |Domain Model Drafting, Create the Final Domain Model, Requirements, Write Repo Files, Write Testing Files, Repo and Test File Debugging|20 |
 
 
 [Project Report]()
