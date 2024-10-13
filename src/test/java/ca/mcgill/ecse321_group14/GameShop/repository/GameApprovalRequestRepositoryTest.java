@@ -36,6 +36,7 @@ public class GameApprovalRequestRepositoryTest {
         Employee employee = new Employee("employeepass", "employ@mcgill.ca", "useremployee");
         employee = employeeRepository.save(employee);
         GameApprovalRequest gameApprovalRequest = new GameApprovalRequest("name", "description","category", "picture", null, employee, manager );
+        gameApprovalRequest = gameApprovalRequestRepository.save(gameApprovalRequest);
 
         int id = gameApprovalRequest.getId();
 

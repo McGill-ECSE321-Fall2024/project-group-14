@@ -18,12 +18,12 @@ public class PolicyRepositoryTest {
     private PolicyRepository policyRepository;
     @Autowired
     private ManagerRepository managerRepository;
-
+    
     @BeforeEach
     @AfterEach
     public void ClearDatabase(){
-        managerRepository.deleteAll();
         policyRepository.deleteAll();
+        managerRepository.deleteAll();
     }
 
     @Test
@@ -35,14 +35,13 @@ public class PolicyRepositoryTest {
 
         int id = policy.getPolicyId();
 
-        Policy readPolicy = policyRepository.findPolicyById(id);
+        Policy readPolicy = policyRepository.findPolicyByPolicyId(id);
 
         assertNotNull(readPolicy);
         assertEquals(policy.getPolicyId(),readPolicy.getPolicyId());
         assertEquals(policy.getManager().getId(), readPolicy.getManager().getId());
-
-
-
+        assertEquals(policy.getDescription(), readPolicy.getDescription());
+        
 
     }
 

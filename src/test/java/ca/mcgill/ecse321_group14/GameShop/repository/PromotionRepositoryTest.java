@@ -39,6 +39,8 @@ public class PromotionRepositoryTest {
         assertNotNull(readPromotion);
         assertEquals(promotion.getPromotionId(), readPromotion.getPromotionId());
         assertEquals(promotion.getGame().getId(), readPromotion.getGame().getId());
+        assertEquals(promotion.getDescription(), readPromotion.getDescription());
+        assertEquals(promotion.getDiscount(), readPromotion.getDiscount());
 
     }
 

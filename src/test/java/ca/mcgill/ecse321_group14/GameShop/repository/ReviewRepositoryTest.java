@@ -53,12 +53,9 @@ public class ReviewRepositoryTest {
         assertEquals(review.getId(), readReview.getId());
         assertEquals(review.getCustomer().getId(), readReview.getCustomer().getId());
         assertEquals(review.getGame().getId(), readReview.getGame().getId());
-
-
-
-
-
-
+        assertEquals(review.getRanking(), readReview.getRanking());
+        assertEquals(review.getDescription(), readReview.getDescription());
+        
     }
 }
 
