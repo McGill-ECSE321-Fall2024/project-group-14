@@ -61,6 +61,7 @@ public class Promotion
     return wasSet;
   }
 
+  public int getPromotionId(){return id;}
   public String getDescription()
   {
     return description;
