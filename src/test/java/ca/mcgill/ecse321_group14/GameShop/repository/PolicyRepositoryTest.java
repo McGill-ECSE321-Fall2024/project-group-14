@@ -42,7 +42,6 @@ public class PolicyRepositoryTest {
         assertEquals(policy.getManager().getId(), readPolicy.getManager().getId());
         assertEquals(policy.getDescription(), readPolicy.getDescription());
         
-
     }
 
 }

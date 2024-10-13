@@ -29,6 +29,7 @@ public class OrderItemsRepositoryTest {
         orderItemsRepository.deleteAll();
         gameRepository.deleteAll();
         orderRepository.deleteAll();
+        customerRepository.deleteAll();
     }
 
     @Test
