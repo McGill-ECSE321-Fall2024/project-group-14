@@ -18,7 +18,7 @@ During the development process for this application, our team will follow the ma
 | Diana Bodik | [dianabodik](https://github.com/dianabodik)  | Software Engineering | U2 | |
 | Deniz Karakus  | [denizkarakus123](https://github.com/denizkarakus123)  | Computer Engineering | U2 |  |
 | Cody Choo-Foo  | [codyc-f](https://github.com/codyc-f)  | Computer Engineering | U3 |  |
-| Sara Andari | [sara14and](https://github.com/sara14and)  | Computer Engineering | U3 |  |
+| Sara Andari | [sara14and](https://github.com/sara14and)  | Computer Engineering | U3 | Middle name is George |
 | Alex Alberto Zhen | [AlexZ1207](https://github.com/AlexZ1207)  | Computer Engineering | U3 | |
 
 # Overview Table 🥇 
