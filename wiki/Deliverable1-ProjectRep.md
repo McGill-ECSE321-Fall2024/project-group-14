@@ -65,3 +65,8 @@ Task management is carried out using GitHub's issue tracking system, where we ma
 Our repository contains a README file at the root, which provides an overview of the project, team roles, and contributions, along with links to important resources in our Wiki.
 
 For meetings, we follow a structured template that outlines the purpose, agenda, notes, and next steps for every meeting. This approach helps maintain focus and track progress efficiently.
+
+[Meeting Minutes](https://github.com/McGill-ECSE321-Fall2024/project-group-14/blob/main/wiki/Deliverable1-MeetingMinutes.md)
+
+# Conclusion
+In conclusion, our team successfully completed Deliverable 1, meeting all specified requirements and making significant progress in developing the GameShop system. As we proceed with the project, we aim to continue along this trajectory to eventually produce a comprehensive solution.
