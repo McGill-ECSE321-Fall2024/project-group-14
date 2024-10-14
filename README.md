@@ -43,4 +43,4 @@ During the development process for this application, our team will follow the ma
 | Alex Alberto Zhen |Domain Model Drafting, Create the Final Domain Model, Requirements, Write Repo Files, Write Testing Files, Repo and Test File Debugging|20 |
 
 
-[Project Report](https://github.com/McGill-ECSE321-Fall2024/project-group-14/blob/main/src/Deliverable1-ProjectRep.md)
+[Project Report](https://github.com/McGill-ECSE321-Fall2024/project-group-14/blob/main/wiki/Deliverable1-ProjectRep.md)
