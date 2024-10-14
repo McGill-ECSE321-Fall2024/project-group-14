@@ -1,4 +1,4 @@
-# Meeting Minutes
+# Meeting Minutes - Deliverable 1
 
 ## 1 - Setup and Class Diagram Initialization - September 17th, 2024
 | Duration: 14:30-16:00 | Location: Schulich Library 5th Floor | Members: Diana, Tessa, Deniz, Sara, Cody, Alex |
