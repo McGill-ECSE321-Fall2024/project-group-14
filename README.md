@@ -15,7 +15,7 @@ During the development process for this application, our team will follow the ma
 | Name  | Github | Major | Year | Fun Fact |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Tessa Hason  | [tessahas](https://github.com/tessahas)  | Software Engineering | U3 | Has a twin sister |
-| Diana Bodik | [dianabodik](https://github.com/dianabodik)  | Software Engineering | U2 | |
+| Diana Bodik | [dianabodik](https://github.com/dianabodik)  | Software Engineering | U2 | Speaks russian |
 | Deniz Karakus  | [denizkarakus123](https://github.com/denizkarakus123)  | Computer Engineering | U2 |  |
 | Cody Choo-Foo  | [codyc-f](https://github.com/codyc-f)  | Computer Engineering | U3 |  |
 | Sara Andari | [sara14and](https://github.com/sara14and)  | Computer Engineering | U3 | Middle name is George |
@@ -43,4 +43,4 @@ During the development process for this application, our team will follow the ma
 | Alex Alberto Zhen |Domain Model Drafting, Create the Final Domain Model, Requirements, Write Repo Files, Write Testing Files, Repo and Test File Debugging|20 |
 
 
-[Project Report]()
+[Project Report](https://github.com/McGill-ECSE321-Fall2024/project-group-14/blob/main/src/Deliverable1-ProjectReport)
