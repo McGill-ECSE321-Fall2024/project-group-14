@@ -9,8 +9,6 @@ The goal of this project is to develop a web-based application for an independen
 
 During the development process for this application, our team will follow the main software engineering activities: specification, development, validation, and evolution.
 
-[Sprint 1](paste github link here to sprint 1) 
-
 # The Team 👥 
 | Name  | Github | Major | Year | Fun Fact |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
