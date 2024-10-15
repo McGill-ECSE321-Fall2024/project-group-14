@@ -21,6 +21,8 @@ spring.datasource.password=xxx
 or
 ```./gradlew test```
 
+NOTE: If you will have to create a new database for our test to run, so please do so by using ``` CREATE DATABASE xxx ```
+
 During the development process for this application, our team will follow the main software engineering activities: specification, development, validation, and evolution.
 
 # The Team 👥 
