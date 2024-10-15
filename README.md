@@ -5,7 +5,21 @@ The goal of this project is to develop a web-based application for an independen
 * Customers: buy/return games from the online shop; add games to wishlist; search for games by genre and rating; review games with discussion posts.
 * Employees: update inventory; make recommendation requests to purchase new games; review games with discussion posts.
 * Owner: approve employee game requests; manage store employees; review customers' order history.
-* Games: games have different categories, ratings (R, G, PG-13, etc.) and reviews where discussion can occur. 
+* Games: games have different categories, ratings (R, G, PG-13, etc.) and reviews where discussion can occur.
+
+# How to Run the Test:
+
+* First, clone the repository to your local machine.
+* Navigate to the application.properties file located in the src/main/resources folder. Update the following lines to match your local PostgreSQL database settings:
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/xxx
+spring.datasource.username=xxx
+spring.datasource.password=xxx
+```
+* Once your database is set up and the properties are updated, you can run the tests using
+```./gradlew clean test ```
+or
+```./gradlew test```
 
 During the development process for this application, our team will follow the main software engineering activities: specification, development, validation, and evolution.
 
