@@ -14,10 +14,10 @@ During the development process for this application, our team will follow the ma
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Tessa Hason  | [tessahas](https://github.com/tessahas)  | Software Engineering | U3 | Has a twin sister |
 | Diana Bodik | [dianabodik](https://github.com/dianabodik)  | Software Engineering | U2 | Speaks russian |
-| Deniz Karakus  | [denizkarakus123](https://github.com/denizkarakus123)  | Computer Engineering | U2 |  |
-| Cody Choo-Foo  | [codyc-f](https://github.com/codyc-f)  | Computer Engineering | U3 |  |
+| Deniz Karakus  | [denizkarakus123](https://github.com/denizkarakus123)  | Computer Engineering | U2 | Has a pet parrot |
+| Cody Choo-Foo  | [codyc-f](https://github.com/codyc-f)  | Computer Engineering | U3 | Hates cheese |
 | Sara Andari | [sara14and](https://github.com/sara14and)  | Computer Engineering | U3 | Middle name is George |
-| Alex Alberto Zhen | [AlexZ1207](https://github.com/AlexZ1207)  | Computer Engineering | U3 | |
+| Alex Alberto Zhen | [AlexZ1207](https://github.com/AlexZ1207)  | Computer Engineering | U3 | Can hold his breath for 3 min underwater|
 
 # Overview Table 🥇 
 | Name  | Role | Sprint 1 Hours | Sprint 2 Hours | Sprint 3 Hours | Presentation Hours | Total Effort Hours |
