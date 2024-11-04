@@ -95,4 +95,16 @@ public class Customer extends Person
             System.getProperties().getProperty("line.separator") +
             "  " + "cardExpiryDate" + "=" + (getCardExpiryDate() != null ? !getCardExpiryDate().equals(this)  ? getCardExpiryDate().toString().replaceAll("  ","    ") : "this" : "null");
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Customer)) return false;
+    Customer customer = (Customer) o;
+    return super.equals(o) && cardNumber == customer.cardNumber && cardExpiryDate.equals(customer.cardExpiryDate) && address.equals(customer.address);
+  }
+
+  @Override
+  public int hashCode() {
+    return super.hashCode() + cardNumber + cardExpiryDate.hashCode() + address.hashCode();
+  }
 }

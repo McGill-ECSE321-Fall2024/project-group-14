@@ -339,4 +339,16 @@ public class Game
             "  " + System.getProperties().getProperty("line.separator") +
             "  " + "promotion = "+(getPromotion()!=null?Integer.toHexString(System.identityHashCode(getPromotion())):"null");
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Game)) return false;
+    Game game = (Game) o;
+    return id == game.id;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }

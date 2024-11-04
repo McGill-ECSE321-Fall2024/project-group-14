@@ -30,7 +30,7 @@ public class OrderRepositoryTest {
     @Test
     public void testCreateAndReadOrder() {
         // Arrange
-        Customer customer = new Customer("password", "email", "username", 123456, null, "address"); // create a new customer
+        Customer customer = new Customer("password", "email", "username", 123456, Date.valueOf("2015-12-07"), "address"); // create a new customer
         customer = customerRepository.save(customer); 
         Order order = new Order(Date.valueOf("2024-10-12"), customer); // create a new order
         order = orderRepository.save(order); // save the order
