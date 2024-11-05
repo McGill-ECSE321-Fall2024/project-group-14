@@ -37,6 +37,15 @@ public class OrderService {
     }
 
     @Transactional
+    public Order getOrder(int id) {
+        Order order = orderRepository.findOrderById(id);
+        if (order == null) {
+            throw new IllegalArgumentException("Order does not exist!");
+        }
+        return order;
+    }
+
+    @Transactional
     public void deleteOrder(int id) {
         if (orderRepository.findOrderById(id) == null) {
             throw new IllegalArgumentException("Order does not exist!");
