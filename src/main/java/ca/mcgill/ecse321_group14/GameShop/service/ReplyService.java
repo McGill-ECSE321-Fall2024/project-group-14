@@ -23,6 +23,15 @@ public class ReplyService {
         replyRepository.save(reply);
         return reply;
     }
+    
+    @Transactional
+    public Reply getReply(int id) {
+        Reply reply = replyRepository.findReplyById(id);
+        if (reply == null) {
+            throw new IllegalArgumentException("Reply does not exist!");
+        }
+        return reply;
+    }
 
     @Transactional
     public Reply deleteReply(int id) {
