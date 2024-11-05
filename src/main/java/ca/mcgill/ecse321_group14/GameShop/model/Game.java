@@ -48,7 +48,7 @@ public class Game
   //------------------------
 
   // Hibernate requires a default constructor
-  protected Game() {}
+  public Game() {}
 
   public Game(String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Rating aRating, String aPicture)
   {
