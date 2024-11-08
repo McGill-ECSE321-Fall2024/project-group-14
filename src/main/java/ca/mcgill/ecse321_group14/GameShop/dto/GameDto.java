@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321_group14.GameShop.Dto;
+package ca.mcgill.ecse321_group14.GameShop.dto;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Game.Rating;
 import java.util.List;
