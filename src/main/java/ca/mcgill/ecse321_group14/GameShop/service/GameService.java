@@ -59,7 +59,7 @@ public class GameService {
      * @throws IllegalArgumentException if any field is null or invalid, or if the game does not exist
      */
     @Transactional
-    public Game updateGame(int id, String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Game.Rating aRating, String aPicture) {
+    public Game updateGameById(int id, String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Game.Rating aRating, String aPicture) {
         if (aName == null || aDescription == null || aCategory == null || aPrice < 0 || aQuantity < 0 || aRating == null || aPicture == null) {
             throw new IllegalArgumentException("All fields must be filled!");
         }
@@ -97,11 +97,8 @@ public class GameService {
     }
 
     @Transactional
-    public Game getGameByName(String aName){
-        if (aName == null) {
-            throw new IllegalArgumentException("Name cannot be null!");
-        }
-        Game game = gameRepository.findGameByName(aName);
+    public Game getGameById(int id){
+        Game game = gameRepository.findGameById(id);
         if (game == null) {
             throw new IllegalArgumentException("Game does not exist!");
         }
