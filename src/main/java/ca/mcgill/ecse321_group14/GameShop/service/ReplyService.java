@@ -23,7 +23,7 @@ public class ReplyService {
         replyRepository.save(reply);
         return reply;
     }
-    
+
     @Transactional
     public Reply getReply(int id) {
         Reply reply = replyRepository.findReplyById(id);
