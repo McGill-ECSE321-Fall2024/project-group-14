@@ -1,3 +1,4 @@
+package ca.mcgill.ecse321_group14.GameShop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
