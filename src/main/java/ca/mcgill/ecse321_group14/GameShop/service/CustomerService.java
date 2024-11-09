@@ -1,3 +1,4 @@
+package ca.mcgill.ecse321_group14.GameShop.service;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
