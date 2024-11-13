@@ -1,15 +1,16 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ca.mcgill.ecse321_group14.GameShop.model.Employee;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Manager;
 import ca.mcgill.ecse321_group14.GameShop.model.Person;
 import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class GameService {
@@ -74,6 +75,25 @@ public class GameService {
         game.setRating(aRating);
         game.setPicture(aPicture);
         return gameRepository.save(game);
+    }
+
+    /**
+     * getGameById: getting a game by its ID
+     * @param id: ID of the game
+     * @return the game object
+     *
+     * @throws IllegalArgumentException if the ID is null or if the game does not exist
+     */
+    @Transactional
+    public Game getGameById(int id){
+        if (id < 0) {
+            throw new IllegalArgumentException("ID cannot be null!");
+        }
+        Game game = gameRepository.findGameById(id);
+        if (game == null) {
+            throw new IllegalArgumentException("Game does not exist!");
+        }
+        return game;
     }
 
     @Transactional

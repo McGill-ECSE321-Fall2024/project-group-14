@@ -1,5 +1,10 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
 
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Order;
@@ -8,10 +13,6 @@ import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.OrderRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.OrderitemRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.sql.Date;
 
 
 @Service
@@ -24,14 +25,12 @@ public class OrderService {
     private OrderitemRepository orderitemRepository;
 
     @Transactional
-    public Order createOrder(Date date, Customer customer) {
-        if (date == null || customer == null) {
-            throw new IllegalArgumentException("All fields must be filled!");
-        }
-        if (customerRepository.findCustomerById(customer.getId()) == null) {
+    public Order createOrder(int customerId) {
+        Customer customer = customerRepository.findCustomerById(customerId);
+        if (customer == null) {
             throw new IllegalArgumentException("Customer does not exist!");
         }
-        Order order = new Order(date, customer);
+        Order order = new Order(LocalDate.now(), customer);
         orderRepository.save(order);
         return order;
     }
