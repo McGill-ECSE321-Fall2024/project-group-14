@@ -1,31 +1,17 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
-public class ReplyDto {
-
-    private int id;
+public class ReplyRequestDto{
     private String description;
     private int reviewId;
     private int managerId;
 
-    // Default constructor
-    public ReplyDto() {
+    public ReplyRequestDto() {
     }
 
-    // Parameterized constructor
-    public ReplyDto(int id, String description, int reviewId, int managerId) {
-        this.id = id;
+    public ReplyRequestDto(String description, int reviewId, int managerId) {
         this.description = description;
         this.reviewId = reviewId;
         this.managerId = managerId;
-    }
-
-    // Getters and Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDescription() {
@@ -51,6 +37,4 @@ public class ReplyDto {
     public void setManagerId(int managerId) {
         this.managerId = managerId;
     }
-
-
 }
