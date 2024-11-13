@@ -107,18 +107,7 @@ public class GameService {
         }
         return game;
     }
-
-    @Transactional
-    public Game getGameById(int id){
-        if (id == 0) {
-            throw new IllegalArgumentException("ID cannot be null!");
-        }
-        Game game = gameRepository.findGameById(id);
-        if (game == null) {
-            throw new IllegalArgumentException("Game does not exist!");
-        }
-        return game;
-    }
+    
 
     @Transactional
     public List<Game> getAllGames(){
