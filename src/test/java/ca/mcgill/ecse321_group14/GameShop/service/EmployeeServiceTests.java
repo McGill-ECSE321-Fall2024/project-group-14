@@ -186,7 +186,7 @@ public class EmployeeServiceTests {
         String password = "password";
         String username = "username";
         String email = "email";
-        Employee employee = new Employee("password", "email", "username");
+        Employee employee = new Employee("password1", "email1", "username1");
         when(employeeRepository.findEmployeeById(id)).thenReturn(employee);
         when(employeeRepository.save(any())).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
 
@@ -293,6 +293,80 @@ public class EmployeeServiceTests {
         verify(employeeRepository, times(0)).findEmployeeById(id);
         verify(employeeRepository, times(0)).delete(any());
     }
+    @Test
+    public void testEmployeeLogin() {
+        String email = "email";
+        String password = "password";
+        Employee employee = new Employee(password, email, "username");
+        when(employeeRepository.findEmployeeByEmail(email)).thenReturn(employee);
+
+        //act
+        Boolean employeeLoggedIn = employeeService.loginEmployee(email, password);
+
+        //assert
+        assertNotNull(employeeLoggedIn);
+        assertTrue(employeeLoggedIn);
+        verify(employeeRepository, times(1)).findEmployeeByEmail(email);
+    }
+    @Test
+    public void testEmployeeLoginNonExistentEmail(){
+        String email = "email";
+        String password = "password";
+        when(employeeRepository.findEmployeeByEmail(email)).thenReturn(null);
+
+        //act
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            employeeService.loginEmployee(email, password);
+        });
+
+        //assert
+        assertEquals("Employee not found.", exception.getMessage());
+        verify(employeeRepository, times(1)).findEmployeeByEmail(email);
+    }
+    @Test
+    public void testEmployeeLoginNullEmail(){
+        String email = null;
+        String password = "password";
+
+        //act
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            employeeService.loginEmployee(email, password);
+        });
+
+        //assert
+        assertEquals("Employee email cannot be empty.", exception.getMessage());
+        verify(employeeRepository, times(0)).findEmployeeByEmail(email);
+    }
+    @Test
+    public void testEmployeeLoginNullPassword(){
+        String email = "email";
+        String password = null;
+
+        //act
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            employeeService.loginEmployee(email, password);
+        });
+
+        //assert
+        assertEquals("Employee password cannot be empty.", exception.getMessage());
+        verify(employeeRepository, times(0)).findEmployeeByEmail(email);
+    }
+    @Test
+    public void testEmployeeLoginIncorrectPassword(){
+        String email = "email";
+        String password = "password";
+        Employee employee = new Employee("password1", email, "username");
+        when(employeeRepository.findEmployeeByEmail(email)).thenReturn(employee);
+
+        //act
+        Boolean employeeLoggedIn = employeeService.loginEmployee(email, password);
+
+        //assert
+        assertNotNull(employeeLoggedIn);
+        assertFalse(employeeLoggedIn);
+        verify(employeeRepository, times(1)).findEmployeeByEmail(email);
+    }
+
 
 
 
