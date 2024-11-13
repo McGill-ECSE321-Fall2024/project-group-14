@@ -20,27 +20,46 @@ public class WishlistService {
 
 
     @Transactional
-    public void addGameToWishlist(Wishlist.Key id, Game game, Customer customer) {
-        Wishlist wishlist = wishlistRepository.findById(id).orElse(null);
+    public Wishlist addGameToWishlist(Game game, Customer customer) {
+        Wishlist wishlist = wishlistRepository.findWishlistByKey(new Wishlist.Key(game, customer));
 
         String error = "";
         if (!customerRepository.existsById(customer.getId())) {
             error += "Customer does not exist!";
         }
         if (wishlist == null) {
-            wishlist = new Wishlist(id);
+            wishlist = new Wishlist(new Wishlist.Key(game, customer));
         }
         Wishlist.Key key = new Wishlist.Key(game, customer);
         wishlistRepository.save(wishlist);
+        return wishlist;
     }
     @Transactional
-    public void deleteGameFromWishlist(Wishlist.Key id, Game game, Customer customer) {
-        Wishlist wishlist = wishlistRepository.findById(id).orElse(null);
+    public Wishlist deleteGameFromWishlist(Game game, Customer customer) {
+        Wishlist wishlist = wishlistRepository.findWishlistByKey(new Wishlist.Key(game, customer));
         if (wishlist == null) {
             throw new IllegalArgumentException("Wishlist does not exist!");
         }
         Wishlist.Key key = new Wishlist.Key(game, customer);
         wishlistRepository.deleteById(key);
+        return wishlist;
+    }
+    @Transactional
+    public void clearWishlist(Customer customer, Game game) {
+
+        Wishlist wishlist = wishlistRepository.findWishlistByKey(new Wishlist.Key(game, customer));
+        if (wishlist == null) {
+            throw new IllegalArgumentException("Wishlist does not exist!");
+        }
+        wishlistRepository.deleteAll();
+    }
+    @Transactional
+    public Wishlist getWishlist(Game game, Customer customer) {
+        Wishlist wishlist = wishlistRepository.findWishlistByKey(new Wishlist.Key(game, customer));
+        if (wishlist == null) {
+            throw new IllegalArgumentException("Wishlist does not exist!");
+        }
+        return wishlist;
     }
 
 
