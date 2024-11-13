@@ -6,18 +6,20 @@ public class PersonDto {
     private int id;
     private String username;
     private String email;
-
+    private String password;
     public PersonDto() {
     }
-    public PersonDto(int id, String username, String email) {
+    public PersonDto(int id, String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.password = password;
     }
     public PersonDto(Person person){
         this.id = person.getId();
         this.username = person.getUsername();
         this.email = person.getEmail();
+        this.password = person.getPassword();
     }
     public int getPersonId() {
         return id;
@@ -36,5 +38,11 @@ public class PersonDto {
     }
     public void setPersonEmail(String email) {
         this.email = email;
+    }
+    public String getPersonPassword() {
+        return password;
+    }
+    public void setPersonPassword(String password) {
+        this.password = password;
     }
 }
