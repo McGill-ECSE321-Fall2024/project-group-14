@@ -1,24 +1,28 @@
 package ca.mcgill.ecse321_group14.GameShop.integration;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import ca.mcgill.ecse321_group14.GameShop.dto.GameListDtos;
 import ca.mcgill.ecse321_group14.GameShop.dto.GameRequestDto;
 import ca.mcgill.ecse321_group14.GameShop.dto.GameResponseDto;
+import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Manager;
 import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.PersonRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -31,6 +35,9 @@ public class GameIntegrationTests {
 
     @Autowired
     private GameRepository gameRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     private static final String name = "Mario";
     private static final String description = "A game about a plumber";
@@ -189,16 +196,53 @@ public class GameIntegrationTests {
 
     }
 
-//    @Test
-//    @Order(6)
-//    public void testDeleteGame() {
-//        //arrange
-//        Manager person = new Manager("pasword", "email", "Username");
-//        //act
-//        ResponseEntity<void> response = client.delete("/game", new GameRequestDto("Luigi", person));
-//
-//        // Assert
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//    }
+    @Test
+    @Order(6)
+    public void testDeleteGameValidPerson() {
+        // Arrange: Ensure the game and manager exist in the database
+        String gameName = "Luigi";
+        Manager person = new Manager("password", "email@gmail.com", "Username");
+        person = personRepository.save(person);  // Save to generate an ID
+        Integer personId = person.getId();
 
+        // Save the game in the database to ensure it exists before deletion
+        Game game = new Game(gameName, "A game about a plumber's brother", "Platformer", 70, 50, Game.Rating.R, "https://www.google.com");
+        gameRepository.save(game);
+
+        // Create the GameRequestDto with the game name and manager's ID
+        GameRequestDto gameRequestDto = new GameRequestDto(gameName, personId);
+
+        try{
+            client.delete("/game", gameRequestDto);
+        }catch (Exception e){
+            fail("Failed to delete game");
+        }
+
+    }
+    @Test
+    @Order(7)
+    public void testDeleteGameNotValidPerson() {
+        // Arrange: Ensure the game and manager exist in the database
+        String gameName = "Luigi";
+        Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
+        person = personRepository.save(person);  // Save to generate an ID
+        Integer personId = person.getId();
+
+        // Save the game in the database to ensure it exists before deletion
+        Game game = new Game(gameName, "A game about a plumber's brother", "Platformer", 70, 50, Game.Rating.R, "https://www.google.com");
+        gameRepository.save(game);
+
+        // Create the GameRequestDto with the game name and manager's ID
+        GameRequestDto gameRequestDto = new GameRequestDto(gameName, personId);
+
+        try{
+            client.delete("/game", gameRequestDto);
+        }catch (Exception e){
+            fail("Failed to delete game");
+        }
+
+
+
+
+}
 }
