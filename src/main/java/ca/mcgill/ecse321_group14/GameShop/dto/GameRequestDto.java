@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
+import ca.mcgill.ecse321_group14.GameShop.model.Person;
 
 
 public class GameRequestDto {
@@ -20,7 +21,14 @@ public class GameRequestDto {
 //    @NotNull(message = "Picture cannot be empty")
     private String picture;
 
+    private Person person;
+
     public GameRequestDto() {
+    }
+
+    public GameRequestDto(String name, Person person) {
+        this.name = name;
+        this.person = person;
     }
 
     public GameRequestDto(Integer id, String name, String description, String category, Integer price, Integer quantity, Game.Rating rating, String picture) {
@@ -42,6 +50,14 @@ public class GameRequestDto {
         this.quantity = quantity;
         this.rating = rating;
         this.picture = picture;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Person getPerson() {
+        return person;
     }
 
     public void setId(int id) {

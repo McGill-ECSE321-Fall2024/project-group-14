@@ -96,15 +96,6 @@ public class GameService {
         return game;
     }
 
-    @Transactional
-    public Game getGameById(int id){
-        Game game = gameRepository.findGameById(id);
-        if (game == null) {
-            throw new IllegalArgumentException("Game does not exist!");
-        }
-        return game;
-    }
-    
 
     @Transactional
     public List<Game> getAllGames(){
@@ -117,6 +108,9 @@ public class GameService {
 
     @Transactional
     public void deleteGame(String aName, Person person) {
+        if (!(person instanceof Employee || person instanceof Manager)) {
+            throw new IllegalArgumentException("Only Staff can delete games!");
+        }
         if (aName == null) {
             throw new IllegalArgumentException("Name cannot be null!");
         }
@@ -124,10 +118,8 @@ public class GameService {
         if (game == null) {
             throw new IllegalArgumentException("Game does not exist!");
         }
-        if (!(person instanceof Employee) || !(person instanceof Manager)){
-            throw new IllegalArgumentException("Only Staff can delete games!");
-        }
         gameRepository.deleteGameByName(aName);
     }
+
 }
 
