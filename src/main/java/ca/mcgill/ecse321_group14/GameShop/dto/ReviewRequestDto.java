@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Review.Ranking;
+import ca.mcgill.ecse321_group14.GameShop.model.Review;
+import ca.mcgill.ecse321_group14.GameShop.model.Customer; //is this allowed?
 
 public class ReviewRequestDto{
     private Ranking ranking;
@@ -22,17 +24,17 @@ public class ReviewRequestDto{
         Review review = new Review();
         review.setRanking(this.ranking);
         review.setDescription(this.description);
-        review.setCustomer(this.customerId);
-        review.setGame(this.gameId);
+        //TODO review.setCustomer(); FIX THIS 
+        //TODO Fix this review.setGame(this.gameId);
         return review; 
     }
 
-    public String getRanking() {
+    public Ranking getRanking() {
         return ranking;
     }
 
     public void setRanking(String ranking) {
-        this.ranking = Ranking(ranking);
+        this.ranking = Ranking.valueOf(ranking);
     }
 
     public String getDescription() {

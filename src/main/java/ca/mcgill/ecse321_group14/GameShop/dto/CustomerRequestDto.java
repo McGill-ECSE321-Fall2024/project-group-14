@@ -27,10 +27,7 @@ public class CustomerRequestDto {
         this.address = address;
     }
     
-    public Customer toModel(){
 
-    }
-    
     public CustomerRequestDto(Customer customer) {
         this.id = customer.getId();
         this.username = customer.getUsername();
