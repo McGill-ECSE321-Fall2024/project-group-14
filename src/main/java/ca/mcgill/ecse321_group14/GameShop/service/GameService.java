@@ -59,7 +59,7 @@ public class GameService {
      * @throws IllegalArgumentException if any field is null or invalid, or if the game does not exist
      */
     @Transactional
-    public Game updateGame(int id, String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Game.Rating aRating, String aPicture) {
+    public Game updateGameById(int id, String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Game.Rating aRating, String aPicture) {
         if (aName == null || aDescription == null || aCategory == null || aPrice < 0 || aQuantity < 0 || aRating == null || aPicture == null) {
             throw new IllegalArgumentException("All fields must be filled!");
         }
@@ -96,17 +96,6 @@ public class GameService {
         return game;
     }
 
-    @Transactional
-    public Game getGameByName(String aName){
-        if (aName == null) {
-            throw new IllegalArgumentException("Name cannot be null!");
-        }
-        Game game = gameRepository.findGameByName(aName);
-        if (game == null) {
-            throw new IllegalArgumentException("Game does not exist!");
-        }
-        return game;
-    }
 
     @Transactional
     public List<Game> getAllGames(){
@@ -119,6 +108,9 @@ public class GameService {
 
     @Transactional
     public void deleteGame(String aName, Person person) {
+        if (!(person instanceof Employee || person instanceof Manager)) {
+            throw new IllegalArgumentException("Only Staff can delete games!");
+        }
         if (aName == null) {
             throw new IllegalArgumentException("Name cannot be null!");
         }
@@ -126,10 +118,8 @@ public class GameService {
         if (game == null) {
             throw new IllegalArgumentException("Game does not exist!");
         }
-        if (!(person instanceof Employee) || !(person instanceof Manager)){
-            throw new IllegalArgumentException("Only Staff can delete games!");
-        }
         gameRepository.deleteGameByName(aName);
     }
+
 }
 
