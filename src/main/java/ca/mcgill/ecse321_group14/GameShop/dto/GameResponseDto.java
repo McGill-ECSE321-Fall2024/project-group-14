@@ -1,9 +1,12 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
+import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Game.Rating;
+import ca.mcgill.ecse321_group14.GameShop.model.Review;
+
 import java.util.List;
 
-public class GameDto {
+public class GameResponseDto {
 
     private int id;
     private String name;
@@ -14,24 +17,23 @@ public class GameDto {
     private Rating rating;
     private String picture;
     private Integer promotionId;
-    private List<Integer> reviewIds;
+    private List<Review> reviews;
 
     // Default constructor
-    public GameDto() {}
+    public GameResponseDto() {}
 
     // Parameterized constructor
-    public GameDto(int id, String name, String description, String category, int price, int quantity,
-                   Rating rating, String picture, Integer promotionId, List<Integer> reviewIds) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.price = price;
-        this.quantity = quantity;
-        this.rating = rating;
-        this.picture = picture;
-        this.promotionId = promotionId;
-        this.reviewIds = reviewIds;
+    public GameResponseDto(Game game) {
+        this.id = game.getId();
+        this.name = game.getName();
+        this.description = game.getDescription();
+        this.category = game.getCategory();
+        this.price = game.getPrice();
+        this.quantity = game.getQuantity();
+        this.rating = game.getRating();
+        this.picture = game.getPicture();
+        this.promotionId = (game.getPromotion() != null) ? game.getPromotion().getPromotionId() : null;
+        this.reviews = game.getReviews();
     }
 
     // Getters and Setters
@@ -107,13 +109,11 @@ public class GameDto {
         this.promotionId = promotionId;
     }
 
-    public List<Integer> getReviewIds() {
-        return reviewIds;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setReviewIds(List<Integer> reviewIds) {
-        this.reviewIds = reviewIds;
-    }
+
 
 
 }
