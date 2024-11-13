@@ -22,6 +22,7 @@ public class PersonRequestDto {
         this.email = person.getEmail();
         this.password = person.getPassword();
     }
+
     public int getPersonId() {
         return id;
     }
