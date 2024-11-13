@@ -17,7 +17,6 @@ public class Customer extends Person
 
   //Customer Attributes
 
-//TODO ALL OF THESE BC THEY CANT BE PRIVATAE
   private int cardNumber; 
   private Date cardExpiryDate;
   private String address;
