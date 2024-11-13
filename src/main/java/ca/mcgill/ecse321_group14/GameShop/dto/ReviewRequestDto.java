@@ -20,15 +20,6 @@ public class ReviewRequestDto{
         this.gameId = gameId;
     }
 
-    public Review toModel(){
-        Review review = new Review();
-        review.setRanking(this.ranking);
-        review.setDescription(this.description);
-        //TODO review.setCustomer(); FIX THIS 
-        //TODO Fix this review.setGame(this.gameId);
-        return review; 
-    }
-
     public Ranking getRanking() {
         return ranking;
     }

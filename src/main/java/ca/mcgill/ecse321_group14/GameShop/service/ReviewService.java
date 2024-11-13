@@ -22,17 +22,25 @@ public class ReviewService {
 
 
     @Transactional
-    public Review createReview(Review.Ranking aRanking, String aDescription, Customer aCustomer, Game aGame) {
-        String error = "";
-        if (customerRepository.findCustomerById(aCustomer.getId()) == null) {
-            error += "Customer does not exist!";
+    public Review createReview(Review.Ranking aRanking, String aDescription, int customerId, int gameId) {
+        if (aDescription == null || aDescription.trim().length() == 0) {
+            throw new IllegalArgumentException("Description cannot be empty!");
         }
-        if (gameRepository.findGameById(aGame.getId()) == null) {
-            error += "Game does not exist!";
+
+        if (aRanking == null) {
+            throw new IllegalArgumentException("Ranking cannot be empty!");
         }
-        if (!error.isEmpty()) {
-            throw new IllegalArgumentException(error);
+
+
+        Customer aCustomer = customerRepository.findCustomerById(customerId);
+        if (aCustomer == null) {
+            throw new IllegalArgumentException("Customer does not exist!");
         }
+        Game aGame = gameRepository.findGameById(gameId);
+        if (aGame == null) {
+            throw new IllegalArgumentException("Game does not exist!");
+        }
+
 
         Review review = new Review(aRanking, aDescription, aCustomer, aGame);
         reviewRepository.save(review);
@@ -57,22 +65,31 @@ public class ReviewService {
     }
 
     @Transactional
-    public Review updateReview(int id, Review.Ranking aRanking, String aDescription, Customer aCustomer, Game aGame) {
+    public Review updateReview(int id, Review.Ranking aRanking, String aDescription, int customerId, int gameId) {
         Review review = reviewRepository.findReviewById(id);
-        String error = "";
+
         if (review == null) {
-            error += "Review does not exist!";
+            throw new IllegalArgumentException("Review does not exist!");
         }
-        if (customerRepository.findCustomerById(aCustomer.getId()) == null) {
-            error += "Customer does not exist!";
+
+        Customer aCustomer = customerRepository.findCustomerById(customerId);
+        Game aGame = gameRepository.findGameById(gameId);
+        if (aRanking == null) {
+            throw new IllegalArgumentException("Ranking cannot be empty!");
         }
-        if (gameRepository.findGameById(aGame.getId()) == null) {
-            error += "Game does not exist!";
+        if (aDescription == null || aDescription.trim().length() == 0) {
+            throw new IllegalArgumentException("Description cannot be empty!");
         }
-        if (!error.isEmpty()) {
-            throw new IllegalArgumentException(error);
+
+        if (aCustomer == null) {
+            throw new IllegalArgumentException("Customer does not exist!");
         }
-        try{
+
+        if (aGame == null) {
+            throw new IllegalArgumentException("Game does not exist!");
+        }
+        
+        try {
             review.setRanking(aRanking);
             review.setDescription(aDescription);
             review.setCustomer(aCustomer);
@@ -80,7 +97,8 @@ public class ReviewService {
             reviewRepository.save(review);
             return review;
         } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage());
+            String errorMessage = "Error updating review: " + e.getMessage();
+            throw new IllegalArgumentException(errorMessage, e);
         }
 
     }
