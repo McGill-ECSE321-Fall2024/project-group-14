@@ -5,7 +5,7 @@ public class CustomerDto extends PersonDto{
     private String cardExpiryDate;
     private String address;
 
-    public CustomerDto() {
+    public CustomerDto(){
         //call super class
         super();
     }

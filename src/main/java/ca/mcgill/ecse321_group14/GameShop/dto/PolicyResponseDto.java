@@ -4,7 +4,7 @@ public class PolicyResponseDto {
     private int policyId;
     private String description;
 
-    public PolicyResponseDto() {
+    public PolicyResponseDto(){
     }
 
     public PolicyResponseDto(int policyId, String description) {

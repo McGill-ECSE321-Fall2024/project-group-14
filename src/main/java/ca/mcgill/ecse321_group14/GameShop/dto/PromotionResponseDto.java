@@ -2,7 +2,7 @@ package ca.mcgill.ecse321_group14.GameShop.dto;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Promotion;
 
-public class PromotionResponseDto {
+public class PromotionResponseDto{
     private int id;
     private String description;
     private int discount;

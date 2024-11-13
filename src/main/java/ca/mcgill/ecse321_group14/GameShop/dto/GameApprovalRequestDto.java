@@ -14,7 +14,7 @@ public class GameApprovalRequestDto {
     private Integer requestApproverId;
 
     // Default constructor
-    public GameApprovalRequestDto() {}
+    public GameApprovalRequestDto(){}
 
     // Parameterized constructor
     public GameApprovalRequestDto(int id, String name, String description, String category, String picture,

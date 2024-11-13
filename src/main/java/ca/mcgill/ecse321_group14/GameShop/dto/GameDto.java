@@ -17,7 +17,7 @@ public class GameDto {
     private List<Integer> reviewIds;
 
     // Default constructor
-    public GameDto() {}
+    public GameDto(){}
 
     // Parameterized constructor
     public GameDto(int id, String name, String description, String category, int price, int quantity,

@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
-public class WishlistDto {
+public class WishlistDto{
 
     private Integer gameId;
     private Integer customerId;

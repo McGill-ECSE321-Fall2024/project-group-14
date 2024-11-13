@@ -3,7 +3,7 @@ import java.util.List;
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
 
-public class OrderResponseDto {
+public class OrderResponseDto{
     private Long id;
     private String customerName;
     private List<String> gameTitles;

@@ -4,7 +4,7 @@ public class PolicyRequestDto {
     private String description;
 
     // Default constructor
-    public PolicyRequestDto() {
+    public PolicyRequestDto(){
     }
 
     // Parameterized constructor

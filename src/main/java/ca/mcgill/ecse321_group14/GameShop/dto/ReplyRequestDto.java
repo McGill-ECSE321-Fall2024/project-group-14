@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
-public class ReplyRequestDto {
+public class ReplyRequestDto{
     private String description;
     private int reviewId;
     private int managerId;

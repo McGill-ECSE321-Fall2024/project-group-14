@@ -6,7 +6,7 @@ public class PromotionRequestDto {
     private int gameId;
 
     // Default constructor
-    public PromotionRequestDto() {
+    public PromotionRequestDto(){
     }
 
     // Parameterized constructor

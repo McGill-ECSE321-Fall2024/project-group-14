@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
-public class ReviewRequestDto {
+public class ReviewRequestDto{
     private String ranking;
     private String description;
     private int customerId;
