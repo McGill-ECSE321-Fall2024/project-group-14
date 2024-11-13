@@ -24,7 +24,7 @@ public class EmployeeService {
         if (password == null || password.trim().length() == 0) {
             throw new IllegalArgumentException("Employee password cannot be empty.");
         }
-        Employee employee = new Employee(name, email, password);
+        Employee employee = new Employee(password, email, name);
         employeeRepository.save(employee);
         return employee;
     }
@@ -35,6 +35,9 @@ public class EmployeeService {
             throw new IllegalArgumentException("Employee email cannot be empty.");
         }
         Employee employee = employeeRepository.findEmployeeByEmail(email);
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee not found.");
+        }
         return employee;
     }
 
@@ -44,6 +47,9 @@ public class EmployeeService {
             throw new IllegalArgumentException("Employee id cannot be empty.");
         }
         Employee employee = employeeRepository.findEmployeeById(id);
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee not found.");
+        }
         return employee;
     }
 

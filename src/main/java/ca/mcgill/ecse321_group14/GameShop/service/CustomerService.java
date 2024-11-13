@@ -45,6 +45,9 @@ public class CustomerService {
             throw new IllegalArgumentException("Customer email cannot be empty.");
         }
         Customer customer = customerRepository.findCustomerByEmail(email);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer not found.");
+        }
         return customer;
     }
 
@@ -54,6 +57,9 @@ public class CustomerService {
             throw new IllegalArgumentException("Customer id cannot be empty.");
         }
         Customer customer = customerRepository.findCustomerById(id);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer not found.");
+        }
         return customer;
     }
 
