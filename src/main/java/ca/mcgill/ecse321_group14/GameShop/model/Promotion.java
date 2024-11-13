@@ -28,7 +28,7 @@ public class Promotion
   // CONSTRUCTOR
   //------------------------
 
-  protected Promotion() {}
+  public Promotion() {}
 
   public Promotion(String aDescription, int aDiscount, Game aGame)
   {

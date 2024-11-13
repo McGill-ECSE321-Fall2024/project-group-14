@@ -28,7 +28,7 @@ public class Customer extends Person
   //------------------------
 
   // Hibernate requires a default constructor
-  protected Customer() {}
+  public Customer() {}
 
   public Customer(String aPassword, String aEmail, String aUsername, int aCardNumber, Date aCardExpiryDate, String aAddress)
   {

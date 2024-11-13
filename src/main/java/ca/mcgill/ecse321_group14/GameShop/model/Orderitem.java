@@ -11,7 +11,7 @@ public class Orderitem {
     @EmbeddedId
     private Key key;
 
-    protected Orderitem () {}
+    public Orderitem () {}
 
     public Orderitem(Key key){
         this.key = key;

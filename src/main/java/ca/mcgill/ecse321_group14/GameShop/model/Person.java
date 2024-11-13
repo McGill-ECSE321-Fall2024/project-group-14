@@ -28,7 +28,7 @@ public abstract class Person
   // CONSTRUCTOR
   //------------------------
 
-  protected Person() {}
+  public Person() {}
 
   public Person(String aPassword, String aEmail, String aUsername)
   {

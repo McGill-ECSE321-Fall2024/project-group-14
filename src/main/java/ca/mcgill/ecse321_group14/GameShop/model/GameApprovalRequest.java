@@ -40,7 +40,7 @@ public class GameApprovalRequest
   //------------------------
 
   // Hibernate requires a default constructor
-  protected GameApprovalRequest() {}
+  public GameApprovalRequest() {}
 
   public GameApprovalRequest(String aName, String aDescription, String aCategory, String aPicture, Status aStatus, Employee aRequestCreator, Manager aRequestApprover)
   {

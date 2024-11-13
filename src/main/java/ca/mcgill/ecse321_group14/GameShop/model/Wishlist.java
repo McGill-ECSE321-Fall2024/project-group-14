@@ -14,7 +14,7 @@ public class Wishlist
     @EmbeddedId
     private Key key;
 
-    protected Wishlist () {}
+    public Wishlist () {}
 
     public Wishlist(Key key){
         this.key = key;

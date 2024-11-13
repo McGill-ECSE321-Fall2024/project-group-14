@@ -18,7 +18,7 @@ public class Manager extends Person
   //------------------------
 
   // Hibernate requires a default constructor
-  protected Manager() {}
+  public Manager() {}
 
   public Manager(String aPassword, String aEmail, String aUsername)
   {
