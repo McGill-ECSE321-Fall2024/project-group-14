@@ -1,24 +1,30 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
-public class PromotionDto {
+import ca.mcgill.ecse321_group14.GameShop.model.Promotion;
 
+public class PromotionResponseDto{
     private int id;
     private String description;
     private int discount;
-    private Integer gameId;
+    private int gameId;
 
-    // Default constructor
-    public PromotionDto() {}
+    public PromotionResponseDto() {
+    }
 
-    // Parameterized constructor
-    public PromotionDto(int id, String description, int discount, Integer gameId) {
+    public PromotionResponseDto(int id, String description, int discount, int gameId) {
         this.id = id;
         this.description = description;
         this.discount = discount;
         this.gameId = gameId;
     }
 
-    // Getters and Setters
+    public PromotionResponseDto(Promotion promotion) {
+        this.id = promotion.getPromotionId();
+        this.description = promotion.getDescription();
+        this.discount = promotion.getDiscount();
+        this.gameId = promotion.getGame().getId();
+    }
+
     public int getId() {
         return id;
     }
@@ -43,21 +49,11 @@ public class PromotionDto {
         this.discount = discount;
     }
 
-    public Integer getGameId() {
+    public int getGameId() {
         return gameId;
     }
 
-    public void setGameId(Integer gameId) {
+    public void setGameId(int gameId) {
         this.gameId = gameId;
-    }
-
-    @Override
-    public String toString() {
-        return "PromotionDTO{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", discount=" + discount +
-                ", gameId=" + gameId +
-                '}';
     }
 }

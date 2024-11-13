@@ -10,7 +10,6 @@ public class CustomerDto extends PersonDto{
     private String address;
 
     public CustomerDto() {
-        //call super class
         super();
     }
 
@@ -21,11 +20,17 @@ public class CustomerDto extends PersonDto{
         this.cardExpiryDate = cardExpiryDate;
         this.address = address;
     }
-    public CustomerDto(Customer customer) {
-        super(customer);
-        this.cardNumber = customer.getCardNumber();
-        this.cardExpiryDate = customer.getCardExpiryDate();
-        this.address = customer.getAddress();
+    
+    public Customer toModel(){
+        Customer customer = new Customer();
+        customer.setId(this.getId());
+        customer.setUsername(this.getUsername());
+        customer.setEmail(this.getEmail());
+        customer.setPassword(this.getPassword());
+        customer.setCardNumber(this.cardNumber);
+        customer.setCardExpiryDate(this.cardExpiryDate);
+        customer.setAddress(this.address);
+        return customer;
     }
 
 
