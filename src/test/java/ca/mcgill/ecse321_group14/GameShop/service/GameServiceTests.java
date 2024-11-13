@@ -14,6 +14,7 @@ import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Manager;
 import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.PersonRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,6 +31,8 @@ import org.springframework.http.HttpStatus;
 public class GameServiceTests {
     @Mock
     private GameRepository gameRepository;
+    @Mock
+    private PersonRepository personRepository;
     @InjectMocks
     private GameService gameService;
 
@@ -271,9 +274,16 @@ public class GameServiceTests {
         String gameName = "Mario";
         Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
 
+        // Mock saving the person without explicitly setting an ID
+        when(personRepository.save(person)).thenReturn(person);
+
+        personRepository.save(person);  // Save the person without setting an ID
+
+        Integer personId = person.getId();
+
         // Act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            gameService.deleteGame(gameName, person);
+            gameService.deleteGame(gameName, personId);
         });
 
         // Assert
@@ -283,24 +293,33 @@ public class GameServiceTests {
 
 
 
+
+
     @Test
     public void testDeleteGame() {
         // Arrange
         String gameName = "Mario";
         Manager person = new Manager("password", "email@gmail.com", "username");
 
+        // Save the person and retrieve the generated ID
+        when(personRepository.save(person)).thenReturn(person);
+        personRepository.save(person);
+        Integer personId = person.getId();  // The ID is generated here
+
         Game game = new Game(gameName, "A game about a plumber", "Platformer", 60, 100, Game.Rating.R, "https://www.google.com");
 
-        // Mock the behavior of findGameByName to return a game
+        // Mock the behavior of findGameByName and findPersonById to return the game and person
         when(gameRepository.findGameByName(gameName)).thenReturn(game);
+        when(personRepository.findPersonById(personId)).thenReturn(person);
 
         // Act
-        gameService.deleteGame(gameName, person);
+        gameService.deleteGame(gameName, personId);
 
         // Assert
         verify(gameRepository, times(1)).findGameByName(gameName);
         verify(gameRepository, times(1)).deleteGameByName(gameName);
     }
+
 
 
 }

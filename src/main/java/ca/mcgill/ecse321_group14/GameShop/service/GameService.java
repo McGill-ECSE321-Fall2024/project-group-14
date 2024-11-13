@@ -2,6 +2,7 @@ package ca.mcgill.ecse321_group14.GameShop.service;
 
 import java.util.List;
 
+import ca.mcgill.ecse321_group14.GameShop.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import jakarta.transaction.Transactional;
 public class GameService {
     @Autowired
     GameRepository gameRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     /**
      * createGame: creating a new game entry
@@ -107,7 +110,8 @@ public class GameService {
     }
 
     @Transactional
-    public void deleteGame(String aName, Person person) {
+    public void deleteGame(String aName, Integer personId) {
+        Person person = personRepository.findPersonById(personId);
         if (!(person instanceof Employee || person instanceof Manager)) {
             throw new IllegalArgumentException("Only Staff can delete games!");
         }
