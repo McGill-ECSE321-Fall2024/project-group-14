@@ -37,8 +37,8 @@ public class Review
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
-  protected Review() {}
+//TODO FIX THIS
+  public Review() {}
 
   public Review(Ranking aRanking, String aDescription, Customer aCustomer, Game aGame)
   {

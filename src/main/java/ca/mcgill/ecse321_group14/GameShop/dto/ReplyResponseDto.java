@@ -1,27 +1,25 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
+import ca.mcgill.ecse321_group14.GameShop.model.Reply;
 
 public class ReplyResponseDto {
     private Long id;
     private String message;
     private String author;
-    private String timestamp;
 
     public ReplyResponseDto() {
     }
 
-    public ReplyResponseDto(Long id, String message, String author, String timestamp) {
+    public ReplyResponseDto(Long id, String message, String author) {
         this.id = id;
         this.message = message;
         this.author = author;
-        this.timestamp = timestamp;
     }
 
-    public ReplyResponseDto(ca.mcgill.ecse321_group14.GameShop.model.Reply reply) {
+    public ReplyResponseDto(Reply reply) {
 
         this.id = (long) reply.getId();
         this.message = reply.getDescription();
         this.author = reply.getManager().getUsername();
-        this.timestamp = reply.getTimestamp();
     }
 
     public Long getId() {
@@ -46,13 +44,5 @@ public class ReplyResponseDto {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 }

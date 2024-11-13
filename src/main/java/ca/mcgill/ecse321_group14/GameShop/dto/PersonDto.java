@@ -3,10 +3,10 @@ package ca.mcgill.ecse321_group14.GameShop.dto;
 import ca.mcgill.ecse321_group14.GameShop.model.Person;
 
 public class PersonDto {
-    private int id;
-    private String username;
-    private String email;
-    private String password;
+    public int id;
+    public String username;
+    public String email;
+    public String password;
     public PersonDto() {
     }
     public PersonDto(int id, String username, String email, String password) {

@@ -13,6 +13,15 @@ public class CustomerDto extends PersonDto{
         super();
     }
 
+    public CustomerDto(Customer customer) {
+        this.id = customer.getId();
+        this.username = customer.getUsername();
+        this.email = customer.getEmail();
+        this.cardNumber = customer.getCardNumber();
+        this.cardExpiryDate = customer.getCardExpiryDate();
+        this.address = customer.getAddress();
+    }
+
     public CustomerDto(int id, String username, String email, String password, int cardNumber, Date cardExpiryDate, String address) {
         super(id, username, email, password);
         //customer has these extra fields
@@ -21,18 +30,6 @@ public class CustomerDto extends PersonDto{
         this.address = address;
     }
     
-    public Customer toModel(){
-        Customer customer = new Customer();
-        customer.setId(this.getId());
-        customer.setUsername(this.getUsername());
-        customer.setEmail(this.getEmail());
-        customer.setPassword(this.getPassword());
-        customer.setCardNumber(this.cardNumber);
-        customer.setCardExpiryDate(this.cardExpiryDate);
-        customer.setAddress(this.address);
-        return customer;
-    }
-
 
     public int getCardNumber() {
         return cardNumber;

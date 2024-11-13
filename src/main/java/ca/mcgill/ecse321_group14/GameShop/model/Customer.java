@@ -17,7 +17,8 @@ public class Customer extends Person
 
   //Customer Attributes
 
-  private int cardNumber;
+//TODO ALL OF THESE BC THEY CANT BE PRIVATAE
+  private int cardNumber; 
   private Date cardExpiryDate;
   private String address;
   
@@ -40,6 +41,7 @@ public class Customer extends Person
   //------------------------
   // INTERFACE
   //------------------------
+
 
   public boolean setCardNumber(int aCardNumber)
   {

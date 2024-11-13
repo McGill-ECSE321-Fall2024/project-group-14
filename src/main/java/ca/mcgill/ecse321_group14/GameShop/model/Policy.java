@@ -24,7 +24,8 @@ public class Policy
   //------------------------
 
   // Hibernate requires a default constructor
-  protected Policy() {}
+  //TODO FIX THIS 
+  public Policy() {}
 
   public Policy(String aDescription)
   {
