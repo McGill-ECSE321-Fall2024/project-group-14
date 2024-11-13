@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
+import ca.mcgill.ecse321_group14.GameShop.model.Wishlist;
+
 public class WishlistDto {
 
     private Integer gameId;
@@ -12,6 +14,10 @@ public class WishlistDto {
     public WishlistDto(Integer gameId, Integer customerId) {
         this.gameId = gameId;
         this.customerId = customerId;
+    }
+    public WishlistDto(Wishlist wishlist){
+        this.gameId = wishlist.getKey().getWish().getId();
+        this.customerId = wishlist.getKey().getBuyer().getId();
     }
 
     // Getters and Setters
