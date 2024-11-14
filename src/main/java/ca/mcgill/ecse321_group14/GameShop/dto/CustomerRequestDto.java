@@ -26,6 +26,14 @@ public class CustomerRequestDto {
         this.cardExpiryDate = cardExpiryDate;
         this.address = address;
     }
+    public CustomerRequestDto(String username, String email, String password, int cardNumber, Date cardExpiryDate, String address) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.cardNumber = cardNumber;
+        this.cardExpiryDate = cardExpiryDate;
+        this.address = address;
+    }
     
 
     public CustomerRequestDto(Customer customer) {

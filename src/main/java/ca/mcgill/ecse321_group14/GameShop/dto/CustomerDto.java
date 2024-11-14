@@ -29,6 +29,7 @@ public class CustomerDto extends PersonDto{
         this.cardExpiryDate = cardExpiryDate;
         this.address = address;
     }
+
     
 
     public int getCardNumber() {
