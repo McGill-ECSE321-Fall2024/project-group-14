@@ -64,7 +64,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer updateCustomer(String aPassword, String aEmail, String aUsername, int aCardNumber, Date aCardExpiryDate, String aAddress){
+    public Customer updateCustomer(int id, String aPassword, String aEmail, String aUsername, int aCardNumber, Date aCardExpiryDate, String aAddress){
         if (aPassword == null || aPassword.trim().length() == 0) {
             throw new IllegalArgumentException("Customer password cannot be empty.");
         }
@@ -83,7 +83,7 @@ public class CustomerService {
         if (aAddress == null || aAddress.trim().length() == 0) {
             throw new IllegalArgumentException("Customer address cannot be empty.");
         }
-        Customer customer = customerRepository.findCustomerByEmail(aEmail);
+        Customer customer = customerRepository.findCustomerById(id);
         customer.setPassword(aPassword);
         customer.setUsername(aUsername);
         customer.setCardNumber(aCardNumber);

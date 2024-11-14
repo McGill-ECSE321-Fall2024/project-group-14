@@ -2,7 +2,7 @@ package ca.mcgill.ecse321_group14.GameShop.dto;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class CustomerResponseDto {
     private int id;
