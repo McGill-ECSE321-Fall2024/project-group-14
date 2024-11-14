@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
-import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Order;
-import ca.mcgill.ecse321_group14.GameShop.model.Orderitem;
 import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.OrderRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.OrderitemRepository;
@@ -55,31 +53,6 @@ public class OrderService {
             throw new IllegalArgumentException("Order does not exist!");
         }
         orderRepository.deleteOrderById(id);
-    }
-    @Transactional
-    public void addOrderItemToOrder(int orderId,Game game) {
-        Order order = orderRepository.findOrderById(orderId);
-        if (order == null) {
-            throw new IllegalArgumentException("Order does not exist!");
-        }
-        Orderitem.Key key = new Orderitem.Key(game, order);
-        Orderitem orderitem = new Orderitem(key);
-        orderitemRepository.save(orderitem);
-        orderRepository.save(order);
-    }
-    @Transactional
-    public void deleteOrderItemFromOrder(int orderId, int orderItemId, Game game) {
-        Order order = orderRepository.findOrderById(orderId);
-        if (order == null) {
-            throw new IllegalArgumentException("Order does not exist!");
-        }
-        Orderitem.Key key = new Orderitem.Key(game, order);
-        Orderitem orderitem = orderitemRepository.findOrderitemByKey(key);
-        if (orderitem == null) {
-            throw new IllegalArgumentException("Orderitem does not exist!");
-        }
-        orderitemRepository.deleteOrderitemByKey(key);
-        orderRepository.save(order);
     }
 
 }

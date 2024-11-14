@@ -2,7 +2,10 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 // line 83 "model.ump"
 // line 178 "model.ump"
 @Entity
@@ -21,7 +24,7 @@ public class Promotion
   private int discount;
 
   //Promotion Associations
-  @OneToOne
+  @ManyToOne
   private Game game;
 
   //------------------------
@@ -34,11 +37,7 @@ public class Promotion
   {
     description = aDescription;
     discount = aDiscount;
-    boolean didAddGame = setGame(aGame);
-    if (!didAddGame)
-    {
-      throw new RuntimeException("Unable to create promotion due to game. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
+    this.game = aGame;
   }
 
   //------------------------
@@ -77,44 +76,20 @@ public class Promotion
     return game;
   }
   /* Code from template association_SetOneToOptionalOne */
-  public boolean setGame(Game aNewGame)
+  public void setGame(Game aNewGame)
   {
-    boolean wasSet = false;
-    if (aNewGame == null)
-    {
-      //Unable to setGame to null, as promotion must always be associated to a game
-      return wasSet;
-    }
-    
-    Promotion existingPromotion = aNewGame.getPromotion();
-    if (existingPromotion != null && !equals(existingPromotion))
-    {
-      //Unable to setGame, the current game already has a promotion, which would be orphaned if it were re-assigned
-      return wasSet;
-    }
-    
-    Game anOldGame = game;
-    game = aNewGame;
-    game.setPromotion(this);
-
-    if (anOldGame != null)
-    {
-      anOldGame.setPromotion(null);
-    }
-    wasSet = true;
-    return wasSet;
+    this.game = aNewGame;
   }
 
   public void delete()
   {
-    Game existingGame = game;
-    game = null;
-    if (existingGame != null)
-    {
-      existingGame.setPromotion(null);
-    }
+    this.game = null;
   }
 
+  public int getId()
+  {
+    return id;
+  }
 
   public String toString()
   {

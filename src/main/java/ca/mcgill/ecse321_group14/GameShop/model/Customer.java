@@ -1,8 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 package ca.mcgill.ecse321_group14.GameShop.model;
-import jakarta.persistence.*;
 import java.sql.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 // line 15 "model.ump"
 // line 126 "model.ump"

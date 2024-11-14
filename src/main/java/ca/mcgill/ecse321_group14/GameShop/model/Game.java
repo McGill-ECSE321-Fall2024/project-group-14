@@ -37,8 +37,6 @@ public class Game
   private String picture;
 
   //Game Associations
-  @OneToOne(optional = true)
-  private Promotion promotion;
   @OneToMany
   private List<Review> reviews;
 
@@ -162,17 +160,7 @@ public class Game
     return picture;
   }
  
-  /* Code from template association_GetOne */
-  public Promotion getPromotion()
-  {
-    return promotion;
-  }
 
-  public boolean hasPromotion()
-  {
-    boolean has = promotion != null;
-    return has;
-  }
   /* Code from template association_GetMany */
   public Review getReview(int index)
   {
@@ -205,33 +193,7 @@ public class Game
   }
   /* Code from template association_GetMany */
 
-  /* Code from template association_SetOptionalOneToOne */
-  public boolean setPromotion(Promotion aNewPromotion)
-  {
-    boolean wasSet = false;
-    if (promotion != null && !promotion.equals(aNewPromotion) && equals(promotion.getGame()))
-    {
-      //Unable to setPromotion, as existing promotion would become an orphan
-      return wasSet;
-    }
 
-    promotion = aNewPromotion;
-    Game anOldGame = aNewPromotion != null ? aNewPromotion.getGame() : null;
-
-    if (!this.equals(anOldGame))
-    {
-      if (anOldGame != null)
-      {
-        anOldGame.promotion = null;
-      }
-      if (promotion != null)
-      {
-        promotion.setGame(this);
-      }
-    }
-    wasSet = true;
-    return wasSet;
-  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfReviews()
   {
@@ -308,13 +270,6 @@ public class Game
 
   public void delete()
   {
-    Promotion existingPromotion = promotion;
-    promotion = null;
-    if (existingPromotion != null)
-    {
-      existingPromotion.delete();
-      existingPromotion.setGame(null);
-    }
     while (reviews.size() > 0)
     {
       Review aReview = reviews.get(reviews.size() - 1);
@@ -336,8 +291,7 @@ public class Game
             "quantity" + ":" + getQuantity()+ "," +
             "picture" + ":" + getPicture()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "rating" + "=" + (getRating() != null ? !getRating().equals(this)  ? getRating().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + System.getProperties().getProperty("line.separator") +
-            "  " + "promotion = "+(getPromotion()!=null?Integer.toHexString(System.identityHashCode(getPromotion())):"null");
+            "  " + System.getProperties().getProperty("line.separator");
   }
 
   @Override

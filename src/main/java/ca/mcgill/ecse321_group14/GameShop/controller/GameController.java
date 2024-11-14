@@ -47,6 +47,6 @@ public class GameController {
 
     @DeleteMapping("/game")
     public void deleteGame(@RequestBody GameRequestDto gameRequestDto) {
-        gameService.deleteGame(gameRequestDto.getName(), gameRequestDto.getPerson());
+        gameService.deleteGame(gameRequestDto.getName(), gameRequestDto.getPersonId());
     }
 }

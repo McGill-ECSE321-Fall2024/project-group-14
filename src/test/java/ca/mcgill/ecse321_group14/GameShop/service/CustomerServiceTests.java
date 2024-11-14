@@ -537,4 +537,20 @@ public class CustomerServiceTests {
         assertFalse(loggedInCustomer);
         verify(customerRepository, times(1)).findCustomerByEmail(email);
     }
+    @Test
+    public void testLoginCustomerIncorrectEmail() {
+        String email = "email";
+        String password = "password";
+        Customer customer = new Customer("password", "email1", "username", 123456789, new Date(2021, 12, 31), "address");
+        when(customerRepository.findCustomerByEmail(email)).thenReturn(customer);
+
+        // Act
+        Boolean loggedInCustomer = customerService.loginCustomer(email, password);
+
+        // Assert
+        assertNotNull(loggedInCustomer);
+        assertFalse(loggedInCustomer);
+        verify(customerRepository, times(1)).findCustomerByEmail(email);
+    }
+
 }

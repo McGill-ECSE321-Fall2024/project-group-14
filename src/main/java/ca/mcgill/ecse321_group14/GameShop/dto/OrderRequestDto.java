@@ -14,5 +14,13 @@ public class OrderRequestDto {
         this.customerId = customerId;
     }
 
+    public OrderRequestDto() {
+    }
+
+    public OrderRequestDto(int customerId) {
+        this.customerId = customerId;
+    }
+
+    
 
 }

@@ -38,7 +38,7 @@ public class GameApprovalService {
             throw new IllegalArgumentException("Game request approver cannot be empty!");
         }
         GameApprovalRequest gameApprovalRequest = new GameApprovalRequest(aName, aDescription, aCategory, aPicture, aStatus, aRequestCreator, aRequestApprover);
-        return gameApprovalRequest;
+        return gameApprovalRequestRepository.save(gameApprovalRequest);
     }
 
     @Transactional
@@ -84,7 +84,7 @@ public class GameApprovalService {
         gameApprovalRequest.setStatus(aStatus);
         gameApprovalRequest.setRequestCreator(aRequestCreator);
         gameApprovalRequest.setRequestApprover(aRequestApprover);
-        return gameApprovalRequest;
+        return gameApprovalRequestRepository.save(gameApprovalRequest);
     }
 
     @Transactional
