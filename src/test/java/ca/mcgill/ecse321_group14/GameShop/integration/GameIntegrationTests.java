@@ -38,13 +38,13 @@ public class GameIntegrationTests {
     @Autowired
     private PersonRepository personRepository;
 
-    private static final String name = "Mario";
-    private static final String description = "A game about a plumber";
-    private static final String category = "Platformer";
-    private static final int price = 60;
-    private static final int quantity = 100;
-    private static final Game.Rating rating = Game.Rating.R;
-    private static final String picture = "https://www.google.com";
+    private static final String Name = "Mario";
+    private static final String Description = "A game about a plumber";
+    private static final String Category = "Platformer";
+    private static final int Price = 60;
+    private static final int Quantity = 100;
+    private static final Game.Rating Rating = Game.Rating.R;
+    private static final String Picture = "https://www.google.com";
     private int gameId;
 
 
@@ -58,7 +58,7 @@ public class GameIntegrationTests {
     @Order(1)
     public void testCreateValidGame() {
         // Arrange
-        ResponseEntity<GameResponseDto> response = client.postForEntity("/game", new GameRequestDto(name, description, category, price, quantity, rating, picture), GameResponseDto.class);
+        ResponseEntity<GameResponseDto> response = client.postForEntity("/game", new GameRequestDto(Name, Description, Category, Price, Quantity, Rating, Picture), GameResponseDto.class);
 
         // Act
         GameResponseDto createdGame = response.getBody();
@@ -66,13 +66,13 @@ public class GameIntegrationTests {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(createdGame);
-        assertEquals(name, createdGame.getName());
-        assertEquals(description, createdGame.getDescription());
-        assertEquals(category, createdGame.getCategory());
-        assertEquals(price, createdGame.getPrice());
-        assertEquals(quantity, createdGame.getQuantity());
-        assertEquals(rating, createdGame.getRating());
-        assertEquals(picture, createdGame.getPicture());
+        assertEquals(Name, createdGame.getName());
+        assertEquals(Description, createdGame.getDescription());
+        assertEquals(Category, createdGame.getCategory());
+        assertEquals(Price, createdGame.getPrice());
+        assertEquals(Quantity, createdGame.getQuantity());
+        assertEquals(Rating, createdGame.getRating());
+        assertEquals(Picture, createdGame.getPicture());
         this.gameId = response.getBody().getId();
     }
 
@@ -118,13 +118,13 @@ public class GameIntegrationTests {
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(this.gameId, response.getBody().getId());
-        assertEquals(name, response.getBody().getName());
-        assertEquals(description, response.getBody().getDescription());
-        assertEquals(category, response.getBody().getCategory());
-        assertEquals(price, response.getBody().getPrice());
-        assertEquals(quantity, response.getBody().getQuantity());
-        assertEquals(rating, response.getBody().getRating());
-        assertEquals(picture, response.getBody().getPicture());
+        assertEquals(Name, response.getBody().getName());
+        assertEquals(Description, response.getBody().getDescription());
+        assertEquals(Category, response.getBody().getCategory());
+        assertEquals(Price, response.getBody().getPrice());
+        assertEquals(Quantity, response.getBody().getQuantity());
+        assertEquals(Rating, response.getBody().getRating());
+        assertEquals(Picture, response.getBody().getPicture());
 
 
 
@@ -148,13 +148,13 @@ public class GameIntegrationTests {
         // Verify details of the first game in the list
         GameResponseDto firstGame = gameListDtos.getGames().get(0);
         assertNotNull(firstGame);
-        assertEquals(name, firstGame.getName());
-        assertEquals(description, firstGame.getDescription());
-        assertEquals(category, firstGame.getCategory());
-        assertEquals(price, firstGame.getPrice());
-        assertEquals(quantity, firstGame.getQuantity());
-        assertEquals(rating, firstGame.getRating());
-        assertEquals(picture, firstGame.getPicture());
+        assertEquals(Name, firstGame.getName());
+        assertEquals(Description, firstGame.getDescription());
+        assertEquals(Category, firstGame.getCategory());
+        assertEquals(Price, firstGame.getPrice());
+        assertEquals(Quantity, firstGame.getQuantity());
+        assertEquals(Rating, firstGame.getRating());
+        assertEquals(Picture, firstGame.getPicture());
 
         // Verify details of the second game in the list
         GameResponseDto secondGame = gameListDtos.getGames().get(1);
