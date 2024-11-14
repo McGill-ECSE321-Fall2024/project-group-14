@@ -215,6 +215,97 @@ public class GameServiceTests {
     }
 
     @Test
+    public void testUpdateGameByValidId(){
+        //arrange
+        int id = 42;
+        String name = "Mario";
+        String description = "A game about a plumber";
+        String category = "Platformer";
+        int price = 60;
+        int quantity = 100;
+        Game.Rating rating = Game.Rating.R;
+        String picture = "https://www.google.com";
+        Game game = new Game(name, description, category, price, quantity, rating, picture);
+        when(gameRepository.findGameById(id)).thenReturn(game);
+        when(gameRepository.save(any())).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
+
+        String newName = "Luigi";
+        String newDescription = "A game about a plumber's brother";
+        String newCategory = "Platformer";
+        int newPrice = 70;
+        int newQuantity = 50;
+        Game.Rating newRating = Game.Rating.R;
+        String newPicture = "https://www.google.com";
+        //act
+        Game updatedGame = gameService.updateGameById(id, newName, newDescription, newCategory, newPrice, newQuantity, newRating, newPicture);
+
+        //assert
+        assertNotNull(updatedGame);
+        assertEquals(newName, updatedGame.getName());
+        assertEquals(newDescription, updatedGame.getDescription());
+        assertEquals(newCategory, updatedGame.getCategory());
+        assertEquals(newPrice, updatedGame.getPrice());
+        assertEquals(newQuantity, updatedGame.getQuantity());
+        assertEquals(newRating, updatedGame.getRating());
+        assertEquals(newPicture, updatedGame.getPicture());
+        verify(gameRepository, times(1)).findGameById(id);
+        verify(gameRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void testUpdateGameByInvalidNegativeId() {
+        // Arrange
+        int id = -1;
+        String name = "Mario";
+        String description = "A game about a plumber";
+        String category = "Platformer";
+        int price = 60;
+        int quantity = 100;
+        Game.Rating rating = Game.Rating.R;
+        String picture = "https://www.google.com";
+
+        // Act
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            gameService.updateGameById(id, name, description, category, price, quantity, rating, picture);
+        });
+
+        // Assert
+        assertEquals("ID cannot be negative!", exception.getMessage());
+        verify(gameRepository, times(0)).findGameById(id); // Ensure repository is not called
+    }
+
+    @Test
+    public void testUpdateGameByInvalidId(){
+        //arrange
+        int id = 42;
+        String name = "Mario";
+        String description = "A game about a plumber";
+        String category = "Platformer";
+        int price = 60;
+        int quantity = 100;
+        Game.Rating rating = Game.Rating.R;
+        String picture = "https://www.google.com";
+        when(gameRepository.findGameById(id)).thenReturn(null);
+
+        String newName = "Luigi";
+        String newDescription = "A game about a plumber's brother";
+        String newCategory = "Platformer";
+        int newPrice = 70;
+        int newQuantity = 50;
+        Game.Rating newRating = Game.Rating.R;
+        String newPicture = "https://www.google.com";
+        //act
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            gameService.updateGameById(id, newName, newDescription, newCategory, newPrice, newQuantity, newRating, newPicture);
+        });
+
+        //assert
+        assertEquals("Game does not exist!", exception.getMessage());
+        verify(gameRepository, times(1)).findGameById(id);
+        verify(gameRepository, times(0)).save(any());
+    }
+
+    @Test
     public void testFindGameByValidId(){
         //arrange
         int id = 42;
@@ -290,6 +381,31 @@ public class GameServiceTests {
         assertEquals("Only Staff can delete games!", exception.getMessage());
         verify(gameRepository, times(0)).deleteGameByName(gameName); // Ensure deletion doesn't happen
     }
+
+    @Test
+    public void testDeleteGameNullName() {
+        // Arrange
+        String gameName = null;
+        Manager person = new Manager("password", "email@gmail.com", "username");
+
+        // Mock saving the person and retrieving the generated ID
+        when(personRepository.save(person)).thenReturn(person);
+        personRepository.save(person);
+        Integer personId = person.getId();
+
+        when(personRepository.findPersonById(personId)).thenReturn(person);
+
+        // Act & Assert
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            gameService.deleteGame(gameName, person.getId());
+        });
+
+        assertEquals("Name cannot be null!", exception.getMessage());
+
+
+    }
+
+
 
 
 

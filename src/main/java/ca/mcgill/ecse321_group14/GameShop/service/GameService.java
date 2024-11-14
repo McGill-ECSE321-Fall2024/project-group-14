@@ -63,9 +63,13 @@ public class GameService {
      */
     @Transactional
     public Game updateGameById(int id, String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Game.Rating aRating, String aPicture) {
+        if (id < 0) {
+            throw new IllegalArgumentException("ID cannot be negative!");
+        }
         if (aName == null || aDescription == null || aCategory == null || aPrice < 0 || aQuantity < 0 || aRating == null || aPicture == null) {
             throw new IllegalArgumentException("All fields must be filled!");
         }
+
         Game game = gameRepository.findGameById(id);
         if (game == null) {
             throw new IllegalArgumentException("Game does not exist!");
