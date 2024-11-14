@@ -1,20 +1,23 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
 
-import ca.mcgill.ecse321_group14.GameShop.model.Employee;
-import ca.mcgill.ecse321_group14.GameShop.model.GameApprovalRequest;
-import ca.mcgill.ecse321_group14.GameShop.model.Manager;
-import ca.mcgill.ecse321_group14.GameShop.model.GameApprovalRequest.Status;
-import ca.mcgill.ecse321_group14.GameShop.repository.GameApprovalRequestRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import ca.mcgill.ecse321_group14.GameShop.model.Employee;
+import ca.mcgill.ecse321_group14.GameShop.model.GameApprovalRequest;
+import ca.mcgill.ecse321_group14.GameShop.model.GameApprovalRequest.Status;
+import ca.mcgill.ecse321_group14.GameShop.model.Manager;
+import ca.mcgill.ecse321_group14.GameShop.repository.GameApprovalRequestRepository;
 
 @SpringBootTest
 public class GameApprovalServiceTests {

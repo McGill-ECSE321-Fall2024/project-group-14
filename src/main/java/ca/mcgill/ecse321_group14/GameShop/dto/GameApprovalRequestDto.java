@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
 import ca.mcgill.ecse321_group14.GameShop.model.GameApprovalRequest.Status;
-
 public class GameApprovalRequestDto {
 
     private int id;
@@ -20,6 +19,17 @@ public class GameApprovalRequestDto {
     public GameApprovalRequestDto(int id, String name, String description, String category, String picture,
                                   Status status, Integer requestCreatorId, Integer requestApproverId) {
         this.id = id;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.picture = picture;
+        this.status = status;
+        this.requestCreatorId = requestCreatorId;
+        this.requestApproverId = requestApproverId;
+    }
+
+    public GameApprovalRequestDto(String name, String description, String category, String picture,
+                                  Status status, Integer requestCreatorId, Integer requestApproverId) {
         this.name = name;
         this.description = description;
         this.category = category;
