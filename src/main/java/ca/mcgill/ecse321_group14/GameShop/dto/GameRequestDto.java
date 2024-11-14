@@ -21,14 +21,14 @@ public class GameRequestDto {
 //    @NotNull(message = "Picture cannot be empty")
     private String picture;
 
-    private Person person;
+    private Integer personId;
 
     public GameRequestDto() {
     }
 
-    public GameRequestDto(String name, Person person) {
+    public GameRequestDto(String name, Integer personId) {
         this.name = name;
-        this.person = person;
+        this.personId = personId;
     }
 
     public GameRequestDto(Integer id, String name, String description, String category, Integer price, Integer quantity, Game.Rating rating, String picture) {
@@ -52,12 +52,12 @@ public class GameRequestDto {
         this.picture = picture;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
-    public Person getPerson() {
-        return person;
+    public Integer getPersonId() {
+        return personId;
     }
 
     public void setId(int id) {
