@@ -13,6 +13,9 @@ public class PolicyService {
 
     @Transactional
     public void deletePolicy(int id) {
+        if (id < 0) {
+            throw new IllegalArgumentException("Policy ID cannot be negative!");
+        }
         if (!policyRepository.existsById(id)) {
             throw new IllegalArgumentException("Policy does not exist!");
         }
@@ -33,6 +36,9 @@ public class PolicyService {
         Policy policy = policyRepository.findPolicyByPolicyId(id);
         if (policy == null) {
             throw new IllegalArgumentException("Policy does not exist!");
+        }
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be empty.");
         }
         try {
             policy.setDescription(description);
