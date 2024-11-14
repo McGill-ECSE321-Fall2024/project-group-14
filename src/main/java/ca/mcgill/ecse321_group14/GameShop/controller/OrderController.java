@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321_group14.GameShop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,20 +45,18 @@ public class OrderController {
         return new OrderResponseDto(order);
     }
 
-    /**
-     * Delete an order by id
-     * 
-     * @param id
-     */
-    @GetMapping("/order/delete/{id}")
-    public void deleteOrder(@PathVariable int id) {
+  
+    @DeleteMapping("/order/{id}")
+    public OrderResponseDto deleteOrder(@PathVariable int id) {
+        Order order = orderService.getOrder(id);
         orderService.deleteOrder(id);
+        return new OrderResponseDto(order);
     }
 
     /**
      * Delete all orders
      */
-    @GetMapping("/order/deleteAll")
+    @DeleteMapping("/order/deleteAll")
     public void deleteAllOrders() {
         orderService.deleteAllOrders();
     }
@@ -65,3 +64,4 @@ public class OrderController {
     
 
 }
+

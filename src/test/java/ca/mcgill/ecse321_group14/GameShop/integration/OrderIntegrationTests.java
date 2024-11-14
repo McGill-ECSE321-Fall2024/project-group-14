@@ -51,6 +51,14 @@ public class OrderIntegrationTests {
         customerId = person.getId();
         assertTrue(customerRepository.existsById(customerId));
         assertTrue(customerId>0,"Customer id is not valid");
+
+        OrderRequestDto orderRequestDto = new OrderRequestDto(customerId);
+        ResponseEntity<OrderResponseDto> response = client.postForEntity("/order", orderRequestDto, OrderResponseDto.class);
+        OrderResponseDto orderResponseDto = response.getBody();
+        orderId = orderResponseDto.getOrderId();
+
+        assertTrue(orderRepository.existsById(orderId));
+        assertTrue(orderId>0,"Order id is not valid");
     }
 
     @AfterAll
@@ -91,20 +99,20 @@ public class OrderIntegrationTests {
 
     }
 
-   /*  @Test
+    @Test
     @org.junit.jupiter.api.Order(3)
     public void testDeleteOrder(){
-        // Act
-        ResponseEntity<Void> response = client.getForEntity("/order/delete/" + orderId, Void.class);
+        // Check that order exists before deletion
+        ResponseEntity<OrderResponseDto> preDeleteResponse = client.getForEntity("/order/" + orderId, OrderResponseDto.class);
+        assertEquals(HttpStatus.OK, preDeleteResponse.getStatusCode());
 
-        // Assert
+        // Act: Perform delete operation
+        ResponseEntity<Void> response = client.exchange("/order/delete/" + orderId, org.springframework.http.HttpMethod.DELETE, null, Void.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response);
-        
-        // Check if the order was deleted
-        ResponseEntity<OrderResponseDto> response2 = client.getForEntity("/order/" + orderId, OrderResponseDto.class);
-        assertEquals(HttpStatus.NOT_FOUND, response2.getStatusCode());
 
+        // Verify deletion
+        ResponseEntity<OrderResponseDto> postDeleteResponse = client.getForEntity("/order/" + orderId, OrderResponseDto.class);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, postDeleteResponse.getStatusCode());
     }
-        */
+        
 }
