@@ -27,7 +27,7 @@ public class PolicyIntegrationTests {
     private TestRestTemplate client;
     @Autowired
     private PolicyRepository policyRepository;
-    private static final String description = "Policy description";
+    private static final String Description = "Policy description";
 
 
     @AfterAll
@@ -39,7 +39,7 @@ public class PolicyIntegrationTests {
     @Order(1)
     public void testCreateValidPolicy() {
         // Arrange
-        ResponseEntity<PolicyResponseDto> response = client.postForEntity("/policy", new PolicyRequestDto(description), PolicyResponseDto.class);
+        ResponseEntity<PolicyResponseDto> response = client.postForEntity("/policy", new PolicyRequestDto(Description), PolicyResponseDto.class);
 
         // Act
         PolicyResponseDto createdPolicy = response.getBody();
@@ -47,7 +47,7 @@ public class PolicyIntegrationTests {
         // Assert
         assertNotNull(createdPolicy);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(description, createdPolicy.getDescription());
+        assertEquals(Description, createdPolicy.getDescription());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class PolicyIntegrationTests {
     @Order(3)
     public void testGetPolicy() {
         // Arrange
-        ResponseEntity<PolicyResponseDto> response = client.postForEntity("/policy", new PolicyRequestDto(description), PolicyResponseDto.class);
+        ResponseEntity<PolicyResponseDto> response = client.postForEntity("/policy", new PolicyRequestDto(Description), PolicyResponseDto.class);
         PolicyResponseDto createdPolicy = response.getBody();
 
         // Act
@@ -75,7 +75,7 @@ public class PolicyIntegrationTests {
         // Assert
         assertNotNull(getResponse);
         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
-        assertEquals(description, getResponse.getBody().getDescription());
+        assertEquals(Description, getResponse.getBody().getDescription());
     }
 
     @Test
@@ -147,7 +147,7 @@ public class PolicyIntegrationTests {
     @Order(8)
     public void testDeletePolicy() {
         // Arrange
-        ResponseEntity<PolicyResponseDto> createResponse = client.postForEntity("/policy", new PolicyRequestDto(description), PolicyResponseDto.class);
+        ResponseEntity<PolicyResponseDto> createResponse = client.postForEntity("/policy", new PolicyRequestDto(Description), PolicyResponseDto.class);
         PolicyResponseDto createdPolicy = createResponse.getBody();
         assertNotNull(createdPolicy);
         Integer foundPolicyId = createdPolicy.getPolicyId();
