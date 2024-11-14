@@ -271,13 +271,13 @@ public class CustomerServiceTests {
         int cardNumber = 123456789;
         Date cardExpiryDate = new Date(2021, 12, 31);
         String address = "address";
+        int id = 1;
         Customer customer = new Customer("password", "email", "username", 123456789, new Date(2021, 12, 31), "address");
-        when(customerRepository.findCustomerByEmail(customer.getEmail())).thenReturn(customer);
+        when(customerRepository.findCustomerById(id)).thenReturn(customer);
         when(customerRepository.save(any())).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
 
-
         //act
-        Customer updatedCustomer = customerService.updateCustomer(password, email, username, cardNumber, cardExpiryDate, address);
+        Customer updatedCustomer = customerService.updateCustomer(id,password, email, username, cardNumber, cardExpiryDate, address);
 
         //assert
         assertNotNull(updatedCustomer);
@@ -288,7 +288,7 @@ public class CustomerServiceTests {
         assertEquals(cardExpiryDate, updatedCustomer.getCardExpiryDate());
         assertEquals(address, updatedCustomer.getAddress());
         verify(customerRepository, times(1)).save(any());
-        verify(customerRepository, times(1)).findCustomerByEmail(customer.getEmail());
+        verify(customerRepository, times(1)).findCustomerById(id);
     }
 
     @Test
@@ -299,11 +299,12 @@ public class CustomerServiceTests {
         int cardNumber = 123456789;
         Date cardExpiryDate = new Date(2021, 12, 31);
         String address = "address";
+        int id = 1;
 
 
         // Act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerService.updateCustomer(password, email, username, cardNumber, cardExpiryDate, address);
+            customerService.updateCustomer(id,password, email, username, cardNumber, cardExpiryDate, address);
         });
 
         // Assert
@@ -319,11 +320,12 @@ public class CustomerServiceTests {
         int cardNumber = 123456789;
         Date cardExpiryDate = new Date(2021, 12, 31);
         String address = "address";
+        int id = 1;
 
 
         // Act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerService.updateCustomer(password, email, username, cardNumber, cardExpiryDate, address);
+            customerService.updateCustomer(id,password, email, username, cardNumber, cardExpiryDate, address);
         });
 
         // Assert
@@ -339,11 +341,12 @@ public class CustomerServiceTests {
         int cardNumber = 123456789;
         Date cardExpiryDate = new Date(2021, 12, 31);
         String address = "address";
+        int id = 1;
 
 
         // Act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerService.updateCustomer(password, email, username, cardNumber, cardExpiryDate, address);
+            customerService.updateCustomer(id,password, email, username, cardNumber, cardExpiryDate, address);
         });
 
         // Assert
@@ -359,11 +362,12 @@ public class CustomerServiceTests {
         int cardNumber = 0;
         Date cardExpiryDate = new Date(2021, 12, 31);
         String address = "address";
+        int id = 1;
 
 
         // Act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerService.updateCustomer(password, email, username, cardNumber, cardExpiryDate, address);
+            customerService.updateCustomer(id,password, email, username, cardNumber, cardExpiryDate, address);
         });
 
         // Assert
@@ -378,11 +382,12 @@ public class CustomerServiceTests {
         int cardNumber = 123456789;
         Date cardExpiryDate = null;
         String address = "address";
+        int id = 1;
 
 
         // Act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerService.updateCustomer(password, email, username, cardNumber, cardExpiryDate, address);
+            customerService.updateCustomer(id,password, email, username, cardNumber, cardExpiryDate, address);
         });
 
         // Assert
@@ -397,11 +402,12 @@ public class CustomerServiceTests {
         int cardNumber = 123456789;
         Date cardExpiryDate = new Date(2021, 12, 31);
         String address = null;
+        int id = 1;
 
 
         // Act
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerService.updateCustomer(password, email, username, cardNumber, cardExpiryDate, address);
+            customerService.updateCustomer(id,password, email, username, cardNumber, cardExpiryDate, address);
         });
 
         // Assert

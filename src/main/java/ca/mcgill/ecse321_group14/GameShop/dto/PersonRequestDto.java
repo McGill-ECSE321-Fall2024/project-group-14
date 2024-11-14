@@ -16,6 +16,11 @@ public class PersonRequestDto {
         this.email = email;
         this.password = password;
     }
+    public PersonRequestDto(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
     public PersonRequestDto(Person person){
         this.id = person.getId();
         this.username = person.getUsername();

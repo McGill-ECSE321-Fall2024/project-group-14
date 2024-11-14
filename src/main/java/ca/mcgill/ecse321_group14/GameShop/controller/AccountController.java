@@ -14,6 +14,9 @@ import ca.mcgill.ecse321_group14.GameShop.service.CustomerService;
 import ca.mcgill.ecse321_group14.GameShop.service.ManagerService;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AccountController {
@@ -29,6 +32,9 @@ public class AccountController {
         int id;
         try{
             id = Integer.parseInt(pid);
+            if (id == 0){
+                return new ResponseEntity<>(new CustomerDto(), HttpStatus.BAD_REQUEST);
+            }
         } catch (NumberFormatException e){
             return new ResponseEntity<>(new CustomerDto(), HttpStatus.BAD_REQUEST);
         }
@@ -45,6 +51,9 @@ public class AccountController {
         int id;
         try{
             id = Integer.parseInt(pid);
+            if (id == 0){
+                return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
+            }
         } catch (NumberFormatException e){
             return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
         }
@@ -61,6 +70,9 @@ public class AccountController {
         int id;
         try{
             id = Integer.parseInt(pid);
+            if (id == 0){
+                return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
+            }
         } catch (NumberFormatException e){
             return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
         }
@@ -77,9 +89,9 @@ public class AccountController {
     public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody CustomerRequestDto customerToCreate) {
         try {
             Customer createdCustomer = customerService.createCustomer(
-                    customerToCreate.getUsername(),
-                    customerToCreate.getEmail(),
                     customerToCreate.getPassword(),
+                    customerToCreate.getEmail(),
+                    customerToCreate.getUsername(),
                     customerToCreate.getCardNumber(),
                     customerToCreate.getCardExpiryDate(),
                     customerToCreate.getAddress()
@@ -119,29 +131,31 @@ public class AccountController {
     }
 
    @PutMapping("/customers/{pid}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable String pid, @RequestBody CustomerDto customerdto) {
+    public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable String pid, @RequestBody CustomerRequestDto customerdto) {
         int id;
         try {
             id = Integer.parseInt(pid);
+            if (id == 0){
+                return new ResponseEntity<>(new CustomerResponseDto(), HttpStatus.BAD_REQUEST);
+            }
         } catch (NumberFormatException e) {
-            return new ResponseEntity<>(new CustomerDto(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CustomerResponseDto(), HttpStatus.BAD_REQUEST);
         }
+        try{
         Customer customerToUpdate = customerService.getCustomerById(id);
-        if (customerToUpdate == null) {
-            return new ResponseEntity<>(new CustomerDto(), HttpStatus.NOT_FOUND);
+        customerToUpdate = customerService.updateCustomer(
+                customerdto.getId(),
+                customerdto.getPassword(),
+                customerdto.getEmail(),
+                customerdto.getUsername(),
+                customerdto.getCardNumber(),
+                customerdto.getCardExpiryDate(),
+                customerdto.getAddress()
+        );
+        return new ResponseEntity<>(new CustomerResponseDto(customerToUpdate), HttpStatus.OK);
         }
-        try {
-            customerToUpdate = customerService.updateCustomer(
-                    customerdto.getPersonUsername(),
-                    customerdto.getPersonEmail(),
-                    customerdto.getPersonPassword(),
-                    customerdto.getCardNumber(),
-                    customerdto.getCardExpiryDate(),
-                    customerdto.getAddress()
-            );
-            return new ResponseEntity<>(new CustomerDto(customerToUpdate), HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(new CustomerDto(), HttpStatus.BAD_REQUEST);
+        catch (Exception e){
+            return new ResponseEntity<>(new CustomerResponseDto(), HttpStatus.NOT_FOUND);
         }
 
    }
@@ -151,14 +165,14 @@ public class AccountController {
        int id;
        try {
            id = Integer.parseInt(pid);
+           if (id == 0){
+               return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
+           }
        } catch (NumberFormatException e) {
            return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
        }
-       Employee employeeToUpdate = employeeService.getEmployeeById(id);
-       if (employeeToUpdate == null) {
-           return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
-       }
-       try {
+       try{
+           Employee employeeToUpdate = employeeService.getEmployeeById(id);
            employeeToUpdate = employeeService.updateEmployee(
                    employeedto.getPersonId(),
                    employeedto.getPersonUsername(),
@@ -166,8 +180,9 @@ public class AccountController {
                    employeedto.getPersonPassword()
            );
            return new ResponseEntity<>(new PersonDto(employeeToUpdate), HttpStatus.OK);
-       } catch (IllegalArgumentException e) {
-           return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
+       }
+       catch (Exception e){
+           return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
        }
 
    }
@@ -177,14 +192,14 @@ public class AccountController {
        int id;
        try {
            id = Integer.parseInt(pid);
+           if (id == 0){
+               return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
+           }
        } catch (NumberFormatException e) {
            return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
        }
-       Manager managerToUpdate = managerService.getManagerById(id);
-       if (managerToUpdate == null) {
-           return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
-       }
        try {
+           Manager managerToUpdate = managerService.getManagerById(id);
            managerToUpdate = managerService.updateManager(
                    managerdto.getPersonId(),
                    managerdto.getPersonUsername(),
@@ -192,9 +207,11 @@ public class AccountController {
                    managerdto.getPersonPassword()
            );
            return new ResponseEntity<>(new PersonDto(managerToUpdate), HttpStatus.OK);
-       } catch (IllegalArgumentException e) {
-           return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
        }
+         catch (Exception e){
+              return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
+         }
+
 
    }
 
@@ -203,6 +220,9 @@ public class AccountController {
        int id;
        try{
            id = Integer.parseInt(pid);
+           if (id == 0){
+               return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+           }
        } catch (NumberFormatException e){
            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
@@ -218,6 +238,9 @@ public class AccountController {
        int id;
        try{
            id = Integer.parseInt(pid);
+           if (id == 0){
+               return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+           }
        } catch (NumberFormatException e){
            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
@@ -228,36 +251,60 @@ public class AccountController {
            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
        }
    }
-    @PostMapping("/managers/login/{email}/{password}")
-    public ResponseEntity<PersonDto> loginManager(@PathVariable String email, @PathVariable String password) {
+    @PostMapping("/managers/login")
+    public ResponseEntity<PersonDto> loginManager(@RequestBody Map<String, String> details) {
         Manager manager;
+        String email = details.get("email");
+        String password = details.get("password");
         if (managerService.loginManager(email, password)){
             manager = managerService.getManagerByEmail(email);
             return new ResponseEntity<>(new PersonDto(manager), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new PersonDto(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("/employees/login/{email}/{password}")
-    public ResponseEntity<PersonDto> loginEmployee(@PathVariable String email, @PathVariable String password) {
+    @PostMapping("/employees/login")
+    public ResponseEntity<PersonDto> loginEmployee(@RequestBody Map<String, String> details) {
         Employee employee;
+        String email = details.get("email");
+        String password = details.get("password");
         if (employeeService.loginEmployee(email, password)){
             employee = employeeService.getEmployeeByEmail(email);
             return new ResponseEntity<>(new PersonDto(employee), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new PersonDto(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("/customers/login/{email}/{password}")
-    public ResponseEntity<CustomerDto> loginCustomer(@PathVariable String email, @PathVariable String password) {
+    @PostMapping("/customers/login")
+    public ResponseEntity<CustomerDto> loginCustomer(@RequestBody Map<String, String> details) {
         Customer customer;
+        String email = details.get("email");
+        String password = details.get("password");
         if (customerService.loginCustomer(email, password)){
             customer = customerService.getCustomerByEmail(email);
             return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new CustomerDto(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new CustomerDto(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/customers")
+    public CustomerListDtos getAllCustomers() {
+        List<CustomerResponseDto> dtos = new ArrayList<CustomerResponseDto>();
+        for (Customer customer : customerService.getAllCustomers()) {
+            dtos.add(new CustomerResponseDto(customer));
+        }
+        return new CustomerListDtos(dtos);
+    }
+    @GetMapping("/employees")
+    public PersonListDtos getAllEmployees() {
+        List<PersonResponseDto> dtos = new ArrayList<PersonResponseDto>();
+        for (Employee employee : employeeService.getAllEmployees()) {
+            dtos.add(new PersonResponseDto(employee));
+        }
+        return new PersonListDtos(dtos);
+    }
+
+
 
 
 

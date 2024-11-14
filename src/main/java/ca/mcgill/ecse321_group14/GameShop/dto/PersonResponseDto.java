@@ -26,4 +26,13 @@ public class PersonResponseDto {
     public String getPersonEmail() {
         return email;
     }
+    public void setPersonId(int id) {
+        this.id = id;
+    }
+    public void setPersonUsername(String username) {
+        this.username = username;
+    }
+    public void setPersonEmail(String email) {
+        this.email = email;
+    }
 }
