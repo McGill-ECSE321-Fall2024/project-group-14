@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
 
+import java.sql.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,10 +18,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Manager;
 import ca.mcgill.ecse321_group14.GameShop.model.Reply;
+import ca.mcgill.ecse321_group14.GameShop.model.Review.Ranking;
 import ca.mcgill.ecse321_group14.GameShop.model.Review;
-import ca.mcgill.ecse321_group14.GameShop.repository.ManagerRepository;
+import ca.mcgill.ecse321_group14.GameShop.model.Customer;
+import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.repository.ReplyRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.ReviewRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.ManagerRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
 
 @SpringBootTest
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -31,6 +37,10 @@ public class ReplyServiceTests {
     private ReviewRepository reviewRepository;
     @Mock
     private ManagerRepository managerRepository;
+    @Mock 
+    private CustomerRepository customerRepository;
+    @Mock 
+    private GameRepository gameRepository;
     @InjectMocks
     private ReplyService replyService;
 
@@ -38,8 +48,9 @@ public class ReplyServiceTests {
     private static final int VALID_REVIEW_ID = 1;
     private static final int VALID_MANAGER_ID = 1;
 
+
     @Test
-    public void testCreateValidReply() {
+    public void testCreateReply() {
         Review review = new Review();
         Manager manager = new Manager();
         when(reviewRepository.findReviewById(VALID_REVIEW_ID)).thenReturn(review);
