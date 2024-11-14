@@ -45,12 +45,15 @@ public class PolicyService {
 
     @Transactional
     public Policy createPolicy(String description) {
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be empty.");
+        }
         try {
             Policy policy = new Policy(description);
             policyRepository.save(policy);
             return policy;
         } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException("An error occurred while creating the policy.", e);
         }
     }
 }
