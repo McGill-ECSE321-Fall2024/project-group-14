@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321_group14.GameShop.dto.OrderRequestDto;
@@ -25,6 +26,7 @@ public class OrderController {
      * @return OrderResponseDto
      */
     @PostMapping("/order")
+    @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
     public OrderResponseDto createOrder(@RequestBody OrderRequestDto orderRequestDto) {
         Order order = orderService.createOrder(orderRequestDto.getCustomerId());
         return new OrderResponseDto(order);

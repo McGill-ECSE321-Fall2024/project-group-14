@@ -1,12 +1,13 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
 
-import ca.mcgill.ecse321_group14.GameShop.model.Game;
-import ca.mcgill.ecse321_group14.GameShop.model.Promotion;
-import ca.mcgill.ecse321_group14.GameShop.repository.PromotionRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ca.mcgill.ecse321_group14.GameShop.model.Game;
+import ca.mcgill.ecse321_group14.GameShop.model.Promotion;
 import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.PromotionRepository;
+import jakarta.transaction.Transactional;
 @Service
 public class PromotionService {
     @Autowired
@@ -18,10 +19,11 @@ public class PromotionService {
 
     @Transactional
     public void deletePromotion(int id) {
-        if (!promotionRepository.existsById(id)) {
+        Promotion promotion = promotionRepository.findPromotionById(id);
+        if (promotion == null) {
             throw new IllegalArgumentException("Promotion does not exist!");
         }
-        promotionRepository.deleteById(id);
+        promotionRepository.delete(promotion);
     }
 
     @Transactional

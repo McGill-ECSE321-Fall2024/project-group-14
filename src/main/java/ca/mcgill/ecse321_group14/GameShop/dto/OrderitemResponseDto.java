@@ -6,6 +6,9 @@ public class OrderitemResponseDto {
     private int orderitemId;
     private int orderId;
 
+    public OrderitemResponseDto() {
+    }
+    
     public OrderitemResponseDto(Orderitem orderitem) {
         this.orderitemId = orderitem.getKey().getGame().getId();
         this.orderId = orderitem.getKey().getOrder().getId();
@@ -18,4 +21,13 @@ public class OrderitemResponseDto {
     public int getOrderId() {
         return orderId;
     }
+
+    public void setOrderitemId(int orderitemId) {
+        this.orderitemId = orderitemId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
 }

@@ -1,10 +1,10 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
+import java.util.List;
+
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Game.Rating;
 import ca.mcgill.ecse321_group14.GameShop.model.Review;
-
-import java.util.List;
 
 public class GameResponseDto {
 
@@ -16,7 +16,6 @@ public class GameResponseDto {
     private int quantity;
     private Rating rating;
     private String picture;
-    private Integer promotionId;
     private List<Review> reviews;
 
     // Default constructor
@@ -32,7 +31,6 @@ public class GameResponseDto {
         this.quantity = game.getQuantity();
         this.rating = game.getRating();
         this.picture = game.getPicture();
-        this.promotionId = (game.getPromotion() != null) ? game.getPromotion().getPromotionId() : null;
         this.reviews = game.getReviews();
     }
 
@@ -99,14 +97,6 @@ public class GameResponseDto {
 
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public Integer getPromotionId() {
-        return promotionId;
-    }
-
-    public void setPromotionId(Integer promotionId) {
-        this.promotionId = promotionId;
     }
 
     public List<Review> getReviews() {

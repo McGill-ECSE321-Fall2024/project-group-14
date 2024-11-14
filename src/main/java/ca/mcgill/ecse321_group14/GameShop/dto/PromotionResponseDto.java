@@ -22,7 +22,7 @@ public class PromotionResponseDto{
         this.id = promotion.getPromotionId();
         this.description = promotion.getDescription();
         this.discount = promotion.getDiscount();
-        this.gameId = promotion.getGame().getId();
+        this.gameId = (promotion.getGame() != null) ? promotion.getGame().getId() : 0;
     }
 
     public int getId() {
