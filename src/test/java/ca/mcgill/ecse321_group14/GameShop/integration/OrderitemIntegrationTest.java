@@ -102,7 +102,7 @@ public class OrderitemIntegrationTest {
 
         // Assert
         assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         OrderitemResponseDto createdOrderitem = response.getBody();
         assertNotNull(createdOrderitem);
         assertEquals(orderId, createdOrderitem.getOrderId());
@@ -142,4 +142,37 @@ public class OrderitemIntegrationTest {
         assertTrue(orderitemList.size() > 0);
         assertEquals(orderId, orderitemList.get(0).getOrderId());
     }
+
+    @Test
+    @org.junit.jupiter.api.Order(4)
+    public void testDeleteOrderitem(){
+        //Act
+        ResponseEntity<Void> response = client.exchange(
+            "/orderitem/" + orderId + "/" + gameId,
+            org.springframework.http.HttpMethod.DELETE,
+            null,
+            Void.class
+        );
+
+        //Assert
+        assertNotNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(5)
+    public void testGetOrderitemNotFound(){
+        //Act
+        ResponseEntity<Void> response = client.exchange(
+            "/orderitem/" + orderId + "/" + gameId,
+            org.springframework.http.HttpMethod.GET,
+            null,
+            Void.class
+        );
+
+        //Assert
+        assertNotNull(response);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
 }

@@ -51,14 +51,6 @@ public class OrderIntegrationTests {
         customerId = person.getId();
         assertTrue(customerRepository.existsById(customerId));
         assertTrue(customerId>0,"Customer id is not valid");
-
-        OrderRequestDto orderRequestDto = new OrderRequestDto(customerId);
-        ResponseEntity<OrderResponseDto> response = client.postForEntity("/order", orderRequestDto, OrderResponseDto.class);
-        OrderResponseDto orderResponseDto = response.getBody();
-        orderId = orderResponseDto.getOrderId();
-
-        assertTrue(orderRepository.existsById(orderId));
-        assertTrue(orderId>0,"Order id is not valid");
     }
 
     @AfterAll
@@ -102,17 +94,19 @@ public class OrderIntegrationTests {
     @Test
     @org.junit.jupiter.api.Order(3)
     public void testDeleteOrder(){
-        // Check that order exists before deletion
+        // Ensure the order exists before deletion
         ResponseEntity<OrderResponseDto> preDeleteResponse = client.getForEntity("/order/" + orderId, OrderResponseDto.class);
-        assertEquals(HttpStatus.OK, preDeleteResponse.getStatusCode());
+        assertNotNull(preDeleteResponse);
+        assertEquals(HttpStatus.OK, preDeleteResponse.getStatusCode(), "Order should exist before deletion");
 
-        // Act: Perform delete operation
-        ResponseEntity<Void> response = client.exchange("/order/delete/" + orderId, org.springframework.http.HttpMethod.DELETE, null, Void.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        // Act: Perform delete operation and expect NO_CONTENT status
+        ResponseEntity<Void> response = client.exchange("/order/" + orderId, org.springframework.http.HttpMethod.DELETE, null, Void.class);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode(), "Order deletion should return 204 NO_CONTENT");
 
-        // Verify deletion
+        // Verify deletion by attempting to GET the deleted order and expect NOT_FOUND
         ResponseEntity<OrderResponseDto> postDeleteResponse = client.getForEntity("/order/" + orderId, OrderResponseDto.class);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, postDeleteResponse.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, postDeleteResponse.getStatusCode(), "Order should not be found after deletion");
     }
+
         
 }

@@ -67,13 +67,13 @@ public class PromotionIntegrationTests {
         ResponseEntity<PromotionResponseDto> response = client.exchange(
             "/promotion/" + gameId,
             org.springframework.http.HttpMethod.PUT,
-            new org.springframework.http.HttpEntity<PromotionRequestDto>(promotionRequestDto),
+            new org.springframework.http.HttpEntity<>(promotionRequestDto),
             PromotionResponseDto.class
         );
         
         // Assert
         assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         PromotionResponseDto createdPromotion = response.getBody();
         assertNotNull(createdPromotion);
         assertEquals("Promo Description", createdPromotion.getDescription());
@@ -127,26 +127,25 @@ public class PromotionIntegrationTests {
         assertEquals(gameId, updatedPromotion.getGameId());
     }
 
-   /*  @Test
+    @Test
     @Order(5)
-    public void testDeletePromotion(){
+    public void testDeletePromotion() {
         // Arrange
-    String url = "/promotion/" + promotionId;
+        String url = "/promotion/" + promotionId;
 
-    // Act - Delete the promotion
-    ResponseEntity<Void> deleteResponse = client.exchange(url, HttpMethod.DELETE, null, Void.class);
+        // Act - Delete the promotion
+        ResponseEntity<Void> deleteResponse = client.exchange(url, HttpMethod.DELETE, null, Void.class);
 
-    // Assert - Verify deletion was successful
-    assertNotNull(deleteResponse);
-    assertEquals(HttpStatus.NO_CONTENT, deleteResponse.getStatusCode(), "Delete operation did not return expected status.");
+        // Assert - Verify deletion was successful
+        assertNotNull(deleteResponse);
+        assertEquals(HttpStatus.NO_CONTENT, deleteResponse.getStatusCode(), "Delete operation did not return expected status.");
 
-    // Act - Try to fetch the deleted promotion
-    ResponseEntity<PromotionResponseDto> getResponse = client.getForEntity(url, PromotionResponseDto.class);
+        // Act - Try to fetch the deleted promotion, expect 404 status
+        ResponseEntity<String> getResponse = client.getForEntity(url, String.class);
 
-    // Assert - Expect a 404 NOT_FOUND status for a non-existing promotion
-    assertNotNull(getResponse);
-    assertEquals(HttpStatus.NOT_FOUND, getResponse.getStatusCode(), "Promotion should not exist after deletion.");
-
+        // Assert - Expect a 404 NOT_FOUND status for a non-existing promotion
+        assertNotNull(getResponse);
+        assertEquals(HttpStatus.NOT_FOUND, getResponse.getStatusCode(), "Promotion should not exist after deletion.");
     }
-    */
+    
 }
