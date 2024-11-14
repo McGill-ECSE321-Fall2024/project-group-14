@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -193,53 +195,81 @@ public class GameIntegrationTests {
 
     }
 
+
+        @Test
+        @Order(6)
+        public void testDeleteGameNullName() {
+            // Arrange
+            String gameName = null;
+            Manager person = new Manager("password", "email@gmail.com", "Username");
+            person = personRepository.save(person);  // Save to generate an ID
+            Integer personId = person.getId();
+
+            GameRequestDto gameRequestDto = new GameRequestDto(gameName, personId);
+            HttpEntity<GameRequestDto> requestEntity = new HttpEntity<>(gameRequestDto);
+
+            // Act
+            ResponseEntity<Void> response = client.exchange("/game", HttpMethod.DELETE, requestEntity, Void.class);
+
+            // Assert
+            assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
     @Test
-    @Order(6)
+    @Order(7)
+    public void testDeleteGameNotValidPerson() {
+        // Arrange: Ensure the customer exists in the database
+        Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
+        person = personRepository.save(person);  // Save to generate an ID
+        Integer personId = person.getId();
+
+        // Assume a game with the name "Zelda" and gameId exists in the database
+        String gameName = "Luigi";
+        Integer gameId = gameRepository.findGameByName(gameName).getId();  // Retrieve the game ID
+
+        // Create the GameRequestDto with the game name and customer ID
+        GameRequestDto gameRequestDto = new GameRequestDto(gameName, personId);
+        HttpEntity<GameRequestDto> requestEntity = new HttpEntity<>(gameRequestDto);
+
+        // Act - Attempt to delete the game with a non-manager's ID
+        ResponseEntity<Void> deleteResponse = client.exchange("/game", HttpMethod.DELETE, requestEntity, Void.class);
+
+        // Assert - Ensure a 403 Forbidden response if non-manager users are not allowed to delete games
+        assertEquals(HttpStatus.NOT_FOUND, deleteResponse.getStatusCode());
+
+        // Verify the game still exists by retrieving it
+        ResponseEntity<GameResponseDto> getResponse = client.getForEntity("/game/" + gameId, GameResponseDto.class);
+        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
+    }
+
+    @Test
+    @Order(8)
     public void testDeleteGameValidPerson() {
         // Arrange: Ensure the game and manager exist in the database
-        String gameName = "Luigi";
+        String gameName = "Zelda";
         Manager person = new Manager("password", "email@gmail.com", "Username");
         person = personRepository.save(person);  // Save to generate an ID
         Integer personId = person.getId();
 
         // Save the game in the database to ensure it exists before deletion
-        Game game = new Game(gameName, "A game about a plumber's brother", "Platformer", 70, 50, Game.Rating.R, "https://www.google.com");
-        gameRepository.save(game);
+//        Game game = new Game(gameName, "A game about a plumber's brother", "Platformer", 70, 50, Game.Rating.R, "https://www.google.com");
+//        game = gameRepository.save(game);
+//        Integer gameId = game.getId();
 
         // Create the GameRequestDto with the game name and manager's ID
         GameRequestDto gameRequestDto = new GameRequestDto(gameName, personId);
+        HttpEntity<GameRequestDto> requestEntity = new HttpEntity<>(gameRequestDto);
 
-        try{
-            client.delete("/game", gameRequestDto);
-        }catch (Exception e){
-            fail("Failed to delete game");
-        }
+        // Act - Attempt to delete the game with a manager's ID
+        ResponseEntity<Void> deleteResponse = client.exchange("/game", HttpMethod.DELETE, requestEntity, Void.class);
 
+        // Assert - Ensure a 204 No Content response if deletion is successful
+        assertEquals(HttpStatus.NO_CONTENT, deleteResponse.getStatusCode());
+
+        // Verify the game no longer exists by attempting to retrieve it
+        ResponseEntity<GameResponseDto> getResponse = client.getForEntity("/game/" + gameId, GameResponseDto.class);
+        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
     }
-    @Test
-    @Order(7)
-    public void testDeleteGameNotValidPerson() {
-        // Arrange: Ensure the game and manager exist in the database
-        String gameName = "Luigi";
-        Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
-        person = personRepository.save(person);  // Save to generate an ID
-        Integer personId = person.getId();
-
-        // Save the game in the database to ensure it exists before deletion
-        Game game = new Game(gameName, "A game about a plumber's brother", "Platformer", 70, 50, Game.Rating.R, "https://www.google.com");
-        gameRepository.save(game);
-
-        // Create the GameRequestDto with the game name and manager's ID
-        GameRequestDto gameRequestDto = new GameRequestDto(gameName, personId);
-
-        try{
-            client.delete("/game", gameRequestDto);
-        }catch (Exception e){
-            fail("Failed to delete game");
-        }
 
 
-
-
-}
 }

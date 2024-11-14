@@ -7,6 +7,8 @@ import ca.mcgill.ecse321_group14.GameShop.dto.GameResponseDto;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,7 +48,21 @@ public class GameController {
     }
 
     @DeleteMapping("/game")
-    public void deleteGame(@RequestBody GameRequestDto gameRequestDto) {
-        gameService.deleteGame(gameRequestDto.getName(), gameRequestDto.getPersonId());
+    public ResponseEntity<Void> deleteGame(@RequestBody GameRequestDto gameRequestDto) {
+        try {
+            // Attempt to delete the game
+            gameService.deleteGame(gameRequestDto.getName(), gameRequestDto.getPersonId());
+
+            // Return 204 No Content if deletion is successful
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        } catch (IllegalArgumentException e) {
+            // Log the exception message (optional)
+            System.out.println(e.getMessage());
+
+            // Return 404 Not Found if the game does not exist
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
 }
