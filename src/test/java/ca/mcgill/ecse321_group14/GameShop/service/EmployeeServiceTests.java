@@ -45,7 +45,7 @@ public class EmployeeServiceTests {
     }
 
     @Test
-    public void testCreatEmployeeNullPassword(){
+    public void testCreateEmployeeNullPassword(){
         String password = null;
         String username = "username";
         String email = "email";
@@ -356,6 +356,21 @@ public class EmployeeServiceTests {
         String email = "email";
         String password = "password";
         Employee employee = new Employee("password1", email, "username");
+        when(employeeRepository.findEmployeeByEmail(email)).thenReturn(employee);
+
+        //act
+        Boolean employeeLoggedIn = employeeService.loginEmployee(email, password);
+
+        //assert
+        assertNotNull(employeeLoggedIn);
+        assertFalse(employeeLoggedIn);
+        verify(employeeRepository, times(1)).findEmployeeByEmail(email);
+    }
+    @Test
+    public void testEmployeeLoginIncorrectEmail(){
+        String email = "email";
+        String password = "password";
+        Employee employee = new Employee(password, "email1", "username");
         when(employeeRepository.findEmployeeByEmail(email)).thenReturn(employee);
 
         //act

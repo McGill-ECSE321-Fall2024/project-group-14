@@ -87,7 +87,7 @@ public class ManagerService {
         if (manager == null) {
             throw new IllegalArgumentException("Manager not found.");
         }
-        return manager.getPassword().equals(password);
+        return manager.getPassword().equals(password) && manager.getEmail().equals(email);
     }
 
 }
