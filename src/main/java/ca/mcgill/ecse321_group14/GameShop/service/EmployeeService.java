@@ -99,7 +99,7 @@ public class EmployeeService {
         if (employee == null) {
             throw new IllegalArgumentException("Employee not found.");
         }
-        return employee.getPassword().equals(password);
+        return employee.getPassword().equals(password) && employee.getEmail().equals(email);
     }
 
     @Transactional

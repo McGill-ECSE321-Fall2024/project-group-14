@@ -333,4 +333,19 @@ public class ManagerServiceTests {
         assertFalse(managerLoggedIn);
         verify(managerRepository, times(1)).findManagerByEmail(email);
     }
+    @Test
+    public void testManagerLoginIncorrectEmail(){
+        String email = "email";
+        String password = "password";
+        Manager manager = new Manager(password, "email1", "username");
+        when(managerRepository.findManagerByEmail(email)).thenReturn(manager);
+
+        // Act
+        Boolean managerLoggedIn = managerService.loginManager(email, password);
+
+        // Assert
+        assertNotNull(managerLoggedIn);
+        assertFalse(managerLoggedIn);
+        verify(managerRepository, times(1)).findManagerByEmail(email);
+    }
 }

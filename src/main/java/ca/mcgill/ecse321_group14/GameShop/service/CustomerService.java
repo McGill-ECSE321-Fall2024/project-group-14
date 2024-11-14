@@ -128,7 +128,7 @@ public class CustomerService {
         if (customer == null) {
             return false;
         }
-        return customer.getPassword().equals(password);
+        return customer.getPassword().equals(password) && customer.getEmail().equals(email);
     }
  
     
