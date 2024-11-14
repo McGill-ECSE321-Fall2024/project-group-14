@@ -21,6 +21,20 @@ public class WishlistController {
     @Autowired
     CustomerService customerService;
 
+    @PostMapping("/wishlist/{gameId}/{customerId}")
+    public ResponseEntity<WishlistDto> createWishlist(@PathVariable("gameId") int gameId, @PathVariable("customerId") int customerId) {
+        try {
+        Game game = gameServivce.getGameById(gameId);
+        Customer customer = customerService.getCustomerById(customerId);
+
+            Wishlist wishlist = wishlistService.createWishlist(game, customer);
+            return new ResponseEntity<>(new WishlistDto(wishlist), HttpStatus.CREATED);
+        }
+        catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(new WishlistDto(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/wishlist/{gameId}/{customerId}")
     public ResponseEntity<WishlistDto> getWishlist(@PathVariable("gameId") int gameId, @PathVariable("customerId") int customerId) {
 
@@ -35,9 +49,10 @@ public class WishlistController {
         }
     }
     @PutMapping("/wishlist/{gameId}/{customerId}")
-    public ResponseEntity<WishlistDto> addGameToWishlist(@PathVariable("gameId") int gameId, @PathVariable("customerId") int customerId) {
+    public ResponseEntity<WishlistDto> addGameToWishlist(@PathVariable("gameId") int gameId, @PathVariable("customerId") int customerId, @RequestBody WishlistDto wishlistDto) {
         Game game = gameServivce.getGameById(gameId);
         Customer customer = customerService.getCustomerById(customerId);
+        Wishlist wishlistToAddTo = wishlistService.getWishlist(game, customer);
         try {
             Wishlist wishlist = wishlistService.addGameToWishlist(game, customer);
             return new ResponseEntity<>(new WishlistDto(wishlist), HttpStatus.OK);
