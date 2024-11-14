@@ -55,10 +55,10 @@ public class GameIntegrationTests {
     @Order(1)
     public void testCreateValidGame() {
         // Arrange
-        ResponseEntity<Game> response = client.postForEntity("/game", new GameRequestDto(name, description, category, price, quantity, rating, picture), Game.class);
+        ResponseEntity<GameResponseDto> response = client.postForEntity("/game", new GameRequestDto(name, description, category, price, quantity, rating, picture), GameResponseDto.class);
 
         // Act
-        Game createdGame = response.getBody();
+        GameResponseDto createdGame = response.getBody();
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -85,10 +85,10 @@ public class GameIntegrationTests {
         Game.Rating secondRating = Game.Rating.PG;
         String secondPicture = "https://example.com/zelda.jpg";
 
-        ResponseEntity<Game> response = client.postForEntity("/game", new GameRequestDto(secondName, secondDescription, secondCategory, secondPrice, secondQuantity, secondRating, secondPicture), Game.class);
+        ResponseEntity<GameResponseDto> response = client.postForEntity("/game", new GameRequestDto(secondName, secondDescription, secondCategory, secondPrice, secondQuantity, secondRating, secondPicture), GameResponseDto.class);
 
         // Act
-        Game createdGame = response.getBody();
+        GameResponseDto createdGame = response.getBody();
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
