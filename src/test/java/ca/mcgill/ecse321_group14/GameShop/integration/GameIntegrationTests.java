@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321_group14.GameShop.integration;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 import ca.mcgill.ecse321_group14.GameShop.dto.GameListDtos;
 import ca.mcgill.ecse321_group14.GameShop.dto.GameRequestDto;
@@ -17,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -58,7 +55,7 @@ public class GameIntegrationTests {
     @Order(1)
     public void testCreateValidGame() {
         // Arrange
-        ResponseEntity<Game> response = client.postForEntity("/game", new Game(name, description, category, price, quantity, rating, picture), Game.class);
+        ResponseEntity<Game> response = client.postForEntity("/game", new GameRequestDto(name, description, category, price, quantity, rating, picture), Game.class);
 
         // Act
         Game createdGame = response.getBody();
@@ -88,7 +85,7 @@ public class GameIntegrationTests {
         Game.Rating secondRating = Game.Rating.PG;
         String secondPicture = "https://example.com/zelda.jpg";
 
-        ResponseEntity<Game> response = client.postForEntity("/game", new Game(secondName, secondDescription, secondCategory, secondPrice, secondQuantity, secondRating, secondPicture), Game.class);
+        ResponseEntity<Game> response = client.postForEntity("/game", new GameRequestDto(secondName, secondDescription, secondCategory, secondPrice, secondQuantity, secondRating, secondPicture), Game.class);
 
         // Act
         Game createdGame = response.getBody();
