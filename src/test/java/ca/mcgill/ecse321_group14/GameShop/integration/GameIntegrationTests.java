@@ -51,6 +51,7 @@ public class GameIntegrationTests {
     @AfterAll
     public void clearDatabase() {
         gameRepository.deleteAll();
+        personRepository.deleteAll();
     }
 
     @Test
