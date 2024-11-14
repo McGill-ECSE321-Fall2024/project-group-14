@@ -29,7 +29,7 @@ public class Reply
   // CONSTRUCTOR
   //------------------------
 
-  protected Reply() {}
+  public Reply() {}
 
   public Reply(String aDescription, Review aReview, Manager aManager)
   {

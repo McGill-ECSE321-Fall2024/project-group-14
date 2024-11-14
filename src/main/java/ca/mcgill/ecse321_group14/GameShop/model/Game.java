@@ -46,7 +46,7 @@ public class Game
   //------------------------
 
   // Hibernate requires a default constructor
-  public Game() {}
+  public Game() { reviews = new ArrayList<Review>(); }
 
   public Game(String aName, String aDescription, String aCategory, int aPrice, int aQuantity, Rating aRating, String aPicture)
   {

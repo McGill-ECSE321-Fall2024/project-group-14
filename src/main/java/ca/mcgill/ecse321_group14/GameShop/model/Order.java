@@ -36,7 +36,7 @@ public class Order
   //------------------------
 
   // Hibernate requires a default constructor
-  protected Order() {}
+  public Order() {}
 
   public Order(LocalDate aOrderDate, Customer aCustomer)
   {
