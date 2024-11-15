@@ -4,7 +4,7 @@ import ca.mcgill.ecse321_group14.GameShop.model.Review;
 
 public class ReviewResponseDto {
     private int id;
-    private String ranking;
+    private Review.Ranking ranking;
     private String description;
     private int customerId;
     private int gameId;
@@ -12,7 +12,7 @@ public class ReviewResponseDto {
     public ReviewResponseDto() {
     }
 
-    public ReviewResponseDto(int id, String ranking, String description, int customerId, int gameId) {
+    public ReviewResponseDto(int id, Review.Ranking ranking, String description, int customerId, int gameId) {
         this.id = id;
         this.ranking = ranking;
         this.description = description;
@@ -22,7 +22,7 @@ public class ReviewResponseDto {
 
     public ReviewResponseDto(Review review) {
         this.id = review.getId();
-        this.ranking = review.getRanking().name(); 
+        this.ranking = review.getRanking();
         this.description = review.getDescription();
         this.customerId = review.getCustomer().getId();
         this.gameId = review.getGame().getId(); 
@@ -36,11 +36,11 @@ public class ReviewResponseDto {
         this.id = id;
     }
 
-    public String getRanking() {
+    public Review.Ranking getRanking() {
         return ranking;
     }
 
-    public void setRanking(String ranking) {
+    public void setRanking(Review.Ranking ranking) {
         this.ranking = ranking;
     }
 

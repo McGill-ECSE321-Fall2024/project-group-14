@@ -9,6 +9,5 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
 
     Game findGameByName(String aName);
     List<Game> findAll();
-
     void deleteGameByName(String aName);
 }

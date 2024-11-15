@@ -2,14 +2,14 @@ package ca.mcgill.ecse321_group14.GameShop.dto;
 import ca.mcgill.ecse321_group14.GameShop.model.Reply;
 
 public class ReplyResponseDto {
-    private Long id;
+    private int id;
     private String message;
     private String author;
 
     public ReplyResponseDto() {
     }
 
-    public ReplyResponseDto(Long id, String message, String author) {
+    public ReplyResponseDto(int id, String message, String author) {
         this.id = id;
         this.message = message;
         this.author = author;
@@ -17,16 +17,16 @@ public class ReplyResponseDto {
 
     public ReplyResponseDto(Reply reply) {
 
-        this.id = (long) reply.getId();
+        this.id = reply.getId();
         this.message = reply.getDescription();
         this.author = reply.getManager().getUsername();
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
