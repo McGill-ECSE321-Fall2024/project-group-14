@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
@@ -35,44 +36,7 @@ public class WishlistService {
         return wishlist;
     }
 
-    @Transactional
-    public Wishlist addGameToWishlist(Game game, Customer customer) {
-        Wishlist wishlist = wishlistRepository.findWishlistByKey(new Wishlist.Key(game, customer));
-        if (game == null){
-            throw new IllegalArgumentException("Game does not exist!");
-        }
-        if (customer == null){
-            throw new IllegalArgumentException("Customer does not exist!");
-        }
-        if (!customerRepository.existsById(customer.getId())) {
-            throw new IllegalArgumentException("Customer does not exist!");
-        }
-        if (!gameRepository.existsById(game.getId())){
-            throw new IllegalArgumentException("Game does not exist!");
-        }
-        if (wishlist == null) {
-            throw new IllegalArgumentException("Wishlist does not exist!");
-        }
-        Wishlist.Key key = new Wishlist.Key(game, customer);
-        wishlistRepository.save(wishlist);
-        return wishlist;
-    }
-    @Transactional
-    public Wishlist deleteGameFromWishlist(Game game, Customer customer) {
-        Wishlist wishlist = wishlistRepository.findWishlistByKey(new Wishlist.Key(game, customer));
-        if (wishlist == null) {
-            throw new IllegalArgumentException("Wishlist does not exist!");
-        }
-        if(!(wishlist.getKey().getWish().getName().equals(game.getName()))){
-            throw new IllegalArgumentException("Game is not in the wishlist!");
-        }
-        if (!(wishlist.getKey().getBuyer().getUsername().equals(customer.getUsername()))) {
-            throw new IllegalArgumentException("Customer does not own the wishlist!");
-        }
-        Wishlist.Key key = new Wishlist.Key(game, customer);
-        wishlistRepository.deleteById(key);
-        return wishlist;
-    }
+
     @Transactional
     public void clearWishlist(Customer customer, Game game) {
 
@@ -80,7 +44,7 @@ public class WishlistService {
         if (wishlist == null) {
             throw new IllegalArgumentException("Wishlist does not exist!");
         }
-        wishlistRepository.deleteAll();
+        wishlistRepository.delete(wishlist);
     }
     @Transactional
     public Wishlist getWishlist(Game game, Customer customer) {
@@ -89,6 +53,14 @@ public class WishlistService {
             throw new IllegalArgumentException("Wishlist does not exist!");
         }
         return wishlist;
+    }
+
+    @Transactional
+    public List<Wishlist> findWishlistsByCustomerId(int customerId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new IllegalArgumentException("Customer does not exist!"));
+        return wishlistRepository.findByKey_Buyer(customer);
+
     }
 
 

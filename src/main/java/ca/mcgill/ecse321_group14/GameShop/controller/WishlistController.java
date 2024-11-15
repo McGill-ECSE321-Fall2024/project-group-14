@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321_group14.GameShop.controller;
 
 import ca.mcgill.ecse321_group14.GameShop.dto.WishlistDto;
+import ca.mcgill.ecse321_group14.GameShop.dto.WishlistListDto;
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Wishlist;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class WishlistController {
@@ -48,40 +52,30 @@ public class WishlistController {
             return new ResponseEntity<>(new WishlistDto(),HttpStatus.NOT_FOUND);
         }
     }
-    @PutMapping("/wishlist/{gameId}/{customerId}")
-    public ResponseEntity<WishlistDto> addGameToWishlist(@PathVariable("gameId") int gameId, @PathVariable("customerId") int customerId) {
-        Game game = gameServivce.getGameById(gameId);
-        Customer customer = customerService.getCustomerById(customerId);
-        try {
-            Wishlist wishlist = wishlistService.addGameToWishlist(game, customer);
-            return new ResponseEntity<>(new WishlistDto(wishlist), HttpStatus.OK);
-        }
-        catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(new WishlistDto(), HttpStatus.NOT_FOUND);
-        }
-    }
+
     @DeleteMapping("/wishlist/{gameId}/{customerId}")
-    public ResponseEntity<WishlistDto> deleteGameFromWishlist(@PathVariable("gameId") int gameId, @PathVariable("customerId") int customerId) {
-        Game game = gameServivce.getGameById(gameId);
-        Customer customer = customerService.getCustomerById(customerId);
+    public ResponseEntity<Void> clearWishlist(@PathVariable("gameId") int gameId, @PathVariable("customerId") int customerId) {
         try {
-            Wishlist wishlist = wishlistService.deleteGameFromWishlist(game, customer);
-            return new ResponseEntity<>(new WishlistDto(wishlist), HttpStatus.OK);
-        }
-        catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(new WishlistDto(),HttpStatus.NOT_FOUND);
+            Game game = gameServivce.getGameById(gameId);
+            Customer customer = customerService.getCustomerById(customerId);
+            wishlistService.clearWishlist(customer, game);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+             // Returns 204 NO_CONTENT if successful
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Returns 404 if wishlist not found
         }
     }
-    @DeleteMapping("/wishlist/{customerId}/{gameId}")
-    public ResponseEntity<?> clearWishlist(@PathVariable("customerId") int customerId, @PathVariable("gameId") int gameId) {
-        Customer customer = customerService.getCustomerById(customerId);
-        Game game = gameServivce.getGameById(gameId);
+
+    @GetMapping("/wishlist/{customerId}")
+    public ResponseEntity<WishlistListDto> getWishlistByCustomerId(@PathVariable("customerId") int customerId) {
         try {
-            wishlistService.clearWishlist(customer, game);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(new WishlistDto(),HttpStatus.NOT_FOUND);
+            List<Wishlist> wishlists = wishlistService.findWishlistsByCustomerId(customerId);
+            List<WishlistDto> wishlistDtos = wishlists.stream()
+                    .map(WishlistDto::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(new WishlistListDto(wishlistDtos)); // Returns 200 OK with list of wishlists
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Returns 404 if customerId not found
         }
     }
 
