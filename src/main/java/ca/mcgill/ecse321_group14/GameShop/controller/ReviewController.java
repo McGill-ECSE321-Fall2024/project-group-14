@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321_group14.GameShop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +29,9 @@ public class ReviewController {
      * @return ReviewResponseDto
      */
     @PostMapping("/review")
-    public ReviewResponseDto createReview(@RequestBody ReviewRequestDto reviewRequestDto) {
+    public ResponseEntity<ReviewResponseDto> createReview(@RequestBody ReviewRequestDto reviewRequestDto) {
         Review review = reviewService.createReview(reviewRequestDto.getRanking(), reviewRequestDto.getDescription(), reviewRequestDto.getCustomerId(), reviewRequestDto.getGameId());
-        return new ReviewResponseDto(review);
+        return new ResponseEntity<>(new ReviewResponseDto(review), HttpStatus.CREATED);
     }
 
     /**
@@ -39,9 +41,9 @@ public class ReviewController {
      * @return ReviewResponseDto
      */
     @GetMapping("/review/{id}")
-    public ReviewResponseDto getReview(@PathVariable int id) {
+    public ResponseEntity<ReviewResponseDto> getReview(@PathVariable int id) {
         Review review = reviewService.getReview(id);
-        return new ReviewResponseDto(review);
+        return new ResponseEntity<>(new ReviewResponseDto(review), HttpStatus.OK);
     }
 
     /**
@@ -50,8 +52,10 @@ public class ReviewController {
      * @param id
      */
     @GetMapping("/review/delete/{id}")
-    public void deleteReview(@PathVariable int id) {
+    public ResponseEntity<Void>  deleteReview(@PathVariable int id) {
+
         reviewService.deleteReview(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

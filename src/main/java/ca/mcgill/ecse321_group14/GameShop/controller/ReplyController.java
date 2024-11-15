@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321_group14.GameShop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +29,9 @@ public class ReplyController {
      * @return ReplyResponseDto
      */
     @PostMapping("/reply")
-    public ReplyResponseDto createReply(@RequestBody ReplyRequestDto replyRequestDto) {
+    public ResponseEntity<ReplyResponseDto> createReply(@RequestBody ReplyRequestDto replyRequestDto) {
         Reply reply = replyService.createReply(replyRequestDto.getDescription(), replyRequestDto.getReviewId(), replyRequestDto.getManagerId());
-        return new ReplyResponseDto(reply);
+        return new ResponseEntity<>(new ReplyResponseDto(reply), HttpStatus.CREATED);
     }
 
 
@@ -40,9 +42,9 @@ public class ReplyController {
      * @return ReplyResponseDto
      */
     @GetMapping("/reply/{id}")
-    public ReplyResponseDto getReply(@PathVariable int id) {
+    public ResponseEntity<ReplyResponseDto> getReply(@PathVariable int id) {
         Reply reply = replyService.getReply(id);
-        return new ReplyResponseDto(reply);
+        return new ResponseEntity<>(new ReplyResponseDto(reply), HttpStatus.OK);
     }
 
     /**
@@ -51,8 +53,10 @@ public class ReplyController {
      * @param id
      */
     @GetMapping("/reply/delete/{id}")
-    public void deleteReply(@PathVariable int id) {
+    public ResponseEntity<Void> deleteReply(@PathVariable int id) {
+
         replyService.deleteReply(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
