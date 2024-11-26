@@ -5,7 +5,7 @@
         <div class="navbar-container">
           <nav class="navbar navbar-expand-lg navbar-light transparent-background">
             <a class="navbar-brand" href="#">
-              <img src="../assets/marwaniottNoBG.png" alt="Your Logo" height="60">
+              <img src="#" alt="Your Logo" height="60">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -16,22 +16,22 @@
                   <a class="nav-link clickable-text" >Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link clickable-text" >Manage Employees</a>
+                  <a class="nav-link clickable-text" >??</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link clickable-text" >Manage Repairs</a>
+                  <a class="nav-link clickable-text" >??</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link clickable-text" >Manage Rooms</a>
+                  <a class="nav-link clickable-text" >??</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Schedule<span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="#">View Promotion<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link clickable-text" >Account</a>
+                  <a class="nav-link clickable-text" >??</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link clickable-text" >View Reservations</a>
+                  <a class="nav-link clickable-text" >??</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link clickable-text" >Log Out</a>

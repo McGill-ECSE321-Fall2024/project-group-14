@@ -5,7 +5,7 @@
                 <div class = navbar-container>
                     <nav class="navbar navbar-expand-lg navbar-light transparent-background">
                         <a class="navbar-band" href="#">
-                            <img src="../assets/marwaniottNoBG.png" alt="Your Logo" height="60">
+                            <img src="#" alt="Your Logo" height="60">
                         </a>
                         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                             <ul class="navbar-nav">
@@ -13,7 +13,7 @@
                                 <a class="nav-link clickable-text" >Home</a>
                                 </li>
                                 <li class="nav-item active">
-                                <a class="nav-link" href="#">Reservations<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="#">Orders<span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
                                 <a class="nav-link clickable-text" >Account</a>
