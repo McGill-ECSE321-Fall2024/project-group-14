@@ -291,7 +291,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url('../../assets/hotelView.png') center center no-repeat;
+  background: url('#') center center no-repeat;
   background-size: cover;
 }
 .navbar-container {
