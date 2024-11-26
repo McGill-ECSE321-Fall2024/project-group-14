@@ -1,3 +1,4 @@
+package ca.mcgill.ecse321_group14.GameShop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class GameApprovalService {
             throw new IllegalArgumentException("Game request approver cannot be empty!");
         }
         GameApprovalRequest gameApprovalRequest = new GameApprovalRequest(aName, aDescription, aCategory, aPicture, aStatus, aRequestCreator, aRequestApprover);
-        return gameApprovalRequest;
+        return gameApprovalRequestRepository.save(gameApprovalRequest);
     }
 
     @Transactional
@@ -83,7 +84,7 @@ public class GameApprovalService {
         gameApprovalRequest.setStatus(aStatus);
         gameApprovalRequest.setRequestCreator(aRequestCreator);
         gameApprovalRequest.setRequestApprover(aRequestApprover);
-        return gameApprovalRequest;
+        return gameApprovalRequestRepository.save(gameApprovalRequest);
     }
 
     @Transactional

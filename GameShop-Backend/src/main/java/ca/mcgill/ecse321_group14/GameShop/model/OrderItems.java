@@ -7,13 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class OrderItems {
+public class Orderitem {
     @EmbeddedId
     private Key key;
 
-    protected OrderItems () {}
+    public Orderitem () {}
 
-    public OrderItems(Key key){
+    public Orderitem(Key key){
         this.key = key;
     }
 

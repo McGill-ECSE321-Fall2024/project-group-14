@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+<<<<<<< HEAD:GameShop-Backend/src/main/java/ca/mcgill/ecse321_group14/GameShop/model/Orderitem.java
 public class OrderItems {
     @EmbeddedId
     private Key key;
@@ -14,6 +15,15 @@ public class OrderItems {
     protected OrderItems () {}
 
     public OrderItems(Key key){
+=======
+public class Orderitem {
+    @EmbeddedId
+    private Key key;
+
+    public Orderitem () {}
+
+    public Orderitem(Key key){
+>>>>>>> main:src/main/java/ca/mcgill/ecse321_group14/GameShop/model/Orderitem.java
         this.key = key;
     }
 

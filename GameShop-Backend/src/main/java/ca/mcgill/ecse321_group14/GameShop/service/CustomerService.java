@@ -1,3 +1,4 @@
+package ca.mcgill.ecse321_group14.GameShop.service;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class CustomerService {
             throw new IllegalArgumentException("Customer email cannot be empty.");
         }
         Customer customer = customerRepository.findCustomerByEmail(email);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer not found.");
+        }
         return customer;
     }
 
@@ -53,11 +57,14 @@ public class CustomerService {
             throw new IllegalArgumentException("Customer id cannot be empty.");
         }
         Customer customer = customerRepository.findCustomerById(id);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer not found.");
+        }
         return customer;
     }
 
     @Transactional
-    public Customer updateCustomer(String aPassword, String aEmail, String aUsername, int aCardNumber, Date aCardExpiryDate, String aAddress){
+    public Customer updateCustomer(int id, String aPassword, String aEmail, String aUsername, int aCardNumber, Date aCardExpiryDate, String aAddress){
         if (aPassword == null || aPassword.trim().length() == 0) {
             throw new IllegalArgumentException("Customer password cannot be empty.");
         }
@@ -76,7 +83,7 @@ public class CustomerService {
         if (aAddress == null || aAddress.trim().length() == 0) {
             throw new IllegalArgumentException("Customer address cannot be empty.");
         }
-        Customer customer = customerRepository.findCustomerByEmail(aEmail);
+        Customer customer = customerRepository.findCustomerById(id);
         customer.setPassword(aPassword);
         customer.setUsername(aUsername);
         customer.setCardNumber(aCardNumber);
@@ -121,7 +128,7 @@ public class CustomerService {
         if (customer == null) {
             return false;
         }
-        return customer.getPassword().equals(password);
+        return customer.getPassword().equals(password) && customer.getEmail().equals(email);
     }
  
     

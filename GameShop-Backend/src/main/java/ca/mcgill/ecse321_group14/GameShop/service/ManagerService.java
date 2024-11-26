@@ -1,3 +1,4 @@
+package ca.mcgill.ecse321_group14.GameShop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,9 @@ public class ManagerService {
             throw new IllegalArgumentException("Manager email cannot be empty.");
         }
         Manager manager = managerRepository.findManagerByEmail(email);
+        if (manager == null) {
+            throw new IllegalArgumentException("Manager not found.");
+        }
         return manager;
     }
 
@@ -42,6 +46,9 @@ public class ManagerService {
             throw new IllegalArgumentException("Manager id cannot be empty.");
         }
         Manager manager = managerRepository.findManagerById(id);
+        if (manager == null) {
+            throw new IllegalArgumentException("Manager not found.");
+        }
         return manager;
     }
 
@@ -80,7 +87,7 @@ public class ManagerService {
         if (manager == null) {
             throw new IllegalArgumentException("Manager not found.");
         }
-        return manager.getPassword().equals(password);
+        return manager.getPassword().equals(password) && manager.getEmail().equals(email);
     }
 
 }

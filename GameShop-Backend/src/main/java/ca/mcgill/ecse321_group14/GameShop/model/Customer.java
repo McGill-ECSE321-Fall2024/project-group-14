@@ -1,8 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 package ca.mcgill.ecse321_group14.GameShop.model;
-import jakarta.persistence.*;
 import java.sql.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 
 // line 15 "model.ump"
 // line 126 "model.ump"
@@ -17,7 +19,8 @@ public class Customer extends Person
 
   //Customer Attributes
 
-  private int cardNumber;
+//TODO ALL OF THESE BC THEY CANT BE PRIVATAE
+  private int cardNumber; 
   private Date cardExpiryDate;
   private String address;
   
@@ -27,7 +30,7 @@ public class Customer extends Person
   //------------------------
 
   // Hibernate requires a default constructor
-  protected Customer() {}
+  public Customer() {}
 
   public Customer(String aPassword, String aEmail, String aUsername, int aCardNumber, Date aCardExpiryDate, String aAddress)
   {
@@ -40,6 +43,7 @@ public class Customer extends Person
   //------------------------
   // INTERFACE
   //------------------------
+
 
   public boolean setCardNumber(int aCardNumber)
   {
@@ -94,5 +98,17 @@ public class Customer extends Person
             "address" + ":" + getAddress()+ "," +
             System.getProperties().getProperty("line.separator") +
             "  " + "cardExpiryDate" + "=" + (getCardExpiryDate() != null ? !getCardExpiryDate().equals(this)  ? getCardExpiryDate().toString().replaceAll("  ","    ") : "this" : "null");
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Customer)) return false;
+    Customer customer = (Customer) o;
+    return super.equals(o) && cardNumber == customer.cardNumber && cardExpiryDate.equals(customer.cardExpiryDate) && address.equals(customer.address);
+  }
+
+  @Override
+  public int hashCode() {
+    return super.hashCode() + cardNumber + cardExpiryDate.hashCode() + address.hashCode();
   }
 }

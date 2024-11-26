@@ -2,8 +2,13 @@
 /*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
 
 package ca.mcgill.ecse321_group14.GameShop.model;
-import java.sql.Date;
-import jakarta.persistence.*;
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 // line 55 "model.ump"
 // line 160 "model.ump"
@@ -20,7 +25,7 @@ public class Order
   @Id
   @GeneratedValue
   private int id;
-  private Date orderDate;
+  private LocalDate orderDate;
 
   //Order Associations
   @ManyToOne
@@ -31,9 +36,9 @@ public class Order
   //------------------------
 
   // Hibernate requires a default constructor
-  protected Order() {}
+  public Order() {}
 
-  public Order(Date aOrderDate, Customer aCustomer)
+  public Order(LocalDate aOrderDate, Customer aCustomer)
   {
     orderDate = aOrderDate;
     if (!setCustomer(aCustomer))
@@ -46,7 +51,7 @@ public class Order
   // INTERFACE
   //------------------------
 
-  public boolean setOrderDate(Date aOrderDate)
+  public boolean setOrderDate(LocalDate aOrderDate)
   {
     boolean wasSet = false;
     orderDate = aOrderDate;
@@ -59,7 +64,7 @@ public class Order
     return id;
   }
 
-  public Date getOrderDate()
+  public LocalDate getOrderDate()
   {
     return orderDate;
   }
