@@ -5,6 +5,8 @@ import ca.mcgill.ecse321_group14.GameShop.model.Orderitem;
 public class OrderitemResponseDto {
     private int orderitemId;
     private int orderId;
+    private String gameTitle;
+    private int price;
 
     public OrderitemResponseDto() {
     }
@@ -12,6 +14,8 @@ public class OrderitemResponseDto {
     public OrderitemResponseDto(Orderitem orderitem) {
         this.orderitemId = orderitem.getKey().getGame().getId();
         this.orderId = orderitem.getKey().getOrder().getId();
+        this.gameTitle = orderitem.getKey().getGame().getName();
+        this.price = orderitem.getKey().getGame().getPrice();
     }
 
     public int getOrderitemId() {
@@ -28,6 +32,14 @@ public class OrderitemResponseDto {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public String getGameTitle(){
+        return gameTitle;
+    }
+
+    public int getPrice(){
+        return price;
     }
 
 }

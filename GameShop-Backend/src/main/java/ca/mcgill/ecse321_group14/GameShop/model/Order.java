@@ -26,6 +26,7 @@ public class Order
   @GeneratedValue
   private int id;
   private LocalDate orderDate;
+  private boolean isPaid;
 
   //Order Associations
   @ManyToOne
@@ -38,13 +39,14 @@ public class Order
   // Hibernate requires a default constructor
   public Order() {}
 
-  public Order(LocalDate aOrderDate, Customer aCustomer)
+  public Order(LocalDate aOrderDate, Customer aCustomer, boolean isPaid)
   {
     orderDate = aOrderDate;
     if (!setCustomer(aCustomer))
     {
       throw new RuntimeException("Unable to create Order due to aCustomer. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+    this.isPaid = isPaid;
   }
 
   //------------------------
@@ -83,6 +85,16 @@ public class Order
       wasSet = true;
     }
     return wasSet;
+  }
+
+  public boolean getIsPaid()
+  {
+    return isPaid;
+  }
+
+  public void setIsPaid(boolean isPaid)
+  {
+    this.isPaid = isPaid;
   }
 
   public String toString()

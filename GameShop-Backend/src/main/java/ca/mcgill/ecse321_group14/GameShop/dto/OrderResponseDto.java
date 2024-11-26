@@ -9,6 +9,7 @@ public class OrderResponseDto {
     private int orderId;
     private LocalDate date;
     private int customerId;
+    private boolean isPaid;
 
     public OrderResponseDto() {
     }
@@ -17,6 +18,7 @@ public class OrderResponseDto {
         this.customerId = order.getCustomer().getId();
         this.date = order.getOrderDate();
         this.orderId = order.getId();
+        this.isPaid = order.getIsPaid();
     }
 
     public int getOrderId() {
@@ -43,5 +45,12 @@ public class OrderResponseDto {
         this.customerId = customerId;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
     
 }

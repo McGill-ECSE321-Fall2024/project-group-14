@@ -12,9 +12,10 @@ const router = createRouter({
     },
 
     {
-      path: '/2',
+      path: '/orders/:customerId',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
+      props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
     }
   ],
 });

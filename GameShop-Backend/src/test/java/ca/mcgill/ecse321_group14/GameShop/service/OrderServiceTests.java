@@ -22,6 +22,7 @@ import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.OrderRepository;
 
 
+
 @SpringBootTest
 public class OrderServiceTests {
 
@@ -81,7 +82,7 @@ public class OrderServiceTests {
     public void testGetOrder() {
         // Arrange
         Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
-        Order order = new Order(LocalDate.now(), person);
+        Order order = new Order(LocalDate.now(), person,false);
     
         // Stub the repository to return the order when queried with the order's ID
         when(orderRepository.findOrderById(order.getId())).thenReturn(order);

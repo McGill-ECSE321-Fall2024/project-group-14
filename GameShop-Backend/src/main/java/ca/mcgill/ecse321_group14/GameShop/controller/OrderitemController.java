@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import ca.mcgill.ecse321_group14.GameShop.model.Orderitem;
 import ca.mcgill.ecse321_group14.GameShop.service.GameService;
 import ca.mcgill.ecse321_group14.GameShop.service.OrderService;
 import ca.mcgill.ecse321_group14.GameShop.service.OrderitemService;
-
+@CrossOrigin(origins = "*")
 @RestController
 public class OrderitemController {
     
@@ -106,4 +107,5 @@ public class OrderitemController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Returns 404 if orderId not found
         }
     }
+    
 }

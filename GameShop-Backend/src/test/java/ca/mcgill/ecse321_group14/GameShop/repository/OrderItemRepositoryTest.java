@@ -1,19 +1,19 @@
 package ca.mcgill.ecse321_group14.GameShop.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.sql.Date;
 
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ca.mcgill.ecse321_group14.GameShop.model.Orderitem;
+
+import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Order;
-import ca.mcgill.ecse321_group14.GameShop.model.Customer;
+import ca.mcgill.ecse321_group14.GameShop.model.Orderitem;
 
 @SpringBootTest
 public class OrderItemRepositoryTest {
@@ -44,7 +44,7 @@ public class OrderItemRepositoryTest {
         Customer customer = new Customer("password", "email", "username", 123456, Date.valueOf("2015-12-07"), "address"); // create a new customer
         customer = customerRepository.save(customer);
 
-        Order order = new Order(null, customer); // create a new order
+        Order order = new Order(null, customer, false); // create a new order
         order = orderRepository.save(order);
 
         

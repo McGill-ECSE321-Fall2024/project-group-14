@@ -49,7 +49,7 @@ public class OrderitemServiceTests {
         // Arrange
         Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
         Game game = new Game("aName", "aDescription", "aCategory", 10, 10, Game.Rating.G, "aPicture");
-        Order order = new Order(LocalDate.now(), person);
+        Order order = new Order(LocalDate.now(), person,false);
         Orderitem.Key orderitemKey = new Orderitem.Key(game, order);
         
         when(orderitemRepository.findOrderitemByKey(orderitemKey)).thenReturn(null);
@@ -70,7 +70,7 @@ public class OrderitemServiceTests {
         // Arrange
         Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
         Game game = new Game("aName", "aDescription", "aCategory", 10, 10, Game.Rating.G, "aPicture");
-        Order order = new Order(LocalDate.now(), person);
+        Order order = new Order(LocalDate.now(), person,false);
         Orderitem existingOrderitem = new Orderitem(new Orderitem.Key(game, order));
         
         when(orderitemRepository.findOrderitemByKey(new Orderitem.Key(game, order))).thenReturn(existingOrderitem);
@@ -89,7 +89,7 @@ public class OrderitemServiceTests {
         // Arrange
         Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
         Game game = new Game("aName", "aDescription", "aCategory", 10, 10, Game.Rating.G, "aPicture");
-        Order order = new Order(LocalDate.now(), person);
+        Order order = new Order(LocalDate.now(), person,false);
         Orderitem orderitem = new Orderitem(new Orderitem.Key(game, order));
         
         when(orderitemRepository.findOrderitemByKey(new Orderitem.Key(game, order))).thenReturn(orderitem);
@@ -106,7 +106,7 @@ public class OrderitemServiceTests {
         // Arrange
         Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
         Game game = new Game("aName", "aDescription", "aCategory", 10, 10, Game.Rating.G, "aPicture");
-        Order order = new Order(LocalDate.now(), person);
+        Order order = new Order(LocalDate.now(), person,false);
         Orderitem orderitem = new Orderitem(new Orderitem.Key(game, order));
         
         when(orderitemRepository.findOrderitemByKey(new Orderitem.Key(game, order))).thenReturn(orderitem);
@@ -124,7 +124,7 @@ public class OrderitemServiceTests {
         // Arrange
         int orderId = 1;
         Customer person = new Customer("password", "customer@gmail.com", "username", 123456789, Date.valueOf("2015-12-07"), "address");
-        Order order = new Order(LocalDate.now(), person);
+        Order order = new Order(LocalDate.now(), person,false);
         Game game = new Game("aName", "aDescription", "aCategory", 10, 10, Game.Rating.G, "aPicture");
         Orderitem orderitem = new Orderitem(new Orderitem.Key(game, order));
         

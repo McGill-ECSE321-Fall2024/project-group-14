@@ -32,7 +32,7 @@ public class OrderRepositoryTest {
         // Arrange
         Customer customer = new Customer("password", "email", "username", 123456, Date.valueOf("2015-12-07"), "address"); // create a new customer
         customer = customerRepository.save(customer); 
-        Order order = new Order(LocalDate.now(), customer); // create a new order
+        Order order = new Order(LocalDate.now(), customer,false); // create a new order
         order = orderRepository.save(order); // save the order
         int id = order.getId(); // get the id of the order
 

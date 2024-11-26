@@ -65,7 +65,7 @@ public class OrderitemIntegrationTest {
         assertTrue(customerRepository.existsById(customerId));
         assertTrue(customerId>0,"Customer id is not valid");
 
-        Order order = new Order(LocalDate.now(), person);
+        Order order = new Order(LocalDate.now(), person, false);
         order = orderRepository.save(order);
         orderId = order.getId();
         assertTrue(orderRepository.existsById(orderId));
