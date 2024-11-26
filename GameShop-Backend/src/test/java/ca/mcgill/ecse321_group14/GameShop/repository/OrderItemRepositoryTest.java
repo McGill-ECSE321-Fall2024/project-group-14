@@ -16,7 +16,7 @@ import ca.mcgill.ecse321_group14.GameShop.model.Order;
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 
 @SpringBootTest
-public class OrderitmeRepositoryTest {
+public class OrderItemRepositoryTest {
     @Autowired
     private OrderitemRepository OrderitemRepository;
     @Autowired

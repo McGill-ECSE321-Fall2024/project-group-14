@@ -1,11 +1,8 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
 
-<<<<<<< HEAD:GameShop-Backend/src/main/java/ca/mcgill/ecse321_group14/GameShop/service/PromotionService.java
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-=======
->>>>>>> main:src/main/java/ca/mcgill/ecse321_group14/GameShop/service/PromotionService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +73,6 @@ public class PromotionService {
         }
     }
 
-<<<<<<< HEAD:GameShop-Backend/src/main/java/ca/mcgill/ecse321_group14/GameShop/service/PromotionService.java
     @Transactional
     public List<Promotion> getAllPromotions(){
        List<Promotion> promotions = promotionRepository.findAll();
@@ -85,7 +81,4 @@ public class PromotionService {
        }
          return promotions;
     }
-=======
-
->>>>>>> main:src/main/java/ca/mcgill/ecse321_group14/GameShop/service/PromotionService.java
 }

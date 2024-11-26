@@ -35,9 +35,6 @@ tasks.named('test') {
  	}
 	finalizedBy jacocoTestReport
 }
-<<<<<<< HEAD:GameShop-Backend/build.gradle
-<<<<<<< Updated upstream:build.gradle
-=======
 
 tasks.named('jacocoTestReport') {
     dependsOn test // tests are required to run before generating the report
@@ -46,10 +43,5 @@ tasks.named('jacocoTestReport') {
 tasks.withType(JavaCompile) {
     options.compilerArgs += ['-parameters']
 }
->>>>>>> Stashed changes:GameShop-Backend/build.gradle
-=======
 
-tasks.named('jacocoTestReport') {
-    dependsOn test // tests are required to run before generating the report
-}
->>>>>>> main:build.gradle
+
