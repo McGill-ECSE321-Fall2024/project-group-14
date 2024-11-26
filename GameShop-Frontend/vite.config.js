@@ -15,11 +15,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-<<<<<<< HEAD
 
   server:{
     port: 8087
   }
-=======
->>>>>>> main
 })
