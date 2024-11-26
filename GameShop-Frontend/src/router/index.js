@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ManagerPromotion from '../views/ManagerPromotionView.vue';
-import CustomerOrderView from '@/views/CustomerOrderView.vue';
+import ManagerPromotion from '../views/Manager/ManagerPromotionView.vue';
+import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 // Create the router instance
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
