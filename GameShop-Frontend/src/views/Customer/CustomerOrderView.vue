@@ -63,7 +63,7 @@
                               <button class="btn payButton" @click="payOrder(order?.orderId)":disabled="order?.paid">Pay</button>
                             </td>
                             <td class="text-center" style="background: white; min-width: 90px">
-                              <button class="btn cancelButton" :class="order.paid ? 'refunButton' : 'cancelButton'" @click="order.paid ? refundOrder(order?.orderId) : cancelOrder(order?.orderId)"> {{ order.paid ? 'Refund' : 'Cancel' }}</button>
+                              <button class="btn cancelButton" :class="order.paid ? 'refunButton' : 'cancelButton'" @click="order.paid ? refundOrder(order?.orderId) : deleteOrder(order?.orderId)"> {{ order.paid ? 'Refund' : 'Cancel' }}</button>
                             </td>
                           </tr>
                         </tbody>

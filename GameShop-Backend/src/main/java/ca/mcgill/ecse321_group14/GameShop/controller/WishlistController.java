@@ -1,5 +1,18 @@
 package ca.mcgill.ecse321_group14.GameShop.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import ca.mcgill.ecse321_group14.GameShop.dto.WishlistDto;
 import ca.mcgill.ecse321_group14.GameShop.dto.WishlistListDto;
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
@@ -8,14 +21,8 @@ import ca.mcgill.ecse321_group14.GameShop.model.Wishlist;
 import ca.mcgill.ecse321_group14.GameShop.service.CustomerService;
 import ca.mcgill.ecse321_group14.GameShop.service.GameService;
 import ca.mcgill.ecse321_group14.GameShop.service.WishlistService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+@CrossOrigin(origins = "*")
 @RestController
 public class WishlistController {
     @Autowired
