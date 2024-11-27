@@ -17,10 +17,13 @@
                 <a class="nav-link" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Login">LogIn</a>
+                <a class="nav-link clickable-text" @click="Orders">Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="SignUp">SignUp</a>
+                <a class="nav-link clickable-text" @click="Account">Account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
               </li>
             </ul>
           </div>
@@ -32,7 +35,7 @@
           <div class="col-md-12 mx-auto text-center">
             <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px" >GAMESHOP</h1>
             <p class="luxurious-text" style="font-weight: normal; color: #fff;">buy games</p>
-            <button class="btn btn-lg mt-3 custom-login-button" @click="CreateAccountSuggestion">Browse Games</button>
+            <button class="btn btn-lg mt-3 custom-login-button" @click="BrowseGames">Browse Games</button>
           </div>
         </div>
       </div>
@@ -101,22 +104,29 @@
 <script>
 
 export default {
-  name: 'Home',
+  name: 'CustomerHome',
   data() {
     return {
-      isLoggedIn: false,
+      email: "",
     };
   },
+  mounted(){
+    this.email = this.$route.params.param1
+  },
   methods: {
-    async Login() {
-      await this.$router.push({path: '/Login/'})
+    async Orders() {
+      await this.$router.push({path: '/customer/orders/' + this.email})
     },
-    async SignUp() {
-      await this.$router.push({path: '/SignUp/'})
+    async Account() {
+      await this.$router.push({path: '/CustomerAccount/' + this.email})
     },
-    async CreateAccountSuggestion(){
-      await this.$router.push({name: 'CreateAccountSuggestion'})
+    async LogOut() {
+      alert('Successfully logged out.')
+      await this.$router.push({name: 'home'})
     },
+    async BrowseGames(){
+      await this.$router.push({path: '/CustomerBrowseGames/' + this.email})
+    }
   }
 };
 </script>
