@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins="*")
 @RestController
 public class AccountController {
     @Autowired
@@ -65,6 +66,27 @@ public class AccountController {
             return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/employees/{pemail}")
+    public ResponseEntity<PersonDto> findEmployeeByEmail(@PathVariable String pemail) throws Exception{
+        Employee employee;
+        try {
+            employee = employeeService.getEmployeeByEmail(pemail);
+            return new ResponseEntity<>(new PersonDto(employee), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/customers/{pemail}")
+    public ResponseEntity<CustomerDto> findCustomerByEmail(@PathVariable String pemail) throws Exception{
+        Customer customer;
+        try {
+            customer = customerService.getCustomerByEmail(pemail);
+            return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(new CustomerDto(), HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/managers/{pid}")
     public ResponseEntity<PersonDto> findManagerById(@PathVariable String pid) throws Exception{
         int id;
@@ -79,6 +101,16 @@ public class AccountController {
         Manager manager;
         try {
             manager = managerService.getManagerById(id);
+            return new ResponseEntity<>(new PersonDto(manager), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/managers/{pemail}")
+    public ResponseEntity<PersonDto> findManagerByEmail(@PathVariable String pemail) throws Exception{
+        Manager manager;
+        try {
+            manager = managerService.getManagerByEmail(pemail);
             return new ResponseEntity<>(new PersonDto(manager), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
