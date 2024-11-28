@@ -2,7 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 import ManagerPromotion from '../views/Manager/ManagerPromotionView.vue';
 import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 import CustomerWishListView from '@/views/Customer/CustomerWishListView.vue';
-// Create the router instance
+import HomeView from '../views/HomeView.vue'
+import SignUp from '../views/SignUp.vue'
+import Login from '../views/Login.vue'
+import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
+import CustomerHome from "@/views/customer/CustomerHome.vue";
+
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
@@ -24,7 +29,23 @@ const router = createRouter({
       name: 'CustomerWishListView',
       component: CustomerWishListView,
       props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
+      path: '/SignUp/',
+      component: SignUp
     },
+    {
+      path: '/Login/',
+      component: Login
+    },
+    {
+      path: '/CreateAccountSuggestion',
+      name: 'CreateAccountSuggestion',
+      component: CreateAccountSuggestion
+    },
+    {
+      path: '/CustomerHome/:param1',
+      name: 'CustomerHome',
+      component: CustomerHome
+    }
   ],
 });
 
