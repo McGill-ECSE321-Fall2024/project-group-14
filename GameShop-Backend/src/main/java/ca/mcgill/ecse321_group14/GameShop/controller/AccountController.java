@@ -77,7 +77,7 @@ public class AccountController {
             return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/customers/{pemail}")
+    @GetMapping("/customersEmail/{pemail}")
     public ResponseEntity<CustomerDto> findCustomerByEmail(@PathVariable String pemail) throws Exception{
         Customer customer;
         try {
