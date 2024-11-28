@@ -13,6 +13,11 @@ const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
     {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+    },
+    {
       path: '/1',
       name: 'ManagerPromotion',
       component: ManagerPromotion,
