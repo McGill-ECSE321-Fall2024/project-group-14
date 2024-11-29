@@ -6,7 +6,7 @@
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
-            <img src="@/assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -62,14 +62,14 @@
       <div class="row">
         <!-- Column 1 -->
         <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-          <img src="@/assets/purchaseGamesImg.jpg" alt="Image 1" class="img-fluid mb-3">
+          <img src="../../assets/purchaseGamesImg.jpg" alt="Image 1" class="img-fluid mb-3">
           <p class="text-center" style="font-family: 'Montserrat', serif; color: #888; letter-spacing: 2px; font-weight: bold">PURCHASE GAMES</p>
           <p class="text-center" style="font-family: 'Georgia', sans-serif">Easily purchase your favorite games at GameShop with a seamless checkout process designed for quick and secure transactions. Dive straight into your next gaming adventure with just a few clicks!</p>
         </div>
 
         <!-- Column 2 -->
         <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-          <img src="@/assets/wishlistLogo.png" alt="Image 2" class="img-fluid mb-3">
+          <img src="../../assets/wishlistLogo.png" alt="Image 2" class="img-fluid mb-3">
           <p class="text-center" style="font-family: 'Montserrat', serif; color: #888; letter-spacing: 2px; font-weight: bold">WISHLIST</p>
           <p class="text-center" style="font-family: 'Georgia', sans-serif">
             GameShop's wishlist feature lets you save your favorite games for future purchases, making it easier to keep track of what you love. Plan your next gaming spree and never lose sight of the titles you want most!</p>
@@ -77,7 +77,7 @@
 
         <!-- Column 3 -->
         <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-          <img src="@/assets/gameReviewImg.jpg" alt="Image 3" class="img-fluid mb-3">
+          <img src="../../assets/gameReviewImg.jpg" alt="Image 3" class="img-fluid mb-3">
           <p class="text-center" style="font-family: 'Montserrat', serif; color: #888; letter-spacing: 2px; font-weight: bold">GAME REVIEWS</p>
           <p class="text-center" style="font-family: 'Georgia', sans-serif">GameShop allows customers to share their gaming experiences by posting reviews for the games they've purchased. Discover honest feedback from fellow gamers to help make your next gaming choice even better!</p>
 
@@ -85,7 +85,7 @@
 
         <!-- Column 4 -->
         <div class="col-md-3 shadow p-3 mb-5 bg-white rounded">
-          <img src="@/assets/browseGamesImg.png" alt="Image 4" class="img-fluid mb-3">
+          <img src="../../assets/browseGamesImg.png" alt="Image 4" class="img-fluid mb-3">
           <p class="text-center" style="font-family: 'Montserrat', serif; color: #888; letter-spacing: 2px; font-weight: bold">BROWSE GAMES</p>
           <p class="text-center" style="font-family: 'Georgia', sans-serif">Explore GameShop's vast collection of games with ease through its intuitive browsing interface. Quickly find your favorite titles or discover new ones using filters like category, genre, and popularity.</p>
         </div>
@@ -95,7 +95,7 @@
     <div class="footer-container">
       <footer class="footer transparent-background">
         <div class="d-flex align-items-center justify-content-center">
-          <img src="@/assets/gameshopLogo.jpg" alt="Your Logo" height="65">
+          <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="65">
         </div>
         <div class="d-flex align-items-center justify-content-center">
           <p class="text-right" style="font-size: 10px">©The Gameshop 2024. All Right Reserved.</p>
@@ -149,7 +149,7 @@ export default {
 }
 
 .hero-section {
-  background: url('@/assets/gameshopBackground.jpg') center/cover no-repeat;
+  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
   padding: 300px 0;
   text-align: center;
 }
