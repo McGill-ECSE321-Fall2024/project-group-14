@@ -5,7 +5,7 @@
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
-            <img src="@/assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -60,7 +60,7 @@
     <div class="footer-container">
       <footer class="footer">
         <div class="d-flex align-items-center justify-content-center">
-          <img src="@/assets/gameshopLogo.jpg" alt="Your Logo" height="65">
+          <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="65">
         </div>
         <div class="d-flex align-items-center justify-content-center">
           <p class="text-right" style="font-size: 10px">©GameShop 2024. All Rights Reserved.</p>
@@ -114,7 +114,7 @@ export default {
 }
 
 .hero-section {
-  background: url('@/assets/gameshopBackground.jpg') center/cover no-repeat;
+  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
   padding: 400px 0;
   text-align: center;
 }

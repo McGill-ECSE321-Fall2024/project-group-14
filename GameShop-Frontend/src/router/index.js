@@ -9,6 +9,7 @@ import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
 import CustomerHome from "@/views/customer/CustomerHome.vue";
 import CustomerBrowseGames from "@/views/customer/CustomerBrowseGames.vue";
 import EmployeeHome from "@/views/employee/EmployeeHome.vue";
+import ManagerHome from "@/views/Manager/ManagerHome.vue";
 
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
@@ -64,6 +65,11 @@ const router = createRouter({
       name: 'EmployeeHome',
       component: EmployeeHome
     },
+    {
+      path: '/ManagerHome/:param1',
+        name: 'ManagerHome',
+        component: ManagerHome
+    }
   ],
 });
 
