@@ -20,6 +20,10 @@
                 <a class="nav-link clickable-text" @click="Orders">Orders</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
+              </li>
+
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
@@ -115,7 +119,10 @@ export default {
   },
   methods: {
     async Orders() {
-      await this.$router.push({path: '/customer/orders/' + this.email})
+      await this.$router.push({path: '/orders/' + this.email})
+    },
+    async Wishlist() {
+      await this.$router.push({path: '/wishlist/' + this.email})
     },
     async Account() {
       await this.$router.push({path: '/CustomerAccount/' + this.email})
