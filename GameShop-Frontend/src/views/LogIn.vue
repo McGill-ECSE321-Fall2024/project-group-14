@@ -113,17 +113,19 @@ export default {
       const requestBody = {
         email: this.email,
         password: this.password,
+        username: this.username
       };
 
       axiosClient
           .post(loginEndpoint[this.user], requestBody)
           .then((response) => {
+            this.username = response.data.username;
             alert("Successfully logged in.");
             // Redirect to the respective home page based on the user type
             if (this.user === "Customer") {
               this.$router.push({ path: `/CustomerHome/${this.email}` });
             } else if (this.user === "Employee") {
-              this.$router.push({ path: `/EmployeeHome/${this.email}` });
+              this.$router.push({ path: `/EmployeeHome/${this.email}/${this.username}` });
             } else if (this.user === "Manager") {
               this.$router.push({ path: `/ManagerHome/${this.email}` });
             }

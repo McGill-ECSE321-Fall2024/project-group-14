@@ -8,6 +8,7 @@ import Login from '../views/Login.vue'
 import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
 import CustomerHome from "@/views/customer/CustomerHome.vue";
 import CustomerBrowseGames from "@/views/customer/CustomerBrowseGames.vue";
+import EmployeeHome from "@/views/employee/EmployeeHome.vue";
 
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
@@ -57,6 +58,11 @@ const router = createRouter({
       name: 'CustomerBrowseGames',
       component: CustomerBrowseGames,
       props: true, // Pass the email as a prop to the component
+    },
+    {
+      path: '/EmployeeHome/:param1/:param2',
+      name: 'EmployeeHome',
+      component: EmployeeHome
     },
   ],
 });
