@@ -77,6 +77,16 @@ const router = createRouter({
       component: EmployeeHome
     },
     {
+      path: '/EmployeeViewGames/:param1/:param2',
+      name: 'EmployeeViewGames',
+      component: EmployeeViewGames
+    },
+    {
+      path: '/EmployeeViewOrders/:param1/:param2',
+      name: 'EmployeeViewOrders',
+      component: EmployeeViewOrders
+    },
+    {
       path: '/ManagerHome/:param1',
       name: 'ManagerHome',
       component: ManagerHome

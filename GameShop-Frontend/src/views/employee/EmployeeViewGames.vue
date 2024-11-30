@@ -1,132 +1,100 @@
 <template>
-  <div>
-    <div id="main"></div>
-    <div class="hero-section">
-      <!-- Navbar -->
-      <div class="navbar-container">
-        <nav class="navbar navbar-expand-lg navbar-light transparent-background">
-          <a class="navbar-brand" href="#">
-            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-              <!-- Using @click methods for navigation -->
-              <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Home">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Account">Account</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="#">View Games<span class="sr-only"></span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-
-      <!-- Page Content -->
-      <div class="container content-container">
-        <div class="row mt-5">
-          <!-- Manage Current Games Section -->
-          <div class="col-md-12">
-            <div class="card viewGames-container shadow">
-              <div class="card-header text-center">
-                <h3>GAMES</h3>
-              </div>
-              <div class="card-body">
-                <div class="table-scroll">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Rating</th>
-                        <th>Update</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(game, index) in games" :key="game.id">
-                        <td>{{ game.id }}</td>
-                        <td>
-                          <input
-                            v-model="game.name"
-                            :readonly="editingGameId !== game.id"
-                            class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            v-model="game.price"
-                            :readonly="editingGameId !== game.id"
-                            class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            v-model="game.category"
-                            :readonly="editingGameId !== game.id"
-                            class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <textarea
-                            v-model="game.description"
-                            :readonly="editingGameId !== game.id"
-                            class="form-control"
-                          ></textarea>
-                        </td>
-                        <td>
-                          <input
-                            v-model="game.rating"
-                            :readonly="editingGameId !== game.id"
-                            class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <button
-                            class="btn btn-warning btn-sm"
-                            v-if="editingGameId !== game.id"
-                            @click="enableEditing(game.id)"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            class="btn btn-success btn-sm"
-                            v-else
-                            @click="saveGame(game)"
-                          >
-                            Save
-                          </button>
-                        </td>
-                      </tr>
-                      <tr v-if="games.length === 0">
-                        <td colspan="7" class="text-center">No games found.</td>
-                      </tr>
-                    </tbody>
-                  </table>
+    <div>
+      <div id="main"></div>
+      <div class="hero-section">
+        <!-- Navbar -->
+        <div class="navbar-container">
+          <nav class="navbar navbar-expand-lg navbar-light transparent-background">
+            <a class="navbar-brand" href="#">
+              <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link clickable-text" @click="Home">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link clickable-text" @click="Employee">Account</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">View Games</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                </li>
+                <li>
+                  <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+  
+        <!-- Page Content -->
+        <div class="container content-container">
+          <div class="row mt-5">
+            <!-- View Current Games Section -->
+            <div class="col-md-12">
+              <div class="card viewGames-container shadow">
+                <div class="card-header text-center">
+                  <h3>GAMES</h3>
+                </div>
+                <div class="card-body">
+                  <div class="table-scroll">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Number</th>
+                          <th>Title</th>
+                          <th>Price</th>
+                          <th>Category</th>
+                          <th>Description</th>
+                          <th>Rating</th>
+                          <th>Update</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="(game, index) in games"
+                          :key="index"
+                          @click="selectGame(game.id)"
+                          :class="{ 'selected-row': selectedGameId === game.id }"
+                        >
+                          <td>{{ game.id }}</td>
+                          <td>{{ game.title }}</td>
+                          <td>{{ game.price }}</td>
+                          <td>{{ game.category }}</td>
+                          <td>{{ game.description }}</td>
+                          <td>{{ game.rating }}</td>
+                          <td>
+                            <button
+                              class="btn btn-warning btn-sm"
+                              @click.stop="editGame(game.id)"
+                            >
+                              Edit
+                            </button>
+                          </td>
+                        </tr>
+                        <tr v-if="games.length === 0">
+                          <td colspan="7" class="text-center">No games found.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -145,160 +113,114 @@
         </footer>
       </div>
     </div>
-  </div>
-</template>
-
-<script>
-import axios from "axios";
-
-const backendUrl = "http://localhost:8060";
-
-export default {
-  name: "EmployeeViewGames",
-  data() {
-    return {
-      games: [],
-      editingGameId: null,
-      email: "",
-      username: ""
-    };
-  },
-  mounted() {
-    this.email = this.$route.params.param1 || "";
-    this.username = this.$route.params.param2 || "";
-    this.fetchAllGames();
-  },
-  methods: {
-    async fetchAllGames() {
-      try {
-        console.log("Fetching all games...");
-        const response = await axios.get(`${backendUrl}/games`);
-        this.games = response.data.games || []; 
-        console.log("Games fetched successfully:", this.games);
-      } catch (error) {
-        console.error("Error fetching games:", error);
-        alert("Failed to fetch games.");
-      }
-    },
-
-    // enable editing for a specific game
-    enableEditing(gameId) {
-      this.editingGameId = gameId;
-    },
-
-    // save the updated game
-    async saveGame(game) {
-      const requestBody = {
-        id: game.id,
-        name: game.name,
-        description: game.description,
-        category: game.category,
-        price: game.price,
-        rating: game.rating,
-        quantity: 0, 
-        picture: "image-url.jpg", // placeholder ?
+  </template>
+  
+  <script>
+  import axios from "axios";
+  
+  const axiosClient = axios.create({
+    baseURL: "http://localhost:8080",
+    headers: { "Access-Control-Allow-Origin": "*" },
+  });
+  
+  export default {
+    data() {
+      return {
+        games: [], 
+        selectedGameId: null,
       };
-
-      try {
-        console.log("Updating game with:", requestBody);
-        await axios.post(`${backendUrl}/game/updatebyid`, requestBody);
-        alert(`Game "${game.name}" has been successfully updated.`);
-        this.editingGameId = null; 
-        this.fetchAllGames(); 
-      } catch (error) {
-        console.error("Error updating game:", error);
-        alert("Failed to update the game.");
-      }
     },
-
-    // Navigation Methods
-    async Home() {
-      await this.$router.push({ path: `/EmployeeHome/${this.email}/${this.username}` });
+    methods: {
+      fetchAllGames() {
+        axiosClient
+          .get("/games")
+          .then((response) => {
+            this.games = response.data.dtos;
+            console.log("Fetched games:", this.games); 
+          })
+          .catch((error) => {
+            console.error("Error fetching games:", error);
+          });
+      },
+      editGame(gameId) {
+        alert(`Editing game ID: ${gameId}`);
+        
+      },
+      selectGame(gameId) {
+        this.selectedGameId = gameId;
+      },
+      Home() {
+        this.$router.push("/home");
+      },
+      Employee() {
+        this.$router.push(`/EmployeeAccount/${this.$route.params.param1}/${this.$route.params.param2}`);
+      },
+      SubmitGameRequest() {
+        this.$router.push(`/EmployeeGameRequest/${this.$route.params.param1}/${this.$route.params.param2}`);
+      },
+      ViewOrders() {
+        this.$router.push(`/EmployeeViewOrders/${this.$route.params.param1}/${this.$route.params.param2}`);
+      },
+      LogOut() {
+        alert("Successfully logged out.");
+        this.$router.push("/home");
+      },
     },
-    async Account() {
-      await this.$router.push({ path: `/EmployeeAccount/${this.email}/${this.username}` });
+    mounted() {
+      this.fetchAllGames(); 
     },
-    async SubmitGameRequest() {
-      await this.$router.push({ path: `/EmployeeGameRequest/${this.email}/${this.username}` });
-    },
-    async ViewOrders() {
-      await this.$router.push({ path: `/EmployeeViewOrders/${this.email}/${this.username}` });
-    },
-    async LogOut() {
-      alert('Successfully logged out.');
-      await this.$router.push({ name: 'home' });
-    }
-  },
-};
-</script>
-
-<style scoped>
-.navbar-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.navbar-brand {
-  margin-right: 0;
-}
-
-.nav-link {
-  color: white !important;
-}
-
-.transparent-background {
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
-.hero-section {
-  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
-  padding: 200px 0;
-  text-align: center;
-  min-height: 100vh;
-}
-
-.content-container {
-  margin-top: 100px;
-}
-
-.viewGames-container {
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.table-scroll {
-  height: 300px;
-  overflow-y: auto;
-}
-
-.btn-sm {
-  padding: 5px 10px;
-  font-size: 14px;
-}
-
-.footer-container {
-  position: relative;
-  margin-top: 100px;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: rgba(136, 136, 136, 0.2);
-  padding-top: 15px;
-}
-
-.clickable-text:hover {
-  cursor: pointer;
-  color: white !important;
-}
-
-.selected-row {
-  background-color: #f0f0f0;
-}
-</style>
-
+  };
+  </script>
+  
+  <style scoped>
+  .navbar-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .navbar-brand {
+    margin-right: 0;
+  }
+  
+  .nav-link {
+    color: white !important;
+  }
+  
+  .transparent-background {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .hero-section {
+    background: url("../../assets/gameshopBackground.jpg") center/cover no-repeat;
+    padding: 200px 0;
+    text-align: center;
+    min-height: 100vh; 
+  }
+  
+  .content-container {
+    margin-top: 200px;
+  }
+  
+  .viewGames-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .table-scroll {
+    height: 300px;
+    overflow-y: auto;
+  }
+  
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  
+  .selected-row {
+    background-color: #f0f0f0;
+  }
+  </style>
+  
