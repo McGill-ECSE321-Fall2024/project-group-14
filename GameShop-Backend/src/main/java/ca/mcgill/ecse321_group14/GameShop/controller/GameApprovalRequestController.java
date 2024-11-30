@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins="*")
 @RestController
 public class GameApprovalRequestController {
 
@@ -31,6 +32,9 @@ public class GameApprovalRequestController {
     @PostMapping("/gameapproval")
     public ResponseEntity<GameApprovalRequestDto> createGameApprovalRequest(@RequestBody GameApprovalRequestDto gameApprovalRequestDto) {
         try {
+            if (gameApprovalRequestDto.getStatus() == null) {
+                gameApprovalRequestDto.setStatus(GameApprovalRequest.Status.PendingApproval); // Default to PendingApproval
+            }
             GameApprovalRequest createdRequest = gameApprovalService.createGameApprovalRequest(
                 gameApprovalRequestDto.getName(),
                 gameApprovalRequestDto.getDescription(),

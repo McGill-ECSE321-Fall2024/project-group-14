@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import ca.mcgill.ecse321_group14.GameShop.model.Manager;
 import ca.mcgill.ecse321_group14.GameShop.repository.ManagerRepository;
 import jakarta.transaction.Transactional;
-
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 @Service
 public class ManagerService {
     
@@ -89,5 +91,18 @@ public class ManagerService {
         }
         return manager.getPassword().equals(password) && manager.getEmail().equals(email);
     }
+    @Transactional
+    public Manager getSingleManager() {
+        List<Manager> managers = StreamSupport.stream(managerRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+
+        if (managers.isEmpty()) {
+            throw new IllegalArgumentException("No managers found in the database.");
+        }
+
+        // Assuming there is only one manager, return the first one
+        return managers.get(0);
+    }
+
 
 }

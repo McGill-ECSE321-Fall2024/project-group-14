@@ -15,6 +15,7 @@ public class GameApprovalRequestDto {
     // Default constructor
     public GameApprovalRequestDto() {}
 
+
     // Parameterized constructor
     public GameApprovalRequestDto(int id, String name, String description, String category, String picture,
                                   Status status, Integer requestCreatorId, Integer requestApproverId) {
@@ -37,6 +38,15 @@ public class GameApprovalRequestDto {
         this.status = status;
         this.requestCreatorId = requestCreatorId;
         this.requestApproverId = requestApproverId;
+    }
+    public GameApprovalRequestDto(String name, String description, String category, Integer requestCreatorId, Integer RequestApproverId, String picture) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.status = Status.PendingApproval;
+        this.requestCreatorId = requestCreatorId;
+        this.requestApproverId = RequestApproverId;
+        this.picture = picture;
     }
 
     // Getters and Setters
@@ -85,8 +95,7 @@ public class GameApprovalRequestDto {
     }
 
     public void setStatus(Status status) {
-        this.status = status;
-    }
+        this.status = (status == null) ? Status.PendingApproval : status;}
 
     public Integer getRequestCreatorId() {
         return requestCreatorId;
