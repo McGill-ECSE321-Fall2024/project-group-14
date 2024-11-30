@@ -147,6 +147,10 @@ export default {
             status: request.status,
           }));
           console.log("Fetched game requests:", this.gameRequests); 
+<<<<<<< HEAD
+=======
+        })
+>>>>>>> 1efd02f (Did ViewOrders page)
         .catch((error) => {
           console.error("Error fetching game requests:", error);
         });
@@ -186,7 +190,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchGameRequests(); // fetch game requests when the page is loaded
+    this.fetchGameRequests(); 
   },
 };
 </script>
