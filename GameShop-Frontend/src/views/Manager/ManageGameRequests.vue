@@ -9,41 +9,41 @@
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
           </a>
           <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('Home')">Home</a>
+                <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ManageEmployees')">Manage Employees</a>
+                <a class="nav-link clickable-text" @click="ManagerManageEmployees">Manage Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ManagePolicy')">Manage Policy</a>
+                <a class="nav-link clickable-text" @click="ManagePolicy">Manage Policy</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ManageGames')">Manage Games</a>
+                <a class="nav-link clickable-text" @click="ManageGames">Manage Games</a>
               </li>
               <li class="nav-item active">
                 <a class="nav-link" href="#">Manage Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
+                <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ViewOrders')">View Orders</a>
+                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
+                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
               </li>
             </ul>
           </div>
@@ -62,49 +62,49 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Request ID</th>
-                      <th>Employee</th>
-                      <th>Title</th>
-                      <th>Category</th>
-                      <th>Description</th>
-                      <th>Picture</th>
-                      <th>Status</th>
-                    </tr>
+                      <tr>
+                        <th>Request ID</th>
+                        <th>Employee</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Picture</th>
+                        <th>Status</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(request, index) in gameRequests" :key="index">
-                      <td>{{ request.id }}</td>
-                      <td>
-                        <div class="column-container">
-                          <label>{{ request.employeeName }}</label>
-                          <label class="prettylabel">{{ request.employeeEmail }}</label>
-                        </div>
-                      </td>
-                      <td>{{ request.title }}</td>
-                      <td>{{ request.category }}</td>
-                      <td>{{ request.description }}</td>
-                      <td>
-                        <img :src="request.picture" alt="Game Picture" class="game-picture" />
-                      </td>
-                      <td>
-                        <button
+                      <tr v-for="(request, index) in gameRequests" :key="index">
+                        <td>{{ request.id }}</td>
+                        <td>
+                          <div class="column-container">
+                            <label>{{ request.employeeName }}</label>
+                            <label class="prettylabel">{{ request.employeeEmail }}</label>
+                          </div>
+                        </td>
+                        <td>{{ request.title }}</td>
+                        <td>{{ request.category }}</td>
+                        <td>{{ request.description }}</td>
+                        <td>
+                          <img :src="request.picture" alt="Game Picture" class="game-picture" />
+                        </td>
+                        <td>
+                          <button
                             class="btn btn-success btn-sm"
                             @click.stop="updateStatus(request.id, 'Approved')"
-                        >
-                          Accept
-                        </button>
-                        <button
+                          >
+                            Accept
+                          </button>
+                          <button
                             class="btn btn-danger btn-sm"
                             @click.stop="updateStatus(request.id, 'Rejected')"
-                        >
-                          Decline
-                        </button>
-                      </td>
-                    </tr>
-                    <tr v-if="gameRequests.length === 0">
-                      <td colspan="7" class="text-center">No game requests found.</td>
-                    </tr>
+                          >
+                            Decline
+                          </button>
+                        </td>
+                      </tr>
+                      <tr v-if="gameRequests.length === 0">
+                        <td colspan="7" class="text-center">No game requests found.</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -128,62 +128,65 @@ const axiosClient = axios.create({
 export default {
   data() {
     return {
-      gameRequests: [],
-      managerEmail: "",
+      gameRequests: [], 
     };
   },
   methods: {
     fetchGameRequests() {
       axiosClient
-          .get("/gameapproval")
-          .then((response) => {
-            this.gameRequests = response.data.map((request) => ({
-              id: request.id,
-              employeeName: request.requestCreatorName,
-              employeeEmail: request.requestCreatorEmail,
-              title: request.name,
-              category: request.category,
-              description: request.description,
-              picture: request.picture,
-              status: request.status,
-            }));
-            console.log("Fetched game requests:", this.gameRequests);
-          })
-          .catch((error) => {
-            console.error("Error fetching game requests:", error);
-          });
+        .get("/gameapproval")
+        .then((response) => {
+          this.gameRequests = response.data.map((request) => ({
+            id: request.id,
+            employeeName: request.requestCreatorName,
+            employeeEmail: request.requestCreatorEmail,
+            title: request.name,
+            category: request.category,
+            description: request.description,
+            picture: request.picture,
+            status: request.status,
+          }));
+          console.log("Fetched game requests:", this.gameRequests); 
+        .catch((error) => {
+          console.error("Error fetching game requests:", error);
+        });
     },
     updateStatus(requestId, status) {
       axiosClient
-          .put(`/gameapproval/${requestId}`, { status })
-          .then(() => {
-            alert(`Request has been ${status.toLowerCase()}!`);
-            this.fetchGameRequests();
-          })
-          .catch((error) => {
-            console.error(`Error updating status to ${status}:`, error);
-          });
+        .put(`/gameapproval/${requestId}`, { status })
+        .then(() => {
+          alert(`Request has been ${status.toLowerCase()}!`);
+          this.fetchGameRequests(); 
+        })
+        .catch((error) => {
+          console.error(`Error updating status to ${status}:`, error);
+        });
     },
-    navigateTo(route) {
-      const routes = {
-        Home: `/ManagerHome/${this.managerEmail}`,
-        ManageEmployees: `/ManageEmployees/${this.managerEmail}`,
-        ManagePolicy: `/ManagePolicy/${this.managerEmail}`,
-        ManageGames: `/ManageGames/${this.managerEmail}`,
-        ManageGameRequests: `/ManageGameRequests/${this.managerEmail}`,
-        Account: `/CustomerAccount/${this.managerEmail}`,
-        ViewOrders: `/ViewOrders/${this.managerEmail}`,
-        LogOut: "/",
-      };
-      if (route === "LogOut") {
-        alert("Successfully logged out.");
-      }
-      this.$router.push(routes[route]);
+    Home() {
+      this.$router.push("/home");
+    },
+    ManageEmployees() {
+      this.$router.push("/ManageEmployees");
+    },
+    ManagePolicy() {
+      this.$router.push("/ManagePolicy");
+    },
+    ManageGames() {
+      this.$router.push("/ManageGames");
+    },
+    Account() {
+      this.$router.push("/account");
+    },
+    ViewOrders() {
+      this.$router.push("/orders");
+    },
+    LogOut() {
+      alert("Successfully logged out.");
+      this.$router.push("/home");
     },
   },
   mounted() {
-    this.managerEmail = this.$route.params.email || "";
-    this.fetchGameRequests();
+    this.fetchGameRequests(); // fetch game requests when the page is loaded
   },
 };
 </script>
@@ -209,10 +212,9 @@ export default {
 }
 
 .hero-section {
-  background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
+  background: url("../../assets/gameshopBackground.jpg") center/cover no-repeat;
   padding: 200px 0;
   text-align: center;
-  min-height: 100vh;
 }
 
 .content-container {
