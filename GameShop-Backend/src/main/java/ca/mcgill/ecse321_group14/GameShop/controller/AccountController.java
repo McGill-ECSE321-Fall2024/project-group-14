@@ -28,39 +28,21 @@ public class AccountController {
     @Autowired
     private ManagerService managerService;
 
-    @GetMapping("/customers/{pid}")
-    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable String pid) throws Exception{
-        int id;
-        try{
-            id = Integer.parseInt(pid);
-            if (id == 0){
-                return new ResponseEntity<>(new CustomerDto(), HttpStatus.BAD_REQUEST);
-            }
-        } catch (NumberFormatException e){
-            return new ResponseEntity<>(new CustomerDto(), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/customers/id/{pid}")
+    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable int pid) throws Exception{
         Customer customer;
         try {
-            customer = customerService.getCustomerById(id);
+            customer = customerService.getCustomerById(pid);
             return new ResponseEntity<>(new CustomerDto(customer), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(new CustomerDto(), HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/employees/{pid}")
-    public ResponseEntity<PersonDto> findEmployeeById(@PathVariable String pid) throws Exception{
-        int id;
-        try{
-            id = Integer.parseInt(pid);
-            if (id == 0){
-                return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-            }
-        } catch (NumberFormatException e){
-            return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/employees/id/{pid}")
+    public ResponseEntity<PersonDto> findEmployeeById(@PathVariable int pid) throws Exception{
         Employee employee;
         try {
-            employee = employeeService.getEmployeeById(id);
+            employee = employeeService.getEmployeeById(pid);
             return new ResponseEntity<>(new PersonDto(employee), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
@@ -87,20 +69,11 @@ public class AccountController {
             return new ResponseEntity<>(new CustomerDto(), HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/managers/{pid}")
-    public ResponseEntity<PersonDto> findManagerById(@PathVariable String pid) throws Exception{
-        int id;
-        try{
-            id = Integer.parseInt(pid);
-            if (id == 0){
-                return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-            }
-        } catch (NumberFormatException e){
-            return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/managers/id/{pid}")
+    public ResponseEntity<PersonDto> findManagerById(@PathVariable int pid) throws Exception{
         Manager manager;
         try {
-            manager = managerService.getManagerById(id);
+            manager = managerService.getManagerById(pid);
             return new ResponseEntity<>(new PersonDto(manager), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(new PersonDto(), HttpStatus.NOT_FOUND);
@@ -163,18 +136,9 @@ public class AccountController {
     }
 
    @PutMapping("/customers/{pid}")
-    public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable String pid, @RequestBody CustomerRequestDto customerdto) {
-        int id;
-        try {
-            id = Integer.parseInt(pid);
-            if (id == 0){
-                return new ResponseEntity<>(new CustomerResponseDto(), HttpStatus.BAD_REQUEST);
-            }
-        } catch (NumberFormatException e) {
-            return new ResponseEntity<>(new CustomerResponseDto(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable int pid, @RequestBody CustomerRequestDto customerdto) {
         try{
-        Customer customerToUpdate = customerService.getCustomerById(id);
+        Customer customerToUpdate = customerService.getCustomerById(pid);
         customerToUpdate = customerService.updateCustomer(
                 customerdto.getId(),
                 customerdto.getPassword(),
@@ -193,18 +157,9 @@ public class AccountController {
    }
 
    @PutMapping("/employees/{pid}")
-   public ResponseEntity<PersonDto> updateEmployee(@PathVariable String pid, @RequestBody PersonDto employeedto) {
-       int id;
-       try {
-           id = Integer.parseInt(pid);
-           if (id == 0){
-               return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-           }
-       } catch (NumberFormatException e) {
-           return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-       }
+   public ResponseEntity<PersonDto> updateEmployee(@PathVariable int pid, @RequestBody PersonDto employeedto) {
        try{
-           Employee employeeToUpdate = employeeService.getEmployeeById(id);
+           Employee employeeToUpdate = employeeService.getEmployeeById(pid);
            employeeToUpdate = employeeService.updateEmployee(
                    employeedto.getPersonId(),
                    employeedto.getPersonUsername(),
@@ -220,18 +175,10 @@ public class AccountController {
    }
 
    @PutMapping("/managers/{pid}")
-   public ResponseEntity<PersonDto> updateManager(@PathVariable String pid, @RequestBody PersonDto managerdto) {
-       int id;
+   public ResponseEntity<PersonDto> updateManager(@PathVariable int pid, @RequestBody PersonDto managerdto) {
+
        try {
-           id = Integer.parseInt(pid);
-           if (id == 0){
-               return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-           }
-       } catch (NumberFormatException e) {
-           return new ResponseEntity<>(new PersonDto(), HttpStatus.BAD_REQUEST);
-       }
-       try {
-           Manager managerToUpdate = managerService.getManagerById(id);
+           Manager managerToUpdate = managerService.getManagerById(pid);
            managerToUpdate = managerService.updateManager(
                    managerdto.getPersonId(),
                    managerdto.getPersonUsername(),
@@ -248,36 +195,19 @@ public class AccountController {
    }
 
    @DeleteMapping("/customers/{pid}")
-   public ResponseEntity<?> deleteCustomer(@PathVariable String pid) throws Exception{
-       int id;
-       try{
-           id = Integer.parseInt(pid);
-           if (id == 0){
-               return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-           }
-       } catch (NumberFormatException e){
-           return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-       }
+   public ResponseEntity<?> deleteCustomer(@PathVariable int pid) throws Exception{
+
        try {
-           customerService.deleteCustomer(id);
+           customerService.deleteCustomer(pid);
            return new ResponseEntity<>(HttpStatus.OK);
        } catch (Exception e){
            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
        }
    }
    @DeleteMapping("/employees/{pid}")
-   public ResponseEntity<?> deleteEmployee(@PathVariable String pid) throws Exception{
-       int id;
-       try{
-           id = Integer.parseInt(pid);
-           if (id == 0){
-               return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-           }
-       } catch (NumberFormatException e){
-           return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-       }
+   public ResponseEntity<?> deleteEmployee(@PathVariable int pid) throws Exception{
        try {
-           employeeService.deleteEmployee(id);
+           employeeService.deleteEmployee(pid);
            return new ResponseEntity<>(HttpStatus.OK);
        } catch (Exception e){
            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
