@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import ManagerManageEmployees from '../views/manager/ManageEmployees.vue';
+import ManageGames from '../views/Manager/ManageGames.vue';
+import ManageGameRequests from '../views/Manager/ManageGameRequests.vue';
 import ManagerPromotion from '../views/Manager/ManagerPromotionView.vue';
 import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 import CustomerWishListView from '@/views/Customer/CustomerWishListView.vue';
@@ -67,13 +70,28 @@ const router = createRouter({
     },
     {
       path: '/ManagerHome/:param1',
-        name: 'ManagerHome',
-        component: ManagerHome
+      name: 'ManagerHome',
+      component: ManagerHome
     },
     {
-      path: '/EmployeeGameRequest/:param1/:param2',
-        name: 'EmployeeGameRequest',
-        component: EmployeeGameRequest
+      path: '/ManageEmployees/:param1',
+      name: 'ManageEmployees',
+      component: ManagerManageEmployees
+    },
+    {
+      path: '/ManageGames/:param1',
+      name: 'ManageGames',
+      component: ManageGames,
+    },  
+    {
+      path: '/ManageGameRequests/:param1',
+      name: 'ManageGameRequests',
+      component: ManageGameRequests,
+    },         
+    {
+    path: '/EmployeeGameRequest/:param1/:param2',
+    name: 'EmployeeGameRequest',
+    component: EmployeeGameRequest
     }
   ],
 });
