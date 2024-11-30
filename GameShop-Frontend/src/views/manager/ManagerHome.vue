@@ -88,7 +88,7 @@ export default {
       await this.$router.push({path: '/CustomerAccount/' + this.email})
     },
     async ViewOrders() {
-      await this.$router.push({path: '/orders/' + this.email})
+      await this.$router.push({path: '/ViewOrders/' + this.email})
     },
     async LogOut() {
       alert('Successfully logged out.')

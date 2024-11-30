@@ -177,7 +177,7 @@
         axiosClient
           .get("/employees")
           .then((response) => {
-            this.employees = response.data.dtos; // Update as per backend structure
+            this.employees = response.data.dtos; 
           })
           .catch((error) => {
             console.error("Error fetching employees:", error);
@@ -188,13 +188,13 @@
           personUsername: this.name,
           personEmail: this.employeeEmail,
           personPassword: this.password,
-          salary: parseFloat(this.salary) || 0, // Ensure numeric salary
+          salary: parseFloat(this.salary) || 0, 
         };
         axiosClient
           .post("/employees", employeeRequest)
           .then(() => {
             alert("Employee successfully created!");
-            this.fetchAllEmployees(); // Refresh list
+            this.fetchAllEmployees(); 
           })
           .catch((error) => {
             console.error("Error creating employee:", error);
@@ -263,7 +263,7 @@
   
   .hero-section {
     background: url("../../assets/gameshopBackground.jpg") center/cover no-repeat;
-    padding: 200px 0; /* Adjusted padding */
+    padding: 200px 0; 
     text-align: center;
   }
   

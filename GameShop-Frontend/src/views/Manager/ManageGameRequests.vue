@@ -146,7 +146,7 @@ export default {
             picture: request.picture,
             status: request.status,
           }));
-          console.log("Fetched game requests:", this.gameRequests); // Debugging log
+          console.log("Fetched game requests:", this.gameRequests); 
         })
         .catch((error) => {
           console.error("Error fetching game requests:", error);
@@ -157,7 +157,7 @@ export default {
         .put(`/gameapproval/${requestId}`, { status })
         .then(() => {
           alert(`Request has been ${status.toLowerCase()}!`);
-          this.fetchGameRequests(); // Refresh the table
+          this.fetchGameRequests(); 
         })
         .catch((error) => {
           console.error(`Error updating status to ${status}:`, error);
@@ -187,7 +187,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchGameRequests(); // Fetch the game requests when the page is loaded
+    this.fetchGameRequests(); 
   },
 };
 </script>
