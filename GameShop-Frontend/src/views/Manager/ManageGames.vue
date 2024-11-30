@@ -226,7 +226,7 @@
     background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
     padding: 200px 0;
     text-align: center;
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh; 
   }
   
   .content-container {

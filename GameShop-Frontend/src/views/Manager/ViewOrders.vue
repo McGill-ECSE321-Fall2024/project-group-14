@@ -125,7 +125,7 @@
   export default {
     data() {
       return {
-        orders: [], // List of orders
+        orders: [], 
       };
     },
     methods: {
@@ -143,7 +143,7 @@
               cardExpiry: order.payment.cardExpiry,
               address: order.address,
             }));
-            console.log("Fetched orders:", this.orders); // Debugging log
+            console.log("Fetched orders:", this.orders); 
           })
           .catch((error) => {
             console.error("Error fetching orders:", error);
@@ -154,7 +154,7 @@
           .delete(`/orders/${orderId}`)
           .then(() => {
             alert("Order has been canceled!");
-            this.fetchOrders(); // Refresh the table
+            this.fetchOrders(); 
           })
           .catch((error) => {
             console.error("Error canceling order:", error);
@@ -184,7 +184,7 @@
       },
     },
     mounted() {
-      this.fetchOrders(); // Fetch the orders when the page is loaded
+      this.fetchOrders(); 
     },
   };
   </script>
@@ -213,7 +213,7 @@
     background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
     padding: 200px 0;
     text-align: center;
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh; 
   }
   
   .content-container {

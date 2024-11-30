@@ -91,7 +91,7 @@
                         placeholder="Salary"
                       />
                     </div>
-                    <div class="form-group mt-4"> <!-- Added spacing -->
+                    <div class="form-group mt-4"> 
                       <button
                         @click="createEmployee"
                         type="button"
@@ -265,7 +265,7 @@
     background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
     padding: 200px 0;
     text-align: center;
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh; 
   }
   
   .content-container {
