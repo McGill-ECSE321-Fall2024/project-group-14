@@ -10,7 +10,7 @@ import CustomerHome from "@/views/customer/CustomerHome.vue";
 import CustomerBrowseGames from "@/views/customer/CustomerBrowseGames.vue";
 import EmployeeHome from "@/views/employee/EmployeeHome.vue";
 import ManagerHome from "@/views/Manager/ManagerHome.vue";
-
+import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
@@ -69,6 +69,11 @@ const router = createRouter({
       path: '/ManagerHome/:param1',
         name: 'ManagerHome',
         component: ManagerHome
+    },
+    {
+      path: '/EmployeeGameRequest/:param1/:param2',
+        name: 'EmployeeGameRequest',
+        component: EmployeeGameRequest
     }
   ],
 });

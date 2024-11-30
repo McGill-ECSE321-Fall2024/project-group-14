@@ -265,6 +265,16 @@ public class AccountController {
         }
         return new PersonListDtos(dtos);
     }
+    @GetMapping("/managers")
+    public ResponseEntity<PersonResponseDto> getSingleManager() {
+        try {
+            Manager manager = managerService.getSingleManager();
+            return new ResponseEntity<>(new PersonResponseDto(manager), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 
 
