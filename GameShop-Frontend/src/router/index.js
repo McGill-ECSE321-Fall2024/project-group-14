@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ManagerManageEmployees from '../views/Manager/ManageEmployees.vue';
+import ManagerManageEmployees from '../views/manager/ManageEmployees.vue';
 import ManageGames from '../views/Manager/ManageGames.vue';
-import ViewOrders from '../views/Manager/ViewOrders.vue';
 import ManageGameRequests from '../views/Manager/ManageGameRequests.vue';
 import ManagerPromotion from '../views/Manager/ManagerPromotionView.vue';
 import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
@@ -22,7 +21,7 @@ import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
 import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
 
 const router = createRouter({
-  history: createWebHistory(), // Use HTML5 history mode
+  history: createWebHistory(), 
   routes: [
     {
       path: '/',
@@ -40,14 +39,14 @@ const router = createRouter({
       path: '/orders/:customerEmail',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
-      props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
+      props: route => ({ customerid: Number(route.params.customerId) }), 
     },
 
     {
       path: '/wishlist/:customerEmail',
       name: 'CustomerWishListView',
       component: CustomerWishListView,
-      props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
+      props: route => ({ customerid: Number(route.params.customerId) }), 
       path: '/SignUp/',
       component: SignUp
     },
@@ -69,7 +68,7 @@ const router = createRouter({
       path: '/CustomerBrowseGames/:email',
       name: 'CustomerBrowseGames',
       component: CustomerBrowseGames,
-      props: true, // Pass the email as a prop to the component
+      props: true, 
     },
     {
       path: '/EmployeeHome/:param1/:param2',
@@ -77,32 +76,22 @@ const router = createRouter({
       component: EmployeeHome
     },
     {
-      path: '/EmployeeViewGames/:param1/:param2',
-      name: 'EmployeeViewGames',
-      component: EmployeeViewGames
-    },
-    {
-      path: '/EmployeeViewOrders/:param1/:param2',
-      name: 'EmployeeViewOrders',
-      component: EmployeeViewOrders
-    },
-    {
-      path: '/ManagerHome/:email',
+      path: '/ManagerHome/:param1',
       name: 'ManagerHome',
       component: ManagerHome
     },
     {
-      path: '/ManageEmployees/:email',
+      path: '/ManageEmployees/:param1',
       name: 'ManageEmployees',
       component: ManagerManageEmployees
     },
     {
-      path: '/ManageGames/:email',
+      path: '/ManageGames/:param1',
       name: 'ManageGames',
       component: ManageGames,
     },  
     {
-      path: '/ManageGameRequests/:email',
+      path: '/ManageGameRequests/:param1',
       name: 'ManageGameRequests',
       component: ManageGameRequests,
     },   
@@ -115,26 +104,6 @@ const router = createRouter({
       path: '/EmployeeGameRequest/:param1/:param2',
       name: 'EmployeeGameRequest',
       component: EmployeeGameRequest
-    },
-    {
-      path: '/ManagerHome/:param1',
-        name: 'ManagerHome',
-        component: ManagerHome
-    },
-    {
-      path: '/writeReview/:param1/:param2',  // param1 = email, param2 = gameId
-      name: 'CustomerWriteReview',
-      component: CustomerWriteReview
-    },
-    {
-      path: '/manager/managerWriteReply/:param1/:param2',  // param1 = email, param2 = gameId
-      name: 'ManagerWriteReply',
-      component: ManagerWriteReply
-    },
-    {
-      path: '/ManagePolicy/:param1',  // param1 = email
-      name: 'ManagePolicy',
-      component: ManagePolicy
     }
   ],
 });
