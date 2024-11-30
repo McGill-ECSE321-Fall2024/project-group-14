@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ManagerManageEmployees from '../views/manager/ManageEmployees.vue';
+import ManagerManageEmployees from '../views/Manager/ManageEmployees.vue';
 import ManageGames from '../views/Manager/ManageGames.vue';
+import ViewOrders from '../views/Manager/ViewOrders.vue';
 import ManageGameRequests from '../views/Manager/ManageGameRequests.vue';
 import ManagerPromotion from '../views/Manager/ManagerPromotionView.vue';
 import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
@@ -96,15 +97,10 @@ const router = createRouter({
       component: ManageGameRequests,
     },   
     {
-      path: '/ViewOrders/:email',
+      path: '/ViewOrders/:param1',
       name: 'ViewOrders',
       component: ViewOrders,
     }, 
-    {
-      path: '/EmployeeGameRequest/:param1/:param2',
-      name: 'EmployeeGameRequest',
-      component: EmployeeGameRequest
-    }
   ],
 });
 
