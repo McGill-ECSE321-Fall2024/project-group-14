@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" tests="8" skipped="0" failures="1" errors="0" timestamp="2024-11-26T00:08:37" hostname="Dianas-MacBook-Air.local" time="0.255">
+  <properties/>
+  <testcase name="testCreateWishlist()" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.041"/>
+  <testcase name="testCreateWishlistWishlistAlreadyExists()" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.036"/>
+  <testcase name="testGetWishlist()" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.017"/>
+  <testcase name="testGetWishlistWishlistDoesNotExist()" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.022"/>
+  <testcase name="testGetWishlistsByCustomerId()" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.034"/>
+  <testcase name="testClearWishlist()" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.019"/>
+  <testcase name="testClearWishlistWishlistDoesNotExist()" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.021"/>
+  <testcase name="executionError" classname="ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests" time="0.009">
+    <failure message="org.springframework.dao.DataIntegrityViolationException: could not execute statement [ERROR: update or delete on table &quot;game&quot; violates foreign key constraint &quot;fkqqxxwdsxhhxc7t2ho2acg2m4p&quot; on table &quot;review&quot;&#10;  Detail: Key (id)=(3806) is still referenced from table &quot;review&quot;.] [delete from game where id=?]; SQL [delete from game where id=?]; constraint [fkqqxxwdsxhhxc7t2ho2acg2m4p]" type="org.springframework.dao.DataIntegrityViolationException">org.springframework.dao.DataIntegrityViolationException: could not execute statement [ERROR: update or delete on table &quot;game&quot; violates foreign key constraint &quot;fkqqxxwdsxhhxc7t2ho2acg2m4p&quot; on table &quot;review&quot;
+  Detail: Key (id)=(3806) is still referenced from table &quot;review&quot;.] [delete from game where id=?]; SQL [delete from game where id=?]; constraint [fkqqxxwdsxhhxc7t2ho2acg2m4p]
+	at app//org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:290)
+	at app//org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:241)
+	at app//org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:566)
+	at app//org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:795)
+	at app//org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:758)
+	at app//org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:663)
+	at app//org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:413)
+	at app//org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at app//org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at app//org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at app//org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at app//org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:165)
+	at app//org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at app//org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at app//org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at app//org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
+	at app/jdk.proxy3/jdk.proxy3.$Proxy156.deleteAll(Unknown Source)
+	at app//ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests.clearDatabase(WishlistIntegrationTests.java:64)
+	at java.base@21.0.4/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base@21.0.4/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base@21.0.4/java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1116)
+	at java.base@21.0.4/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement [ERROR: update or delete on table &quot;game&quot; violates foreign key constraint &quot;fkqqxxwdsxhhxc7t2ho2acg2m4p&quot; on table &quot;review&quot;
+  Detail: Key (id)=(3806) is still referenced from table &quot;review&quot;.] [delete from game where id=?]
+	at app//org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:97)
+	at app//org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at app//org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at app//org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
+	at app//org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:134)
+	at app//org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:55)
+	at app//org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:55)
+	at app//org.hibernate.persister.entity.mutation.AbstractDeleteCoordinator.doStaticDelete(AbstractDeleteCoordinator.java:279)
+	at app//org.hibernate.persister.entity.mutation.AbstractDeleteCoordinator.delete(AbstractDeleteCoordinator.java:87)
+	at app//org.hibernate.action.internal.EntityDeleteAction.execute(EntityDeleteAction.java:131)
+	at app//org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:633)
+	at app//org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:500)
+	at app//org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:385)
+	at app//org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
+	at app//org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
+	at app//org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1425)
+	at app//org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:487)
+	at app//org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2324)
+	at app//org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1981)
+	at app//org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
+	at app//org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
+	at app//org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
+	at app//org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
+	at app//org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:562)
+	... 19 more
+Caused by: org.postgresql.util.PSQLException: ERROR: update or delete on table &quot;game&quot; violates foreign key constraint &quot;fkqqxxwdsxhhxc7t2ho2acg2m4p&quot; on table &quot;review&quot;
+  Detail: Key (id)=(3806) is still referenced from table &quot;review&quot;.
+	at app//org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+	at app//org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+	at app//org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+	at app//org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+	at app//org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+	at app//org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:194)
+	at app//org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:155)
+	at app//com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+	at app//com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java)
+	at app//org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194)
+	... 39 more
+</failure>
+  </testcase>
+  <system-out><![CDATA[2024-11-25T19:08:37.462-05:00  INFO 27174 --- [GameShop] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests]: WishlistIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-25T19:08:37.463-05:00  INFO 27174 --- [GameShop] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321_group14.GameShop.GameShopApplication for test class ca.mcgill.ecse321_group14.GameShop.integration.WishlistIntegrationTests
+2024-11-25T19:08:37.684-05:00  WARN 27174 --- [GameShop] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 23503
+2024-11-25T19:08:37.685-05:00 ERROR 27174 --- [GameShop] [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : ERROR: update or delete on table "game" violates foreign key constraint "fkqqxxwdsxhhxc7t2ho2acg2m4p" on table "review"
+  Detail: Key (id)=(3806) is still referenced from table "review".
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
