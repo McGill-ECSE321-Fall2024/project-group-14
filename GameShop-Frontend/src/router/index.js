@@ -8,10 +8,10 @@ import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 import CustomerWishListView from '@/views/Customer/CustomerWishListView.vue';
 import HomeView from '../views/HomeView.vue'
 import SignUp from '../views/SignUp.vue'
-import Login from '../views/Login.vue'
+import Login from '../views/LogIn.vue'
 import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
-import CustomerHome from "@/views/customer/CustomerHome.vue";
-import CustomerBrowseGames from "@/views/customer/CustomerBrowseGames.vue";
+import CustomerHome from "@/views/Customer/CustomerHome.vue";
+import CustomerBrowseGames from "@/views/Customer/CustomerBrowseGames.vue";
 import EmployeeHome from "@/views/employee/EmployeeHome.vue";
 import EmployeeViewGames from "@/views/employee/EmployeeViewGames.vue";
 import EmployeeViewOrders from "@/views/employee/EmployeeViewOrders.vue";
@@ -114,6 +114,21 @@ const router = createRouter({
       path: '/EmployeeGameRequest/:param1/:param2',
       name: 'EmployeeGameRequest',
       component: EmployeeGameRequest
+    },
+    {
+      path: '/ManagerHome/:param1',
+        name: 'ManagerHome',
+        component: ManagerHome
+    },
+    {
+      path: '/writeReview/:param1/:param2',  // param1 = email, param2 = gameId
+      name: 'CustomerWriteReview',
+      component: CustomerWriteReview
+    },
+    {
+      path: '/manager/managerWriteReply/:param1/:param2',  // param1 = email, param2 = gameId
+      name: 'ManagerWriteReply',
+      component: ManagerWriteReply
     }
   ],
 });
