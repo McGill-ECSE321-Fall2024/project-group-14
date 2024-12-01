@@ -52,8 +52,14 @@ public class OrderService {
 
     @Transactional
     public void deleteOrder(int id) {
-        if (orderRepository.findOrderById(id) == null) {
+        Order order = orderRepository.findOrderById(id);
+        if (order == null) {
             throw new IllegalArgumentException("Order does not exist!");
+        }
+
+        List<Orderitem> orderItems = orderitemRepository.findByKey_Order(order);
+        for (Orderitem item : orderItems) {
+            orderitemRepository.delete(item);
         }
         orderRepository.deleteOrderById(id);
     }

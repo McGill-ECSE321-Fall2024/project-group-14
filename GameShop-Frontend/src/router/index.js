@@ -17,6 +17,8 @@ import EmployeeViewGames from "@/views/employee/EmployeeViewGames.vue";
 import EmployeeViewOrders from "@/views/employee/EmployeeViewOrders.vue";
 import ManagerHome from "@/views/Manager/ManagerHome.vue";
 import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
+import CustomerWriteReview from "@/views/Customer/CustomerWriteReview.vue";
+import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
