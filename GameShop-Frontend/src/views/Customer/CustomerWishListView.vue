@@ -281,7 +281,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url('#') center center no-repeat;
+  background: url('../../assets/gameshopBackground.jpg') center center no-repeat;
   background-size: cover;
 }
 .navbar-container {
@@ -302,6 +302,7 @@ export default {
 
 .nav-link:hover {
   cursor: pointer;
+  color: white !important;
 }
 
 .wishlist-container {
@@ -388,6 +389,12 @@ export default {
   top: 0;
   left: 0;
   right: 0;
+}
+
+.hero-section {
+  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
+  padding: 300px 0;
+  text-align: center;
 }
 
 

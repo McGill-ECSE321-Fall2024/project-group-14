@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" tests="7" skipped="0" failures="0" errors="0" timestamp="2024-11-26T00:08:45" hostname="Dianas-MacBook-Air.local" time="0.056">
+  <properties/>
+  <testcase name="testFindWishlistsByCustomerId()" classname="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" time="0.008"/>
+  <testcase name="testCreateWishlist()" classname="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" time="0.004"/>
+  <testcase name="testAlreadyCreatedWishlist()" classname="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" time="0.005"/>
+  <testcase name="testClearWishlist()" classname="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" time="0.003"/>
+  <testcase name="testGetWishlist()" classname="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" time="0.004"/>
+  <testcase name="testGetWishlistWishlistDoesNotExist()" classname="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" time="0.006"/>
+  <testcase name="testClearWishlistWishlistDoesNotExist()" classname="ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests" time="0.005"/>
+  <system-out><![CDATA[2024-11-25T19:08:45.268-05:00  INFO 27174 --- [GameShop] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests]: WishlistServiceTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-25T19:08:45.271-05:00  INFO 27174 --- [GameShop] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321_group14.GameShop.GameShopApplication for test class ca.mcgill.ecse321_group14.GameShop.service.WishlistServiceTests
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

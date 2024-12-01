@@ -28,7 +28,9 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ManageGameRequests">Manage Game Requests</a>
               </li>
-
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ManagePromotion">Promotion</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
@@ -93,8 +95,11 @@ export default {
     async LogOut() {
       alert('Successfully logged out.')
       await this.$router.push({name: '/'})
-    }
-  }
+    },
+    async ManagePromotion() {
+      await this.$router.push({path: '/ManagePromotion/' + this.email})
+    },
+  },
 };
 </script>
 

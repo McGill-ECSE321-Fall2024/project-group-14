@@ -19,6 +19,7 @@ import ManagerHome from "@/views/Manager/ManagerHome.vue";
 import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
 import CustomerWriteReview from "@/views/Customer/CustomerWriteReview.vue";
 import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
+import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
 
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
@@ -132,6 +133,11 @@ const router = createRouter({
       path: '/manager/managerWriteReply/:param1/:param2',  // param1 = email, param2 = gameId
       name: 'ManagerWriteReply',
       component: ManagerWriteReply
+    },
+    {
+      path: '/ManagePolicy/:param1',  // param1 = email
+      name: 'ManagePolicy',
+      component: ManagePolicy
     }
   ],
 });
