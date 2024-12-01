@@ -88,4 +88,9 @@ public class OrderService {
         orderRepository.deleteById(orderId);
 
     }
+
+    @Transactional
+    public List<Order> getAllOrders() {
+        return (List<Order>) orderRepository.findAll();
+    }
 }
