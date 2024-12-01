@@ -21,8 +21,7 @@ public class ReplyRequestDto {
     }
 
     public String getDescription() {
-        System.out.println("Description: " + message);
-        return "a message";
+        return message;
     }
 
     public void setDescription(String description) {
@@ -30,8 +29,7 @@ public class ReplyRequestDto {
     }
 
     public int getReviewId() {
-        System.out.println("ReviewId: " + id);
-        return 254;
+        return id;
     }
 
     public void setReviewId(int id) {
@@ -39,7 +37,6 @@ public class ReplyRequestDto {
     }
 
     public int getManagerId() {
-        System.out.println("ManagerId: " + managerId);
         return managerId;
     }
 
