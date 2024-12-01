@@ -6,6 +6,9 @@ import ca.mcgill.ecse321_group14.GameShop.model.Review;
 import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ca.mcgill.ecse321_group14.GameShop.repository.ReviewRepository;
@@ -20,7 +23,6 @@ public class ReviewService {
     @Autowired
     GameRepository gameRepository;
 
-
     @Transactional
     public Review createReview(Review.Ranking aRanking, String aDescription, int customerId, int gameId) {
         if (aDescription == null || aDescription.trim().length() == 0) {
@@ -31,7 +33,6 @@ public class ReviewService {
             throw new IllegalArgumentException("Ranking cannot be empty!");
         }
 
-
         Customer aCustomer = customerRepository.findCustomerById(customerId);
         if (aCustomer == null) {
             throw new IllegalArgumentException("Customer does not exist!");
@@ -41,9 +42,11 @@ public class ReviewService {
             throw new IllegalArgumentException("Game does not exist!");
         }
 
-
+        System.out.println("Creating review with customer: " + customerId + " Ranking " + aRanking
+                + " and description: " + aDescription);
         Review review = new Review(aRanking, aDescription, aCustomer, aGame);
         reviewRepository.save(review);
+        System.out.println("Review created!");
         return review;
     }
 
@@ -88,7 +91,7 @@ public class ReviewService {
         if (aGame == null) {
             throw new IllegalArgumentException("Game does not exist!");
         }
-        
+
         try {
             review.setRanking(aRanking);
             review.setDescription(aDescription);
@@ -101,5 +104,14 @@ public class ReviewService {
             throw new IllegalArgumentException(errorMessage, e);
         }
 
+    }
+
+    @Transactional
+    public List<Review> getAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        if (reviews.isEmpty()) {
+            throw new IllegalArgumentException("No reviews found!");
+        }
+        return reviews;
     }
 }

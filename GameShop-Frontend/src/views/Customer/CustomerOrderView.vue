@@ -332,7 +332,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url('#') center center no-repeat;
+  background: url('../../assets/gameshopBackground.jpg') center center no-repeat;
   background-size: cover;
 }
 .navbar-container {
@@ -353,6 +353,7 @@ export default {
 
 .nav-link:hover {
   cursor: pointer;
+  color: white !important;
 }
 
 .orders-container {
@@ -440,6 +441,8 @@ export default {
   left: 0;
   right: 0;
 }
+
+
 
 
 </style>
