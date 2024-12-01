@@ -4,7 +4,7 @@ import ca.mcgill.ecse321_group14.GameShop.model.Review.Ranking;
 import ca.mcgill.ecse321_group14.GameShop.model.Review;
 import ca.mcgill.ecse321_group14.GameShop.model.Customer; //is this allowed?
 
-public class ReviewRequestDto{
+public class ReviewRequestDto {
     private Ranking ranking;
     private String description;
     private int customerId;
@@ -13,8 +13,18 @@ public class ReviewRequestDto{
     public ReviewRequestDto() {
     }
 
-    public ReviewRequestDto(Ranking ranking, String description, int customerId, int gameId) {
-        this.ranking = ranking;
+    public ReviewRequestDto(String ranking, String description, int customerId, int gameId) {
+        if (ranking.equals("FiveStar")) {
+            this.ranking = Ranking.FiveStar;
+        } else if (ranking.equals("FourStar")) {
+            this.ranking = Ranking.FourStar;
+        } else if (ranking.equals("ThreeStar")) {
+            this.ranking = Ranking.ThreeStar;
+        } else if (ranking.equals("TwoStar")) {
+            this.ranking = Ranking.TwoStar;
+        } else if (ranking.equals("OneStar")) {
+            this.ranking = Ranking.OneStar;
+        }
         this.description = description;
         this.customerId = customerId;
         this.gameId = gameId;
@@ -24,8 +34,8 @@ public class ReviewRequestDto{
         return ranking;
     }
 
-    public void setRanking(String ranking) {
-        this.ranking = Ranking.valueOf(ranking);
+    public void setRanking(Ranking ranking) {
+        this.ranking = ranking;
     }
 
     public String getDescription() {
