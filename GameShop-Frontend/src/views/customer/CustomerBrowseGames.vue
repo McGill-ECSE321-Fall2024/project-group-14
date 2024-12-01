@@ -10,17 +10,21 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" @click="Home">Home</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click="Account">Account</a>
+              <a class="nav-link clickable-text" @click="Orders">Orders</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link clickable-text" @click="Reservations">Reservations</a>
+              <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link clickable-text" @click="Account">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" @click="LogOut">Log Out</a>
+              <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
             </li>
           </ul>
         </div>
@@ -100,6 +104,12 @@ export default {
         return new URL("../../assets/default-image.jpg", import.meta.url).href; // Fallback image
       }
     },
+    async Orders() {
+      await this.$router.push({path: '/orders/' + this.customerEmail})
+    },
+    async Wishlist() {
+      await this.$router.push({path: '/wishlist/' + this.customerEmail})
+    },
     async Account() {
       await this.$router.push({
         name: "CustomerAccount",
@@ -107,7 +117,8 @@ export default {
       });
     },
     async LogOut() {
-      await this.$router.push({ name: "Home" });
+      alert('Successfully logged out.')
+      await this.$router.push({name: 'home'})
     },
     async Home() {
       await this.$router.push({ path: "/CustomerHome/" + this.customerEmail });

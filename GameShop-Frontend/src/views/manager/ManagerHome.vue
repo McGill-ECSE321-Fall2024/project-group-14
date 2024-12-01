@@ -43,7 +43,7 @@
         </nav>
       </div>
 
-      <div class="container">
+      <div class="container" style="margin-top: 70px;">
         <div class="row">
           <div class="col-md-12 mx-auto text-center">
             <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px" >GAMESHOP MANAGER PORTAL</h1>
@@ -69,7 +69,7 @@ export default {
     };
   },
   mounted() {
-    this.email = this.$route.params.param1
+    this.email = this.$route.params.email
   },
   methods: {
     async ManageEmployees() {
@@ -88,11 +88,11 @@ export default {
       await this.$router.push({path: '/CustomerAccount/' + this.email})
     },
     async ViewOrders() {
-      await this.$router.push({path: '/orders/' + this.email})
+      await this.$router.push({path: '/ViewOrders/' + this.email})
     },
     async LogOut() {
       alert('Successfully logged out.')
-      await this.$router.push({name: 'home'})
+      await this.$router.push({name: '/'})
     }
   }
 };
@@ -109,9 +109,10 @@ export default {
 }
 
 .hero-section {
-  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
-  padding: 300px 0;
+  background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
+  padding: 200px 0;
   text-align: center;
+  min-height: 100vh;
 }
 
 .luxurious-text {

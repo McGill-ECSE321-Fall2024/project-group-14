@@ -1,4 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import ManagerManageEmployees from '../views/Manager/ManageEmployees.vue';
+import ManageGames from '../views/Manager/ManageGames.vue';
+import ViewOrders from '../views/Manager/ViewOrders.vue';
+import ManageGameRequests from '../views/Manager/ManageGameRequests.vue';
 import ManagerPromotion from '../views/Manager/ManagerPromotionView.vue';
 import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 import CustomerWishListView from '@/views/Customer/CustomerWishListView.vue';
@@ -9,6 +13,8 @@ import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
 import CustomerHome from "@/views/customer/CustomerHome.vue";
 import CustomerBrowseGames from "@/views/customer/CustomerBrowseGames.vue";
 import EmployeeHome from "@/views/employee/EmployeeHome.vue";
+import EmployeeViewGames from "@/views/employee/EmployeeViewGames.vue";
+import EmployeeViewOrders from "@/views/employee/EmployeeViewOrders.vue";
 import ManagerHome from "@/views/Manager/ManagerHome.vue";
 import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
 const router = createRouter({
@@ -66,14 +72,44 @@ const router = createRouter({
       component: EmployeeHome
     },
     {
-      path: '/ManagerHome/:param1',
-        name: 'ManagerHome',
-        component: ManagerHome
+      path: '/EmployeeViewGames/:param1/:param2',
+      name: 'EmployeeViewGames',
+      component: EmployeeViewGames
     },
     {
+      path: '/EmployeeViewOrders/:param1/:param2',
+      name: 'EmployeeViewOrders',
+      component: EmployeeViewOrders
+    },
+    {
+      path: '/ManagerHome/:email',
+      name: 'ManagerHome',
+      component: ManagerHome
+    },
+    {
+      path: '/ManageEmployees/:email',
+      name: 'ManageEmployees',
+      component: ManagerManageEmployees
+    },
+    {
+      path: '/ManageGames/:email',
+      name: 'ManageGames',
+      component: ManageGames,
+    },  
+    {
+      path: '/ManageGameRequests/:email',
+      name: 'ManageGameRequests',
+      component: ManageGameRequests,
+    },   
+    {
+      path: '/ViewOrders/:email',
+      name: 'ViewOrders',
+      component: ViewOrders,
+    }, 
+    {
       path: '/EmployeeGameRequest/:param1/:param2',
-        name: 'EmployeeGameRequest',
-        component: EmployeeGameRequest
+      name: 'EmployeeGameRequest',
+      component: EmployeeGameRequest
     }
   ],
 });
