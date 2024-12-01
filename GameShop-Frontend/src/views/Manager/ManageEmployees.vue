@@ -8,41 +8,41 @@
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
           </a>
           <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Home">Home</a>
+                <a class="nav-link clickable-text" @click="navigateTo('Home')">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageEmployees">Manage Employees</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ManageEmployees')">Manage Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePolicy">Manage Policy</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ManagePolicy')">Manage Policy</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGames">Manage Games</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ManageGames')">Manage Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGameRequests">Manage Game Requests</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ManageGameRequests')">Manage Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Account">Account</a>
+                <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ViewOrders')">View Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
+                <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
               </li>
             </ul>
           </div>
@@ -62,36 +62,35 @@
                 <form>
                   <div class="form-group">
                     <input
-                      id="name"
-                      v-model="name"
-                      type="text"
-                      class="form-control"
-                      placeholder="Full Name"
+                        id="name"
+                        v-model="name"
+                        type="text"
+                        class="form-control"
+                        placeholder="Full Name"
                     />
                   </div>
                   <div class="form-group">
                     <input
-                      id="employeeEmail"
-                      v-model="employeeEmail"
-                      type="email"
-                      class="form-control"
-                      placeholder="Email"
+                        id="employeeEmail"
+                        v-model="employeeEmail"
+                        type="email"
+                        class="form-control"
+                        placeholder="Email"
                     />
                   </div>
                   <div class="form-group">
                     <input
-                      id="password"
-                      v-model="password"
-                      type="password"
-                      class="form-control"
-                      placeholder="Password"
+                        id="password"
+                        v-model="password"
+                        type="password"
+                        class="form-control"
+                        placeholder="Password"
                     />
                   </div>
                   <div class="form-group mt-4">
                     <button
-                      @click="createEmployee"
-                      type="button"
-                      class="btn btn-primary btn-block hire-button"
+                        @click.prevent="createEmployee"
+                        class="btn btn-primary btn-block hire-button"
                     >
                       Hire
                     </button>
@@ -111,32 +110,32 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Fire</th>
-                      </tr>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Fire</th>
+                    </tr>
                     </thead>
                     <tbody>
-                      <tr
+                    <tr
                         v-for="(employee, index) in employees"
-                        :key="index"
+                        :key="employee.personId"
                         :class="{ 'selected-row': selectedEmployeeEmail === employee.personEmail }"
-                      >
-                        <td>{{ employee.personUsername }}</td>
-                        <td>{{ employee.personEmail }}</td>
-                        <td>
-                          <button
+                    >
+                      <td>{{ employee.personUsername }}</td>
+                      <td>{{ employee.personEmail }}</td>
+                      <td>
+                        <button
                             @click="fireEmployee(employee.personId)"
                             class="btn btn-danger fire-button"
-                          >
-                            Fire
-                          </button>
-                        </td>
-                      </tr>
-                      <tr v-if="employees.length === 0">
-                        <td colspan="3" class="text-center">No employees found.</td>
-                      </tr>
+                        >
+                          Fire
+                        </button>
+                      </td>
+                    </tr>
+                    <tr v-if="employees.length === 0">
+                      <td colspan="3" class="text-center">No employees found.</td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -165,7 +164,7 @@ export default {
       employeeEmail: "",
       password: "",
       selectedEmployeeEmail: null,
-      email: this.$route.params.email || "", 
+      email: this.$route.params.email || "",
     };
   },
   mounted() {
@@ -182,6 +181,10 @@ export default {
       }
     },
     async createEmployee() {
+      if (!this.name || !this.employeeEmail || !this.password) {
+        alert("All fields are required.");
+        return;
+      }
       try {
         const employeeRequest = {
           personUsername: this.name,
@@ -190,6 +193,9 @@ export default {
         };
         await axiosClient.post("/employees", employeeRequest);
         alert("Employee successfully created!");
+        this.name = "";
+        this.employeeEmail = "";
+        this.password = "";
         this.fetchAllEmployees();
       } catch (error) {
         console.error("Error creating employee:", error);
@@ -197,6 +203,7 @@ export default {
       }
     },
     async fireEmployee(employeeId) {
+      if (!confirm("Are you sure you want to fire this employee?")) return;
       try {
         await axiosClient.delete(`/employees/${employeeId}`);
         alert("Employee successfully fired.");
@@ -206,30 +213,21 @@ export default {
         alert("Failed to fire employee.");
       }
     },
-    async Home() {
-      await this.$router.push({ path: `/home/${this.email}` });
-    },
-    async ManageEmployees() {
-      await this.$router.push({ path: `/ManageEmployees/${this.email}` });
-    },
-    async ManagePolicy() {
-      await this.$router.push({ path: `/ManagePolicy/${this.email}` });
-    },
-    async ManageGames() {
-      await this.$router.push({ path: `/ManageGames/${this.email}` });
-    },
-    async ManageGameRequests() {
-      await this.$router.push({ path: `/ManageGameRequests/${this.email}` });
-    },
-    async Account() {
-      await this.$router.push({ path: `/CustomerAccount/${this.email}` });
-    },
-    async ViewOrders() {
-      await this.$router.push({ path: `/ViewOrders/${this.email}` });
-    },
-    async LogOut() {
-      alert("Successfully logged out.");
-      await this.$router.push({ name: "home" });
+    navigateTo(route) {
+      const routes = {
+        Home: `/ManagerHome/${this.email}`,
+        ManageEmployees: `/ManageEmployees/${this.email}`,
+        ManagePolicy: `/ManagePolicy/${this.email}`,
+        ManageGames: `/ManageGames/${this.email}`,
+        ManageGameRequests: `/ManageGameRequests/${this.email}`,
+        Account: `/CustomerAccount/${this.email}`,
+        ViewOrders: `/ViewOrders/${this.email}`,
+        LogOut: "/",
+      };
+      if (route === "LogOut") {
+        alert("Successfully logged out.");
+      }
+      this.$router.push(routes[route]);
     },
   },
 };
@@ -281,6 +279,11 @@ export default {
 
 .fire-button {
   background-color: #dc3545;
+  color: white;
+}
+
+.hire-button {
+  background-color: #007bff;
   color: white;
 }
 </style>

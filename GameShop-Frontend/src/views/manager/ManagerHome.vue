@@ -69,7 +69,7 @@ export default {
     };
   },
   mounted() {
-    this.email = this.$route.params.param1
+    this.email = this.$route.params.email
   },
   methods: {
     async ManageEmployees() {
@@ -92,7 +92,7 @@ export default {
     },
     async LogOut() {
       alert('Successfully logged out.')
-      await this.$router.push({name: 'home'})
+      await this.$router.push({name: '/'})
     }
   }
 };

@@ -9,41 +9,41 @@
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
           <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Home">Home</a>
+                <a class="nav-link clickable-text" @click="navigateTo('Home')">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageEmployees">Manage Employees</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ManageEmployees')">Manage Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePolicy">Manage Policy</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ManagePolicy')">Manage Policy</a>
               </li>
               <li class="nav-item active">
                 <a class="nav-link" href="#">Manage Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGameRequests">Manage Game Requests</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ManageGameRequests')">Manage Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Account">Account</a>
+                <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                <a class="nav-link clickable-text" @click="navigateTo('ViewOrders')">View Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
+                <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
               </li>
             </ul>
           </div>
@@ -63,96 +63,96 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                      <tr>
-                        <th>Number</th>
-                        <th>Title</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Rating</th>
-                        <th>View Reviews</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                      </tr>
+                    <tr>
+                      <th>Id</th>
+                      <th>Title</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Rating</th>
+                      <th>View Reviews</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+                    </tr>
                     </thead>
                     <tbody>
-                      <tr
+                    <tr
                         v-for="(game, index) in games"
                         :key="game.id"
                         :class="{ 'selected-row': editingGameId === game.id }"
-                      >
-                        <td>{{ game.id }}</td>
-                        <td>
-                          <input
+                    >
+                      <td>{{ game.id }}</td>
+                      <td>
+                        <input
                             v-model="game.name"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <input
+                        />
+                      </td>
+                      <td>
+                        <input
                             v-model="game.price"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <input
+                        />
+                      </td>
+                      <td>
+                        <input
                             v-model="game.category"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
+                        />
+                      </td>
+                      <td>
                           <textarea
-                            v-model="game.description"
-                            :readonly="editingGameId !== game.id"
-                            class="form-control"
+                              v-model="game.description"
+                              :readonly="editingGameId !== game.id"
+                              class="form-control"
                           ></textarea>
-                        </td>
-                        <td>
-                          <input
+                      </td>
+                      <td>
+                        <input
                             v-model="game.rating"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <button
+                        />
+                      </td>
+                      <td>
+                        <button
                             class="btn btn-info btn-sm"
                             @click="viewReviews(game.id)"
-                          >
-                            View
-                          </button>
-                        </td>
-                        <td>
-                          <button
+                        >
+                          View
+                        </button>
+                      </td>
+                      <td>
+                        <button
                             class="btn btn-warning btn-sm"
                             v-if="editingGameId !== game.id"
                             @click="enableEditing(game.id)"
-                          >
-                            Edit
-                          </button>
-                          <button
+                        >
+                          Edit
+                        </button>
+                        <button
                             class="btn btn-success btn-sm"
                             v-else
                             @click="saveGame(game)"
-                          >
-                            Save
-                          </button>
-                        </td>
-                        <td>
-                          <button
+                        >
+                          Save
+                        </button>
+                      </td>
+                      <td>
+                        <button
                             class="btn btn-danger btn-sm"
                             @click="deleteGame(game.id)"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                      <tr v-if="games.length === 0">
-                        <td colspan="9" class="text-center">No games found.</td>
-                      </tr>
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                    <tr v-if="games.length === 0">
+                      <td colspan="9" class="text-center">No games found.</td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -168,19 +168,22 @@
 <script>
 import axios from "axios";
 
-const backendUrl = "http://localhost:8060"; 
+const backendUrl = "http://localhost:8060";
 export default {
   name: "ManageGames",
   data() {
     return {
-      games: [], 
-      editingGameId: null, 
+      games: [],
+      editingGameId: null,
+      managerEmail: "",
     };
   },
   mounted() {
+    this.managerEmail = this.$route.params.email || "";
     this.fetchAllGames();
   },
   methods: {
+    // Fetch all games from the server
     async fetchAllGames() {
       try {
         const response = await axios.get(`${backendUrl}/games`);
@@ -190,103 +193,98 @@ export default {
         alert("Failed to fetch games.");
       }
     },
+
+    // Enable editing for a specific game
     enableEditing(gameId) {
       this.editingGameId = gameId;
     },
-    async saveGame(gameId) {
-  let name = document.getElementById(`name${gameId}`).value;
-  let description = document.getElementById(`description${gameId}`).value;
-  let category = document.getElementById(`category${gameId}`).value;
-  let price = document.getElementById(`price${gameId}`).value;
-  let rating = document.getElementById(`rating${gameId}`).value;
 
-  const gameRequest = {
-    id: gameId,
-    name: name,
-    description: description,
-    category: category,
-    price: parseFloat(price), 
-    rating: rating,
-    quantity: 0, 
-    picture: "",
-  };
+    // Save the updated game
+    saveGame(game) {
+      const requestBody = {
+        id: game.id,
+        name: game.name,
+        description: game.description,
+        category: game.category,
+        price: game.price,
+        rating: game.rating,
+        quantity: 200, // Set default quantity
+        picture: "image-url.jpg", // Placeholder picture
+      };
 
-  console.log("Payload sent to backend for saving:", gameRequest); 
+      console.log("Updating game with:", requestBody);
 
-  try {
-    const response = await axios.post(`${backendUrl}/game/updatebyid`, gameRequest);
-    console.log("Save response from backend:", response.data); 
-    alert("Game updated successfully.");
-    this.editingGameId = null;
-    this.fetchAllGames();
-  } catch (error) {
-    console.error("Error saving game:", error);
-    alert(`Failed to save the game: ${error.response?.data || error.message}`);
-  }
-},
+      axios
+          .post(`${backendUrl}/game/updatebyid`, requestBody)
+          .then(() => {
+            alert(`Game "${game.name}" has been successfully updated.`);
+            this.editingGameId = null; // Exit editing mode
+            this.fetchAllGames(); // Refresh the game list
+          })
+          .catch((error) => {
+            console.error("Error updating game:", error);
+            alert("Failed to update the game.");
+          });
+    },
 
-
-    enableEditing(gameId) {
-      this.editingGameId = gameId;
-      document.getElementById(`name${gameId}`).removeAttribute("readonly");
-      document.getElementById(`description${gameId}`).removeAttribute("readonly");
-      document.getElementById(`category${gameId}`).removeAttribute("readonly");
-      document.getElementById(`price${gameId}`).removeAttribute("readonly");
-      document.getElementById(`rating${gameId}`).removeAttribute("readonly");
-      document.getElementById(`save${gameId}`).style.display = "inline";
-      document.getElementById(`edit${gameId}`).style.display = "none";
-    }
-  },
-  async deleteGame(gameId) {
-    const confirmed = confirm("Are you sure you want to delete this game?");
-    if (!confirmed) return;
-
-    try {
-      const gameToDelete = this.games.find((game) => game.id === gameId);
-      if (!gameToDelete) {
-        alert("Game not found.");
+    // Delete a game
+    deleteGame(gameId) {
+      const game = this.games.find((g) => g.id === gameId);
+      if (!game) {
+        console.error(`Game with ID ${gameId} not found.`);
         return;
       }
 
-      const deletePayload = {
-        name: gameToDelete.name,
-        personId: this.personId, 
-      };
+      axios
+          .get(`${backendUrl}/managers`)
+          .then((response) => {
+            const personId = response.data.personId;
+            console.log("Fetched personId:", personId);
 
-      await axios.delete(`${backendUrl}/game`, { data: deletePayload });
-      alert("Game deleted successfully.");
-      this.fetchAllGames();
-    } catch (error) {
-      console.error("Error deleting game:", error);
-      alert(`Failed to delete the game: ${error.response?.data || error.message}`);
-    }
+            if (confirm(`Are you sure you want to delete the game "${game.name}"?`)) {
+              const requestBody = {
+                name: game.name,
+                personId: personId,
+              };
+
+              console.log("Deleting game with:", requestBody);
+
+              axios
+                  .delete(`${backendUrl}/game`, { data: requestBody })
+                  .then(() => {
+                    alert(`Game "${game.name}" has been successfully deleted.`);
+                    this.fetchAllGames();
+                  })
+                  .catch((error) => {
+                    console.error("Error deleting game:", error);
+                    alert("Failed to delete the game.");
+                  });
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching personId:", error);
+            alert("Failed to fetch manager information.");
+          });
+    },
+
+    navigateTo(route) {
+      const routes = {
+        Home: `/ManagerHome/${this.managerEmail}`,
+        ManageEmployees: `/ManageEmployees/${this.managerEmail}`,
+        ManagePolicy: `/ManagePolicy/${this.managerEmail}`,
+        ManageGames: `/ManageGames/${this.managerEmail}`,
+        ManageGameRequests: `/ManageGameRequests/${this.managerEmail}`,
+        Account: `/CustomerAccount/${this.managerEmail}`,
+        ViewOrders: `/ViewOrders/${this.managerEmail}`,
+        LogOut: "/",
+      };
+      if (route === "LogOut") {
+        alert("Successfully logged out.");
+      }
+      this.$router.push(routes[route]);
+    },
   },
-    viewReviews(gameId) {
-      alert(`Viewing reviews for game ID: ${gameId}`);
-    },
-    async Home() {
-      this.$router.push("/home");
-    },
-    async ManageEmployees() {
-      this.$router.push("/ManageEmployees");
-    },
-    async ManagePolicy() {
-      this.$router.push("/ManagePolicy");
-    },
-    async ManageGameRequests() {
-      this.$router.push("/ManageGameRequests");
-    },
-    async Account() {
-      this.$router.push("/account");
-    },
-    async ViewOrders() {
-      this.$router.push("/orders");
-    },
-    async LogOut() {
-      alert("Successfully logged out.");
-      this.$router.push("/home");
-    },
-  };
+};
 </script>
 
 <style scoped>

@@ -82,27 +82,27 @@ const router = createRouter({
       component: EmployeeViewOrders
     },
     {
-      path: '/ManagerHome/:param1',
+      path: '/ManagerHome/:email',
       name: 'ManagerHome',
       component: ManagerHome
     },
     {
-      path: '/ManageEmployees/:param1',
+      path: '/ManageEmployees/:email',
       name: 'ManageEmployees',
       component: ManagerManageEmployees
     },
     {
-      path: '/ManageGames/:param1',
+      path: '/ManageGames/:email',
       name: 'ManageGames',
       component: ManageGames,
     },  
     {
-      path: '/ManageGameRequests/:param1',
+      path: '/ManageGameRequests/:email',
       name: 'ManageGameRequests',
       component: ManageGameRequests,
     },   
     {
-      path: '/ViewOrders/:param1',
+      path: '/ViewOrders/:email',
       name: 'ViewOrders',
       component: ViewOrders,
     }, 
