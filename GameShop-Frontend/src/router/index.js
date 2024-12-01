@@ -17,6 +17,7 @@ import EmployeeViewGames from "@/views/employee/EmployeeViewGames.vue";
 import EmployeeViewOrders from "@/views/employee/EmployeeViewOrders.vue";
 import ManagerHome from "@/views/Manager/ManagerHome.vue";
 import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
+import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
@@ -114,6 +115,11 @@ const router = createRouter({
       path: '/EmployeeGameRequest/:param1/:param2',
       name: 'EmployeeGameRequest',
       component: EmployeeGameRequest
+    },
+    {
+      path: '/ManagePolicy/:param1',
+      name: 'ManagePolicy',
+      component: ManagePolicy
     }
   ],
 });
