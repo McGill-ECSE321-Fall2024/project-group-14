@@ -1,51 +1,63 @@
 <template>
     <div>
       <div class= "background">
-        
+        <div class="hero-section">
         <div class="navbar-container">
-          <nav class="navbar navbar-expand-lg navbar-light transparent-background">
-            <a class="navbar-brand" href="#">
-              <img src="#" alt="Your Logo" height="60">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" >Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" >??</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" >??</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" >??</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">View Promotion<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" >??</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" >??</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" >Log Out</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light transparent-background">
+          <a class="navbar-brand" href="#">
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+          </a>
+          <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('Home')">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('ManageEmployees')">Manage Employees</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('ManagePolicy')">Manage Policy</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Manage Games</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('ManageGameRequests')">Manage Game Requests</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('ManagePromotion')">Promotion</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('ViewOrders')">View Orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
   
   
   
         <div class="table-container">
           <div class="buttons-container">
-            <button class="prettybutton" @click="openCreatePromotionPopup">Create Promotion</button>
+            <button class="btn btn-success btn-sm" @click="openCreatePromotionPopup">Create Promotion</button>
           </div>
           <table>
             <tr>
@@ -62,10 +74,10 @@
                   <td>{{ promotion.discount }}</td>
                   <td>{{ promotion.description }}</td>
                   <td>
-                    <button class="prettybutton2" @click="openUpdatePromotionPopup(promotion)">Update</button>
+                    <button class="btn btn-info btn-sm" @click="openUpdatePromotionPopup(promotion)">Update</button>
                   </td>
                   <td>
-                    <button class="prettybutton2" @click="deletePromotion(promotion.id)">Delete</button>
+                    <button class="btn btn-danger btn-sm" @click="deletePromotion(promotion.id)">Delete</button>
                   </td>
                 </tr>
           </table>
@@ -94,9 +106,9 @@
               <input v-model="currPromotion.description" type="text" id="newPromotionDescription" name="newPromotionDescription" class="styledinput" placeholder="Description of promotion">
             </div>
             <div class="centerbuttoncontainer">
-              <button class="prettybutton2" @click="closeCreatePromotionPopup">Close</button>
-              <button class="prettybutton" @click="createPromotion" v-if="!isUpdate">Create</button>
-              <button class="prettybutton" @click="updatePromotion" v-if="isUpdate">Update</button>
+              <button class="btn btn-danger btn-sm" @click="closeCreatePromotionPopup">Close</button>
+              <button class="btn btn-success btn-sm" @click="createPromotion" v-if="!isUpdate">Create</button>
+              <button class="btn btn-success btn-sm" @click="updatePromotion" v-if="isUpdate">Update</button>
             </div>
             <div class="centerbuttoncontainer">
               <label>{{ errorMessage }}</label>
@@ -105,17 +117,18 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/promotion';
-
+const BASE_URL = 'http://localhost:8060/promotion';
+const backendURL = 'http://localhost:8060';
 var axiosClient = axios.create({
   baseURL: BASE_URL,
   headers: {
-    'Access-Control-Allow-Origin': 'http://localhost:8087',
+    'Access-Control-Allow-Origin': '*',
   },
 });
 
@@ -134,6 +147,7 @@ export default {
       },
       isUpdate:false,
       currid:null,
+      email: this.$route.params.email || "",
     }
   },
 
@@ -238,11 +252,29 @@ export default {
         this.errorMessage = `Could not delete promotion with ID ${id}.`;
       }
     },
+    navigateTo(route) {
+      const routes = {
+        Home: `/ManagerHome/${this.email}`,
+        ManageEmployees: `/ManageEmployees/${this.email}`,
+        ManagePolicy: `/ManagePolicy/${this.email}`,
+        ManageGames: `/ManageGames/${this.email}`,
+        ManageGameRequests: `/ManageGameRequests/${this.email}`,
+        Account: `/CustomerAccount/${this.email}`,
+        ViewOrders: `/ViewOrders/${this.email}`,
+        ManagePromotions: `/ManagePromotion/${this.email}`,
+        LogOut: "/",
+      };
+      if (route === "LogOut") {
+        alert("Successfully logged out.");
+      }
+      this.$router.push(routes[route]);
+    },
   },
 
   created(){
       this.fetchPromotions();
     },
+
 
 };
 
@@ -253,6 +285,13 @@ export default {
 
 
 <style scoped>
+.navbar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 .background {
   width: 100%;
   height: 100%;
@@ -262,7 +301,7 @@ export default {
 }
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 body {
@@ -312,35 +351,11 @@ th {
   color: #888888;
 }
 
-.prettybutton {
-  border-radius: 5px;
-  background-color: white;
-  border: 1px solid #721c24;
-  color: #721c24;
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
-.prettybutton2 {
-  border-radius: 5px;
-  background-color: white;
-  border: 1px solid #888888;
-  color: #888888;
-}
-
-.prettybutton:hover {
-  border-radius: 5px;
-  border: #721c24;
-  background-color: #721c24;
-  border: 1px solid #721c24;
-  color: white;
-}
-
-.prettybutton2:hover {
-  border-radius: 5px;
-  border: #888888;
-  background-color: #888888;
-  border: 1px solid #888888;
-  color: white;
-}
 
 .centerbuttoncontainer {
   margin-top: 5%;
@@ -361,57 +376,8 @@ th {
 }
 
 .prettyheader {
-  color: #721c24;
+  color: #4e555b;
   margin-bottom: 10%;
-}
-
-/* Dropdown styles */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 5px;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #888888;
-  color: white;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-/* Button specific styles */
-.dropdown-button {
-  background-color: white;
-  border: none;
-  width: 100%;
-  text-decoration: none;
-  display: inline-block;
-  text-align: left;
-  cursor: pointer;
-  color: #888888;
-}
-
-.dropdown-button:hover {
-  background-color: #888888;
-  color: white;
 }
 
 /* Styles for overlay */
@@ -452,4 +418,14 @@ th {
   color: white !important;
 }
 
+.hero-section {
+  background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
+  padding: 200px 0;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.nav-link {
+  color: white !important;
+}
 </style>

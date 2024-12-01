@@ -26,23 +26,27 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/1',
+      path: '/ManagerPromotion/:email',
       name: 'ManagerPromotion',
       component: ManagerPromotion,
+      props: true
     },
 
     {
-      path: '/orders/:customerId',
+      path: '/orders/:customerEmail',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
-      props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
+      props : true
     },
 
     {
-      path: '/wishlist/:customerId',
+      path: '/wishlist/:customerEmail',
       name: 'CustomerWishListView',
       component: CustomerWishListView,
-      props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
+      props: true
+    },
+
+    {
       path: '/SignUp/',
       component: SignUp
     },

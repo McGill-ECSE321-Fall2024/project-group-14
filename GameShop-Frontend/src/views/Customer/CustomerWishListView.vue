@@ -2,29 +2,36 @@
     <div>
         <div id="makeOrder">
             <div class="background">
-                <div class = navbar-container>
-                    <nav class="navbar navbar-expand-lg navbar-light transparent-background">
-                        <a class="navbar-band" href="#">
-                            <img src="#" alt="Your Logo" height="60">
-                        </a>
-                        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                <a class="nav-link clickable-text" >Home</a>
-                                </li>
-                                <li class="nav-item active">
-                                <a class="nav-link" href="#">Orders<span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link clickable-text" >Account</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link clickable-text" >Log Out</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
+              <div class="navbar-container">
+                <nav class="navbar navbar-expand-lg navbar-light transparent-background">
+                  <a class="navbar-brand" href="#">
+                    <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+                  </a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                      <li class="nav-item active">
+                        <a class="nav-link clickable-text" @click="Home">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link clickable-text" @click="Orders">Orders</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Wishlist</a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a class="nav-link clickable-text" @click="Account">Account</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
 
                 <div class="wishlist-container">
                   <div class="luxurious-text" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px">
@@ -76,6 +83,7 @@
 <script>
 import axios from 'axios';
 const BASE_URL = 'http://localhost:8060/wishlist';
+const backendUrl = "http://localhost:8060"; // Hardcoded backend URL
 
 var axiosClient = axios.create({
   baseURL: BASE_URL,
@@ -225,7 +233,30 @@ export default {
             this.errorMessage = "Failed to add game to order.";
         }
     },
+
+    async Orders() {
+      await this.$router.push({path: '/orders/' + this.customerEmail})
+    },
+
+    async Wishlist() {
+      await this.$router.push({path: '/wishlist/' + this.customerEmail})
+    },
+
+    async Account() {
+      await this.$router.push({
+        name: "CustomerAccount",
+        params: { email: this.customerEmail },
+      });
+    },
     
+    async LogOut() {
+      alert('Successfully logged out.')
+      await this.$router.push({name: 'home'})
+    },
+
+    async Home() {
+      await this.$router.push({ path: "/CustomerHome/" + this.customerEmail });
+    },
   },
 
   // Fetch orders when the component is created
