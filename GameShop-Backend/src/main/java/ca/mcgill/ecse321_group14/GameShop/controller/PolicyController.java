@@ -14,7 +14,7 @@ import ca.mcgill.ecse321_group14.GameShop.model.Policy;
 import ca.mcgill.ecse321_group14.GameShop.service.PolicyService;
 
 
-@CrossOrigin(origins = "http://localhost:8087")
+@CrossOrigin(origins = "*")
 @RestController
 public class PolicyController {
 
