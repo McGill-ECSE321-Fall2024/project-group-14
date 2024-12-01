@@ -75,7 +75,7 @@
 
 <script>
 import axios from 'axios';
-const BASE_URL = 'http://localhost:8080/wishlist';
+const BASE_URL = 'http://localhost:8060/wishlist';
 
 var axiosClient = axios.create({
   baseURL: BASE_URL,
@@ -87,8 +87,8 @@ var axiosClient = axios.create({
 export default {
   name: 'WishListManagement',
   props: {
-    customerid: {
-      type: Number,
+    customerEmail: {
+      type: String,
       required: true, // Or false if you handle fallback
     },
   },
@@ -122,7 +122,11 @@ export default {
 
     async fetchWishlists() {
         try {
-            const response = await axios.get(`http://localhost:8080/wishlist/${this.customerid}`);
+            //Fetch the Customer ID using the email
+            const customerResponse = await axios.get(`http://localhost:8060/customersEmail/${this.customerEmail}`);
+            const customerid = customerResponse.data.id;
+            this.customerid = customerid;
+            const response = await axios.get(`http://localhost:8060/wishlist/${customerid}`);
             const wishlists = response.data.wishlists;
 
             // Map game info and total price directly from backend response
@@ -144,7 +148,7 @@ export default {
     async createWishlist(gameId) {
         const customerId = this.customerid; // Use the provided customer ID prop
         try {
-            const response = await axios.post(`http://localhost:8080/wishlist/${gameId}/${customerId}`);
+            const response = await axios.post(`http://localhost:8060/wishlist/${gameId}/${customerId}`);
             console.log("Wishlist created successfully:", response.data);
 
             // Refresh the wishlists
@@ -164,7 +168,7 @@ export default {
         }
 
         try {
-            await axios.delete(`http://localhost:8080/wishlist/${gameId}/${customerId}`);
+            await axios.delete(`http://localhost:8060/wishlist/${gameId}/${customerId}`);
             console.log(`Wishlist item with Game ID ${gameId} cleared.`);
 
             // Refresh the wishlists
@@ -180,7 +184,7 @@ export default {
         console.log("Creating order for Customer ID:", customerId);
         const payload = { customerId };
         try {
-            const response = await axios.post('http://localhost:8080/order', payload);
+            const response = await axios.post('http://localhost:8060/order', payload);
             return response.data.orderId; // Return the created order ID
         } catch (error) {
             console.error("Error creating order:", error);
@@ -190,7 +194,7 @@ export default {
 
         async addGameToOrder(orderId, gameId) {
         try {
-            await axios.put(`http://localhost:8080/orderitem/${orderId}/${gameId}`);
+            await axios.put(`http://localhost:8060/orderitem/${orderId}/${gameId}`);
             console.log(`Game ID ${gameId} added to Order ID ${orderId}`);
         } catch (error) {
             console.error(`Error adding game ${gameId} to order ${orderId}:`, error);
@@ -226,9 +230,9 @@ export default {
 
   // Fetch orders when the component is created
   created() {
-        console.log("Customer ID from prop:", this.customerid);
-        if (isNaN(this.customerid)) {
-            console.error("Invalid Customer ID: Not a Number");
+        console.log("Customer Email from prop:", this.customerEmail);
+        if (!this.customerEmail || typeof this.customerEmail !== 'string') {
+          console.error("Invalid Customer Email: Must be a non-empty string.");
         } else {
             this.fetchWishlists(); // Fetch wishlists instead of orders
         }

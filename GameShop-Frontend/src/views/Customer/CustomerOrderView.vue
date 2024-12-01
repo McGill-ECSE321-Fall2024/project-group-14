@@ -82,7 +82,7 @@
 
 <script>
 import axios from 'axios';
-const BASE_URL = 'http://localhost:8080/order';
+const BASE_URL = 'http://localhost:8060/order';
 
 var axiosClient = axios.create({
   baseURL: BASE_URL,
@@ -94,8 +94,8 @@ var axiosClient = axios.create({
 export default {
   name: 'OrderManagement',
   props: {
-    customerid: {
-      type: Number,
+    customerEmail: {
+      type: String,
       required: true, // Or false if you handle fallback
     },
   },
@@ -128,23 +128,30 @@ export default {
     },
 
     async fetchOrders() {
-      const customerId = this.$route.params.customerId; // Extract customerId from route params
-      console.log("Customer ID:", customerId); // Debugging customerId
+      const customerEmail = this.$route.params.customerEmail; // Extract customerId from route params
+      console.log("Customer Email:", customerEmail); // Debugging customerId
 
       try {
-        // Fetch the orders for the given customerId
+        // fetch the Customer ID using the email
+        const customerResponse = await axios.get(`http://localhost:8060/customersEmail/${this.customerEmail}`);
+        const customerId = customerResponse.data.id;
+        console.log("Customer ID:", customerId);
+
+        // Fetch the orders for the customer
         const response = await axios.get(`${BASE_URL}/customer/${customerId}`);
         const orders = response.data.orders;
 
-        // Fetch all order items concurrently
-        const orderItemsPromises = orders.map(order => 
-          axios.get(`http://localhost:8080/orderitems/${order.orderId}`)
+        // Fetch all order items 
+        const orderItemsPromises = orders.map(order =>
+          axios
+            .get(`http://localhost:8060/orderitems/${order.orderId}`)
             .then(res => ({ orderId: order.orderId, items: res.data.orderitems }))
             .catch(error => {
               console.error(`Failed to fetch order items for orderId ${order.orderId}:`, error);
               return { orderId: order.orderId, items: [] }; // Return an empty list on failure
             })
         );
+
 
         // Resolve all promises
         const orderItemsResults = await Promise.all(orderItemsPromises);
@@ -243,7 +250,7 @@ export default {
 
       try {
         // Call the backend API to mark the order as paid
-        const response = await axios.put(`http://localhost:8080/order/${orderId}/pay`);
+        const response = await axios.put(`http://localhost:8060/order/${orderId}/pay`);
         console.log(`Order ID ${orderId} marked as paid on backend.`);
 
         // Update the order in the frontend state
@@ -269,10 +276,11 @@ export default {
 
   // Fetch orders when the component is created
   created() {
-    console.log("Customer ID from prop:", this.customerid);
+    console.log("Customer Email from prop:", this.customerEmail);
     console.log("Orders from backend:", this.orders);
-    if (isNaN(this.customerid)) {
-      console.error("Invalid Customer ID: Not a Number");
+
+    if (!this.customerEmail || typeof this.customerEmail !== 'string') {
+      console.error("Invalid Customer Email: Must be a non-empty string.");
     } else {
       this.fetchOrders();
     }
