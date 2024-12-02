@@ -73,6 +73,7 @@
                       <th>Category</th>
                       <th>Description</th>
                       <th>Rating</th>
+                      <th>Quantity</th>
                       <th>View Reviews</th>
                       <th>Update</th>
                       <th>Delete</th>
@@ -121,6 +122,13 @@
                         />
                       </td>
                       <td>
+                        <input
+                            v-model="game.quantity"
+                            :readonly="editingGameId !== game.id"
+                            class="form-control"
+                        />
+                      </td>
+                      <td>
                         <button
                             class="btn btn-info btn-sm"
                             @click="viewReviews(game.id)"
@@ -154,7 +162,7 @@
                       </td>
                     </tr>
                     <tr v-if="games.length === 0">
-                      <td colspan="9" class="text-center">No games found.</td>
+                      <td colspan="10" class="text-center">No games found.</td>
                     </tr>
                     </tbody>
                   </table>
@@ -211,8 +219,8 @@ export default {
         category: game.category,
         price: game.price,
         rating: game.rating,
-        quantity: 0, // default value
-        picture: "image-url.jpg", // placeholder ?
+        quantity: game.quantity, 
+        picture: game.picture || "default-image.jpg", // placeholder if picture is missing
       };
 
       console.log("Updating game with:", requestBody);
@@ -269,6 +277,25 @@ export default {
             alert("Failed to fetch manager information.");
           });
     },
+
+    async viewReviews(gameId) {
+  if (!gameId) {
+    console.error("Game ID is undefined!");
+    return;
+  }
+
+  console.log("Viewing reviews for Game ID:", gameId);
+
+  try {
+    await this.$router.push({
+      path: `/writeReview/${this.managerEmail}/${gameId}`,
+    });
+  } catch (error) {
+    // Update error logging here
+    console.error("Error navigating to reviews page:", error?.message || error);
+    alert("An error occurred while trying to view reviews. " + (error?.message || "Please try again later."));
+  }
+},
 
     navigateTo(route) {
       const routes = {
