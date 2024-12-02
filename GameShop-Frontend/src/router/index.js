@@ -146,7 +146,7 @@ const router = createRouter({
       component: CustomerWriteReview
     },
     {
-      path: '/manager/managerWriteReply/:param1/:param2',  // param1 = email, param2 = gameId
+      path: '/ManageGames/managerWriteReply/:param1/:param2',  // param1 = email, param2 = gameId
       name: 'ManagerWriteReply',
       component: ManagerWriteReply
     },
