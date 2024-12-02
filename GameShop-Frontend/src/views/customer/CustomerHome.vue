@@ -38,6 +38,7 @@
           <div class="col-md-12 mx-auto text-center">
             <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px" >GAMESHOP</h1>
             <p class="luxurious-text" style="font-weight: normal; color: #fff;">{{ storePolicy }}</p>
+            <button class="btn btn-lg mt-3 custom-login-button" @click="BrowseGames">Browse Games</button>
           </div>
         </div>
       </div>
