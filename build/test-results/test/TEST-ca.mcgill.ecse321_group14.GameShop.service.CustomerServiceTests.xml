@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" tests="30" skipped="0" failures="0" errors="0" timestamp="2024-11-26T00:08:40" hostname="Dianas-MacBook-Air.local" time="0.792">
+  <properties/>
+  <testcase name="testUpdateCustomerNullCardNumber()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.161"/>
+  <testcase name="testCreateCustomerNullPassword()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.035"/>
+  <testcase name="testCreateCustomerNullAddress()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.032"/>
+  <testcase name="testUpdateCustomerNullAddress()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.017"/>
+  <testcase name="testUpdateCustomerNullPassword()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.015"/>
+  <testcase name="testDeleteCustomerNullId()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.026"/>
+  <testcase name="testCreateCustomerNullCardExpiryDate()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.012"/>
+  <testcase name="testCreateCustomerNullEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.01"/>
+  <testcase name="testLoginCustomerIncorrectEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.067"/>
+  <testcase name="testDeleteCustomerNullCustomer()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.012"/>
+  <testcase name="testFindCustomerByNullEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.013"/>
+  <testcase name="testFindCustomerById()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.011"/>
+  <testcase name="testUpdateCustomerNullEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.008"/>
+  <testcase name="testUpdateCustomer()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.016"/>
+  <testcase name="testCreateCustomer()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.012"/>
+  <testcase name="testLoginCustomerNullEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.009"/>
+  <testcase name="testLoginCustomerIncorrectPassword()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.007"/>
+  <testcase name="testCreateCustomerNullCardNumber()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.01"/>
+  <testcase name="testFindCustomerByEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.007"/>
+  <testcase name="testFindCustomerByNonExistentId()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.01"/>
+  <testcase name="testUpdateCustomerNullCardExpiryDate()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.012"/>
+  <testcase name="testFindCustomerByNonExistentEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.014"/>
+  <testcase name="testLoginCustomerNonExistentEmail()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.017"/>
+  <testcase name="testLoginCustomer()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.006"/>
+  <testcase name="testDeleteCustomer()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.006"/>
+  <testcase name="testFindCustomerByNullId()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.011"/>
+  <testcase name="testCreateCustomerNullUsername()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.008"/>
+  <testcase name="testDeleteCustomerNonExistentId()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.006"/>
+  <testcase name="testLoginCustomerNullPassword()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.008"/>
+  <testcase name="testUpdateCustomerNullUsername()" classname="ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests" time="0.006"/>
+  <system-out><![CDATA[2024-11-25T19:08:39.238-05:00  INFO 27174 --- [GameShop] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests]: CustomerServiceTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-25T19:08:39.305-05:00  INFO 27174 --- [GameShop] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321_group14.GameShop.GameShopApplication for test class ca.mcgill.ecse321_group14.GameShop.service.CustomerServiceTests
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -141,4 +141,11 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // 404 Not Found if the order doesn't exist
         }
     }
+
+    @GetMapping("/order/all")
+    public ResponseEntity<OrderListDto> getAllOrders(){
+        List<Order> orders = orderService.getAllOrders();
+        List<OrderResponseDto> dtos = orders.stream().map(order -> new OrderResponseDto(order)).collect(Collectors.toList());
+        return ResponseEntity.ok(new OrderListDto(dtos));
+    }
 }

@@ -2,29 +2,36 @@
     <div>
         <div id="makeOrder">
             <div class="background">
-                <div class = navbar-container>
-                    <nav class="navbar navbar-expand-lg navbar-light transparent-background">
-                        <a class="navbar-band" href="#">
-                            <img src="#" alt="Your Logo" height="60">
-                        </a>
-                        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                <a class="nav-link clickable-text" >Home</a>
-                                </li>
-                                <li class="nav-item active">
-                                <a class="nav-link" href="#">Orders<span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link clickable-text" >Account</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link clickable-text" >Log Out</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
+              <div class="navbar-container">
+                <nav class="navbar navbar-expand-lg navbar-light transparent-background">
+                  <a class="navbar-brand" href="#">
+                    <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+                  </a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                      <li class="nav-item active">
+                        <a class="nav-link clickable-text" @click="Home">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Orders</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a class="nav-link clickable-text" @click="Account">Account</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
 
                 <div class="orders-container">
                   <div class="luxurious-text" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px">
@@ -82,7 +89,8 @@
 
 <script>
 import axios from 'axios';
-const BASE_URL = 'http://localhost:8080/order';
+const BASE_URL = 'http://localhost:8060/order';
+const backendUrl = "http://localhost:8060"; // Hardcoded backend URL
 
 var axiosClient = axios.create({
   baseURL: BASE_URL,
@@ -94,8 +102,8 @@ var axiosClient = axios.create({
 export default {
   name: 'OrderManagement',
   props: {
-    customerid: {
-      type: Number,
+    customerEmail: {
+      type: String,
       required: true, // Or false if you handle fallback
     },
   },
@@ -128,23 +136,30 @@ export default {
     },
 
     async fetchOrders() {
-      const customerId = this.$route.params.customerId; // Extract customerId from route params
-      console.log("Customer ID:", customerId); // Debugging customerId
+      const customerEmail = this.$route.params.customerEmail; // Extract customerId from route params
+      console.log("Customer Email:", customerEmail); // Debugging customerId
 
       try {
-        // Fetch the orders for the given customerId
+        // fetch the Customer ID using the email
+        const customerResponse = await axios.get(`http://localhost:8060/customersEmail/${this.customerEmail}`);
+        const customerId = customerResponse.data.id;
+        console.log("Customer ID:", customerId);
+
+        // Fetch the orders for the customer
         const response = await axios.get(`${BASE_URL}/customer/${customerId}`);
         const orders = response.data.orders;
 
-        // Fetch all order items concurrently
-        const orderItemsPromises = orders.map(order => 
-          axios.get(`http://localhost:8080/orderitems/${order.orderId}`)
+        // Fetch all order items 
+        const orderItemsPromises = orders.map(order =>
+          axios
+            .get(`http://localhost:8060/orderitems/${order.orderId}`)
             .then(res => ({ orderId: order.orderId, items: res.data.orderitems }))
             .catch(error => {
               console.error(`Failed to fetch order items for orderId ${order.orderId}:`, error);
               return { orderId: order.orderId, items: [] }; // Return an empty list on failure
             })
         );
+
 
         // Resolve all promises
         const orderItemsResults = await Promise.all(orderItemsPromises);
@@ -243,7 +258,7 @@ export default {
 
       try {
         // Call the backend API to mark the order as paid
-        const response = await axios.put(`http://localhost:8080/order/${orderId}/pay`);
+        const response = await axios.put(`http://localhost:8060/order/${orderId}/pay`);
         console.log(`Order ID ${orderId} marked as paid on backend.`);
 
         // Update the order in the frontend state
@@ -264,15 +279,41 @@ export default {
         console.error("Error processing payment: ", error);
         this.errorMessage = error.response?.data?.message || "Failed to process payment.";
       }
-    }
+    },
+
+    async Orders() {
+      await this.$router.push({path: '/orders/' + this.customerEmail})
+    },
+
+    async Wishlist() {
+      await this.$router.push({path: '/wishlist/' + this.customerEmail})
+    },
+
+    async Account() {
+      await this.$router.push({
+        name: "CustomerAccount",
+        params: { email: this.customerEmail },
+      });
+    },
+    
+    async LogOut() {
+      alert('Successfully logged out.')
+      await this.$router.push({name: 'home'})
+    },
+
+    async Home() {
+      await this.$router.push({ path: "/CustomerHome/" + this.customerEmail });
+    },
+
   },
 
   // Fetch orders when the component is created
   created() {
-    console.log("Customer ID from prop:", this.customerid);
+    console.log("Customer Email from prop:", this.customerEmail);
     console.log("Orders from backend:", this.orders);
-    if (isNaN(this.customerid)) {
-      console.error("Invalid Customer ID: Not a Number");
+
+    if (!this.customerEmail || typeof this.customerEmail !== 'string') {
+      console.error("Invalid Customer Email: Must be a non-empty string.");
     } else {
       this.fetchOrders();
     }
@@ -291,7 +332,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url('#') center center no-repeat;
+  background: url('../../assets/gameshopBackground.jpg') center center no-repeat;
   background-size: cover;
 }
 .navbar-container {
@@ -312,6 +353,7 @@ export default {
 
 .nav-link:hover {
   cursor: pointer;
+  color: white !important;
 }
 
 .orders-container {
@@ -399,6 +441,8 @@ export default {
   left: 0;
   right: 0;
 }
+
+
 
 
 </style>

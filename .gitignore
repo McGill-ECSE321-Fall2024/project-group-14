@@ -1,1 +1,3 @@
 node_modules
+GameShop-Backend/src/main/resources/application.properties
+GameShop-Frontend/package-lock.json

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" tests="8" skipped="0" failures="0" errors="0" timestamp="2024-11-26T00:08:35" hostname="Dianas-MacBook-Air.local" time="0.433">
+  <properties/>
+  <testcase name="testCreateValidGame()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.141"/>
+  <testcase name="testCreateSecondGame()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.03"/>
+  <testcase name="testGetValidGameById()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.029"/>
+  <testcase name="testGetAllGames()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.036"/>
+  <testcase name="testUpdateValidGameById()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.023"/>
+  <testcase name="testDeleteGameNullName()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.021"/>
+  <testcase name="testDeleteGameNotValidPerson()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.099"/>
+  <testcase name="testDeleteGameValidPerson()" classname="ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests" time="0.05"/>
+  <system-out><![CDATA[2024-11-25T19:08:35.569-05:00  INFO 27174 --- [GameShop] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests]: GameIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-25T19:08:35.583-05:00  INFO 27174 --- [GameShop] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321_group14.GameShop.GameShopApplication for test class ca.mcgill.ecse321_group14.GameShop.integration.GameIntegrationTests
+Name cannot be null!
+Only Staff can delete games!
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

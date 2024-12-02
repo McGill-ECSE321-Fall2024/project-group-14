@@ -8,15 +8,19 @@ import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 import CustomerWishListView from '@/views/Customer/CustomerWishListView.vue';
 import HomeView from '../views/HomeView.vue'
 import SignUp from '../views/SignUp.vue'
-import Login from '../views/Login.vue'
+import Login from '../views/LogIn.vue'
 import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
-import CustomerHome from "@/views/customer/CustomerHome.vue";
-import CustomerBrowseGames from "@/views/customer/CustomerBrowseGames.vue";
+import CustomerHome from "@/views/Customer/CustomerHome.vue";
+import CustomerBrowseGames from "@/views/Customer/CustomerBrowseGames.vue";
 import EmployeeHome from "@/views/employee/EmployeeHome.vue";
 import EmployeeViewGames from "@/views/employee/EmployeeViewGames.vue";
 import EmployeeViewOrders from "@/views/employee/EmployeeViewOrders.vue";
 import ManagerHome from "@/views/Manager/ManagerHome.vue";
 import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
+import CustomerWriteReview from "@/views/Customer/CustomerWriteReview.vue";
+import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
+import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
+
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
@@ -26,20 +30,21 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/1',
+      path: '/ManagerPromotion/:email',
       name: 'ManagerPromotion',
       component: ManagerPromotion,
+      props: true
     },
 
     {
-      path: '/orders/:customerId',
+      path: '/orders/:customerEmail',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
       props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
     },
 
     {
-      path: '/wishlist/:customerId',
+      path: '/wishlist/:customerEmail',
       name: 'CustomerWishListView',
       component: CustomerWishListView,
       props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
@@ -110,6 +115,26 @@ const router = createRouter({
       path: '/EmployeeGameRequest/:param1/:param2',
       name: 'EmployeeGameRequest',
       component: EmployeeGameRequest
+    },
+    {
+      path: '/ManagerHome/:param1',
+        name: 'ManagerHome',
+        component: ManagerHome
+    },
+    {
+      path: '/writeReview/:param1/:param2',  // param1 = email, param2 = gameId
+      name: 'CustomerWriteReview',
+      component: CustomerWriteReview
+    },
+    {
+      path: '/manager/managerWriteReply/:param1/:param2',  // param1 = email, param2 = gameId
+      name: 'ManagerWriteReply',
+      component: ManagerWriteReply
+    },
+    {
+      path: '/ManagePolicy/:param1',  // param1 = email
+      name: 'ManagePolicy',
+      component: ManagePolicy
     }
   ],
 });
