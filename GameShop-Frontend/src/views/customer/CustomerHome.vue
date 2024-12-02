@@ -33,12 +33,11 @@
           </div>
         </nav>
       </div>
-
       <div class="container">
         <div class="row">
           <div class="col-md-12 mx-auto text-center">
             <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px" >GAMESHOP</h1>
-            <p class="luxurious-text" style="font-weight: normal; color: #fff;">buy games</p>
+            <p class="luxurious-text" style="font-weight: normal; color: #fff;">{{ storePolicy }}</p>
             <button class="btn btn-lg mt-3 custom-login-button" @click="BrowseGames">Browse Games</button>
           </div>
         </div>
@@ -112,10 +111,12 @@ export default {
   data() {
     return {
       email: "",
+      storePolicy:"",
     };
   },
   mounted(){
     this.email = this.$route.params.param1
+    this.fetchPolicy();
   },
   methods: {
     async Orders() {
@@ -133,6 +134,25 @@ export default {
     },
     async BrowseGames(){
       await this.$router.push({path: '/CustomerBrowseGames/' + this.email})
+    },
+    async fetchPolicy() {
+      try {
+        const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL
+        const policies = await response.json();
+        console.log("Fetched policies:", policies);
+
+        if (policies.length > 0) {
+          // Display the first policy's description
+          this.storePolicy = `GameShop Policy: ${policies[0].description}`;
+        } else {
+          // Default message if no policies exist
+          this.storePolicy = "GameShop Policy: buy games.";
+        }
+      } catch (error) {
+        console.error("Error fetching policy:", error);
+        // Fallback message in case of an error
+        this.storePolicy = "GameShop Policy: buy games.";
+      }
     }
   }
 };
