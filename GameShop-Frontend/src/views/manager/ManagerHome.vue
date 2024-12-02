@@ -97,7 +97,7 @@ export default {
       await this.$router.push({name: '/'})
     },
     async ManagePromotion() {
-      await this.$router.push({path: '/ManagePromotion/' + this.email})
+      await this.$router.push({path: '/ManagerPromotion/' + this.email})
     },
   },
 };

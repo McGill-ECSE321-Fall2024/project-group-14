@@ -37,6 +37,9 @@
                 <a class="nav-link clickable-text" @click="navigateTo('ManageGameRequests')">Manage Game Requests</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('ManagePromotion')">Promotion</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
               </li>
               <li class="nav-item">
@@ -303,6 +306,7 @@ export default {
         ManageGameRequests: `/ManageGameRequests/${this.managerEmail}`,
         Account: `/CustomerAccount/${this.managerEmail}`,
         ViewOrders: `/ViewOrders/${this.managerEmail}`,
+        ManagePromotions: `/ManagerPromotion/${this.managerEmail}`,
         LogOut: "/",
       };
       if (route === "LogOut") {
