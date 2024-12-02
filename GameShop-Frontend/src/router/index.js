@@ -22,7 +22,7 @@ import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
 import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
 import CustomerAccount from '@/views/Customer/CustomerAccount.vue';
 import ManagerAccount from '@/views/Manager/ManagerAccount.vue'; 
-import EmployeeAccount from '@/views/Employee/EmployeeAccount.vue';
+import EmployeeAccount from '@/views/employee/EmployeeHome.vue';
 
 
 const router = createRouter({
@@ -52,14 +52,14 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/CustomerAccount/:param1', // Define the path with a parameter
-      name: 'CustomerAccount', // Name of the route
-      component: CustomerAccount, // Component to render
+      path: '/CustomerAccount/:param1', 
+      name: 'CustomerAccount', 
+      component: CustomerAccount,
     },
     {
-      path: '/ManagerAccount/:param1', // Define the path with a parameter for manager email
-      name: 'ManagerAccount', // Name of the route
-      component: ManagerAccount, // Component to render
+      path: '/ManagerAccount/:param1',
+      name: 'ManagerAccount',
+      component: ManagerAccount,
     },
     {
       path: '/SignUp/',

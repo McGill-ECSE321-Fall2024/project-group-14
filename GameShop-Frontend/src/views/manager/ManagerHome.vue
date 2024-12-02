@@ -102,6 +102,9 @@ export default {
     async ManagePromotion() {
       await this.$router.push({path: '/ManagerPromotion/' + this.email})
     },
+    async Home(){
+      await this.$router.push({path: '/ManagerHome/' + this.email})
+    },
     async fetchPolicy() {
       try {
         const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL

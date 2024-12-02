@@ -2,42 +2,46 @@
     <div class="managerAccount">
       <div class="background">
         <div class="navbar-container">
-          <nav class="navbar navbar-expand-lg navbar-light transparent-background">
-            <a class="navbar-brand" href="#">
-              <img src="../../assets/gameshopLogo.jpg" alt="GameShop Logo" height="60" />
-            </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="Home">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="Orders">Orders</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Account<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light transparent-background">
+          <a class="navbar-brand" href="#">
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link clickable-text" @click="Home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ManageEmployees">Manage Employees</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ManagePolicy">Manage Policy</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ManageGames">Manage Games</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ManageGameRequests">Manage Game Requests</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ManagePromotion">Promotion</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"> Account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
   
         <div class="profile-box">
           <div class="container rounded bg-white mt-5 mb-5 account-box shadow">
@@ -115,18 +119,34 @@
           alert(this.errorMsg);
         }
       },
-      async Home() {
-        await this.$router.push({ path: `/ManagerHome/${this.email}` });
-      },
-      async Orders() {
-        await this.$router.push({ path: `/orders/${this.email}` });
-      },
-      async Wishlist() {
-        await this.$router.push({ path: `/wishlist/${this.email}` });
-      },
-      async LogOut() {
-        await this.$router.push({ name: "home" });
-      },
+      async ManageEmployees() {
+      await this.$router.push({path: '/ManageEmployees/' + this.email})
+    },
+    async ManagePolicy() {
+      await this.$router.push({path: '/ManagePolicy/' + this.email})
+    },
+    async ManageGames() {
+      await this.$router.push({path: '/ManageGames/' + this.email})
+    },
+    async ManageGameRequests() {
+      await this.$router.push({path: '/ManageGameRequests/' + this.email})
+    },
+    async Account() {
+      await this.$router.push({path: '/ManagerAccount/' + this.email})
+    },
+    async ViewOrders() {
+      await this.$router.push({path: '/ViewOrders/' + this.email})
+    },
+    async LogOut() {
+      alert('Successfully logged out.')
+      await this.$router.push({name: 'home'})
+    },
+    async ManagePromotion() {
+      await this.$router.push({path: '/ManagerPromotion/' + this.email})
+    },
+    async Home(){
+      await this.$router.push({path: '/ManagerHome/' + this.email})
+    },
     },
   };
   </script>
