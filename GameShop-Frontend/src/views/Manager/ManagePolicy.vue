@@ -132,35 +132,26 @@ export default {
       },
       isUpdate: false,
       currid: null,
-      email: this.$route.params.email || "",
     }
   },
 
   methods: {
-    async ManageEmployees() {
-      await this.$router.push({path: '/ManageEmployees/' + this.email})
-    },
-    async ManagerHome() {
-      await this.$router.push({path: '/ManagerHome/' + this.email})
-    },
-    async ManageGames() {
-      await this.$router.push({path: '/ManageGames/' + this.email})
-    },
-    async ManageGameRequests() {
-      await this.$router.push({path: '/ManageGameRequests/' + this.email})
-    },
-    async Account() {
-      await this.$router.push({path: '/CustomerAccount/' + this.email})
-    },
-    async ViewOrders() {
-      await this.$router.push({path: '/ViewOrders/' + this.email})
-    },
-    async LogOut() {
-      alert('Successfully logged out.')
-      await this.$router.push({name: '/'})
-    },
-    async ManagePromotion() {
-      await this.$router.push({path: '/ManagePromotion/' + this.email})
+    navigateTo(route) {
+      const routes = {
+        Home: `/ManagerHome/${this.email}`,
+        ManageEmployees: `/ManageEmployees/${this.email}`,
+        ManagePolicy: `/ManagePolicy/${this.email}`,
+        ManageGames: `/ManageGames/${this.email}`,
+        ManageGameRequests: `/ManageGameRequests/${this.email}`,
+        Account: `/CustomerAccount/${this.email}`,
+        ViewOrders: `/ViewOrders/${this.email}`,
+        ManagePromotions: `/ManagerPromotion/${this.email}`,
+        LogOut: "/",
+      };
+      if (route === "LogOut") {
+        alert("Successfully logged out.");
+      }
+      this.$router.push(routes[route]);
     },
     openCreatePolicyPopup() {
       this.currPolicy = {
