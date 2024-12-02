@@ -6,9 +6,9 @@ import ManageGameRequests from '../views/Manager/ManageGameRequests.vue';
 import ManagerPromotion from '../views/Manager/ManagerPromotionView.vue';
 import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 import CustomerWishListView from '@/views/Customer/CustomerWishListView.vue';
-import HomeView from '../views/HomeView.vue'
-import SignUp from '../views/SignUp.vue'
-import Login from '../views/LogIn.vue'
+import HomeView from '../views/HomeView.vue';
+import SignUp from '../views/SignUp.vue';
+import Login from '../views/LogIn.vue';
 import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
 import CustomerHome from "@/views/Customer/CustomerHome.vue";
 import CustomerBrowseGames from "@/views/Customer/CustomerBrowseGames.vue";
@@ -20,7 +20,9 @@ import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
 import CustomerWriteReview from "@/views/Customer/CustomerWriteReview.vue";
 import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
 import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
-import CustomerAccount from '@/views/Customer/CustomerAccount.vue'; 
+import CustomerAccount from '@/views/Customer/CustomerAccount.vue';
+import ManagerAccount from '@/views/Manager/ManagerAccount.vue'; 
+import EmployeeAccount from '@/views/Employee/EmployeeAccount.vue';
 
 
 const router = createRouter({
@@ -37,34 +39,32 @@ const router = createRouter({
       component: ManagerPromotion,
       props: true
     },
-
     {
       path: '/orders/:customerEmail',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
       props: true
     },
-
     {
       path: '/wishlist/:customerEmail',
       name: 'CustomerWishListView',
       component: CustomerWishListView,
       props: true
     },
-
     {
       path: '/CustomerAccount/:param1', // Define the path with a parameter
       name: 'CustomerAccount', // Name of the route
       component: CustomerAccount, // Component to render
-     // Pass route params as props to the component
     },
-    
-
+    {
+      path: '/ManagerAccount/:param1', // Define the path with a parameter for manager email
+      name: 'ManagerAccount', // Name of the route
+      component: ManagerAccount, // Component to render
+    },
     {
       path: '/SignUp/',
       component: SignUp
     },
-
     {
       path: '/Login/',
       component: Login
@@ -94,6 +94,11 @@ const router = createRouter({
       path: '/EmployeeViewGames/:param1/:param2',
       name: 'EmployeeViewGames',
       component: EmployeeViewGames
+    },
+    {
+      path: '/EmployeeAccount/:param1',  
+      name: 'EmployeeAccount',  
+      component: EmployeeAccount,  
     },
     {
       path: '/EmployeeViewOrders/:param1/:param2',
@@ -132,8 +137,8 @@ const router = createRouter({
     },
     {
       path: '/ManagerHome/:param1',
-        name: 'ManagerHome',
-        component: ManagerHome
+      name: 'ManagerHome',
+      component: ManagerHome
     },
     {
       path: '/writeReview/:param1/:param2',  // param1 = email, param2 = gameId

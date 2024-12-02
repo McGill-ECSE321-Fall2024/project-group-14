@@ -87,7 +87,7 @@ export default {
       await this.$router.push({path: '/ManageGameRequests/' + this.email})
     },
     async Account() {
-      await this.$router.push({path: '/CustomerAccount/' + this.email})
+      await this.$router.push({path: '/ManagerAccount/' + this.email})
     },
     async ViewOrders() {
       await this.$router.push({path: '/ViewOrders/' + this.email})

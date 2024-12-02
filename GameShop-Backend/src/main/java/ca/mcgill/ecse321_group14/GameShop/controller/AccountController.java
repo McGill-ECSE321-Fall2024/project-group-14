@@ -136,24 +136,30 @@ public class AccountController {
         }
     }
 
-    @PutMapping("/customers/{pid}")
-    public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable int pid,
-            @RequestBody CustomerRequestDto customerdto) {
+    @PutMapping("/customersEmail/{email}")
+    public ResponseEntity<CustomerResponseDto> updateCustomerByEmail(
+            @PathVariable String email,
+            @RequestBody CustomerRequestDto customerDto) {
         try {
-            Customer customerToUpdate = customerService.getCustomerById(pid);
+            // Retrieve the existing customer
+            Customer customerToUpdate = customerService.getCustomerByEmail(email);
+
+            // Update the details of the customer
             customerToUpdate = customerService.updateCustomer(
-                    customerdto.getId(),
-                    customerdto.getPassword(),
-                    customerdto.getEmail(),
-                    customerdto.getUsername(),
-                    customerdto.getCardNumber(),
-                    customerdto.getCardExpiryDate(),
-                    customerdto.getAddress());
+                    customerToUpdate.getId(), // Use existing ID
+                    customerDto.getPassword(),
+                    customerDto.getEmail(),
+                    customerDto.getUsername(),
+                    customerDto.getCardNumber(),
+                    customerDto.getCardExpiryDate(),
+                    customerDto.getAddress()
+            );
+
+            // Return the updated customer as a response
             return new ResponseEntity<>(new CustomerResponseDto(customerToUpdate), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new CustomerResponseDto(), HttpStatus.NOT_FOUND);
         }
-
     }
 
     @PutMapping("/employees/{pid}")

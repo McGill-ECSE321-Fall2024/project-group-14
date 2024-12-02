@@ -58,7 +58,7 @@
                   <div class="row mt-3">
                     <div class="col-md-6">
                       <label class="labels">Username</label>
-                      <input class="form-control" id="username" v-model="username" readonly />
+                      <input class="form-control" id="username" v-model="username" :readonly="isReadonly" />
                     </div>
                     <div class="col-md-6">
                       <label class="labels">Email</label>
@@ -66,15 +66,19 @@
                     </div>
                     <div class="col-md-6">
                       <label class="labels">Card Number</label>
-                      <input class="form-control" id="cardNumber" v-model="cardNumber" readonly />
+                      <input class="form-control" id="cardNumber" v-model="cardNumber" :readonly="isReadonly" />
                     </div>
                     <div class="col-md-6">
                       <label class="labels">Card Expiry Date</label>
-                      <input class="form-control" id="cardExpiryDate" type="date" v-model="cardExpiryDate" readonly />
+                      <input class="form-control" id="cardExpiryDate" type="date" v-model="cardExpiryDate" :readonly="isReadonly" />
                     </div>
                     <div class="col-md-12">
                       <label class="labels">Address</label>
-                      <input class="form-control" id="address" v-model="address" readonly />
+                      <input class="form-control" id="address" v-model="address" :readonly="isReadonly" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="labels">Enter Your Password To Make Changes</label>
+                      <input class="form-control" id="password" type="password" v-model="password" :readonly="isReadonly" />
                     </div>
                   </div>
                 </div>
@@ -116,10 +120,13 @@ export default {
     return {
       email: this.$route.params.param1,
       username: "",
+      password: "", // Added password field
       cardNumber: "",
       cardExpiryDate: "",
       address: "",
       errorMsg: "",
+      id: null,
+      isReadonly: true,
     };
   },
   created() {
@@ -128,14 +135,16 @@ export default {
   methods: {
     async fetchCustomerInfo() {
       try {
-        const response = await axiosClient.get(`/customersEmail/${this.email}`);
+        const response = await axiosClient.get(`/customersEmail/${encodeURIComponent(this.email)}`);
         const customer = response.data;
+        this.id = customer.id;
         this.username = customer.username;
+        this.password = customer.password || "";  // Ensure password is fetched correctly
         this.cardNumber = customer.cardNumber;
         this.cardExpiryDate = customer.cardExpiryDate;
         this.address = customer.address;
       } catch (error) {
-        this.errorMsg = `Error fetching customer info: ${error.response.data}`;
+        this.errorMsg = `Error fetching customer info: ${error.response?.data || error.message}`;
         alert(this.errorMsg);
       }
     },
@@ -144,40 +153,32 @@ export default {
         const customerRequest = {
           username: this.username,
           email: this.email,
+          password: this.password, // Ensure password is included in the request
           cardNumber: this.cardNumber,
           cardExpiryDate: this.cardExpiryDate,
           address: this.address,
         };
-        await axiosClient.put(`/customers/${this.email}`, customerRequest);
+        await axiosClient.put(`/customersEmail/${encodeURIComponent(this.email)}`, customerRequest);
         alert("Account details updated successfully.");
-        this.makeFieldsReadOnly();
+        this.isReadonly = true;
       } catch (error) {
-        alert(`Error saving info: ${error.response.data}`);
+        alert(`Error saving info: ${error.response?.data || error.message}`);
       }
     },
-    async editInfo() {
-      document.getElementById("username").removeAttribute("readonly");
-      document.getElementById("cardNumber").removeAttribute("readonly");
-      document.getElementById("cardExpiryDate").removeAttribute("readonly");
-      document.getElementById("address").removeAttribute("readonly");
-    },
-    makeFieldsReadOnly() {
-      document.getElementById("username").setAttribute("readonly", "true");
-      document.getElementById("cardNumber").setAttribute("readonly", "true");
-      document.getElementById("cardExpiryDate").setAttribute("readonly", "true");
-      document.getElementById("address").setAttribute("readonly", "true");
+    editInfo() {
+      this.isReadonly = false;
     },
     async Home() {
-      await this.$router.push({path: `/CustomerHome/${this.email}`});
+      await this.$router.push({ path: `/CustomerHome/${this.email}` });
     },
     async Orders() {
-      await this.$router.push({path: `/orders/${this.email}`});
+      await this.$router.push({ path: `/orders/${this.email}` });
     },
     async Wishlist() {
-      await this.$router.push({path: `/wishlist/${this.email}`});
+      await this.$router.push({ path: `/wishlist/${this.email}` });
     },
     async LogOut() {
-      await this.$router.push({name: "home"});
+      await this.$router.push({ name: "home" });
     },
   },
 };
