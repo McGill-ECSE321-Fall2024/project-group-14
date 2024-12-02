@@ -124,12 +124,12 @@ export default {
                     this.$router.push({path: '/Login/'})
                   })
                   .catch((err) => {
-                    this.errorMsg = `Failure: ${err.response.data}`
+                    this.errorMsg = `Failure creating account. Please try again.`
                     alert(this.errorMsg)
                   })
 
             .catch((err) => {
-              this.errorMsg = `Failure: ${err.response.data}`
+              this.errorMsg = `Failure creating account. Please try again.`
               alert(this.errorMsg)
             })
       } else {

@@ -20,8 +20,8 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
               <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home</a>
+                <li class="nav-item">
+                  <a class="nav-link clickable-text" @click="Home">Home</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link clickable-text" @click="Orders">Orders</a>
@@ -122,6 +122,7 @@
   
   <script>
   import axios from "axios";
+import HomeView from "../HomeView.vue";
   const backendUrl = "http://localhost:8060";
   var axiosClient = axios.create({
   baseURL: backendUrl,
@@ -227,19 +228,27 @@ fetchReplies() {
     document.getElementById("review_form").reset();
     }
     ,
-    async Home() {
-        await this.$router.push({ path: "/CustomerHome/" + this.email });
+    async Orders() {
+      await this.$router.push({path: '/orders/' + this.email})
     },
-    async LogOut() {
-        await this.$router.push({ name: "Home" });
-    },
-    async Games() {
-        await this.$router.push({ path: "/customer/games/" + this.email });
+    async Wishlist() {
+      await this.$router.push({path: '/wishlist/' + this.email})
     },
     async Account() {
-        await this.$router.push({ path: "/CustomerAccount/" + this.email });
+      await this.$router.push({path: '/CustomerAccount/' + this.email})
     },
+    async LogOut() {
+      alert('Successfully logged out.')
+      await this.$router.push({name: 'home'})
     },
+    async BrowseGames(){
+      await this.$router.push({path: '/CustomerBrowseGames/' + this.email})
+    },
+    async Home() {
+      await this.$router.push({path: '/CustomerHome/' + this.email})
+    }
+
+  }
 
   };
   </script>

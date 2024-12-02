@@ -139,7 +139,7 @@ export default {
       await this.$router.push({ path: "/SignUp/" });
     },
     async Home() {
-      await this.$router.push({ name: "Home" });
+      await this.$router.push({ name: "home" });
     },
   },
 };
