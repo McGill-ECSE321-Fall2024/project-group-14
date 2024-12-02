@@ -20,6 +20,9 @@ import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
 import CustomerWriteReview from "@/views/Customer/CustomerWriteReview.vue";
 import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
 import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
+import CustomerAccount from '@/views/Customer/CustomerAccount.vue'; 
+
+
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
@@ -48,6 +51,14 @@ const router = createRouter({
       component: CustomerWishListView,
       props: true
     },
+
+    {
+      path: '/CustomerAccount/:param1', // Define the path with a parameter
+      name: 'CustomerAccount', // Name of the route
+      component: CustomerAccount, // Component to render
+     // Pass route params as props to the component
+    },
+    
 
     {
       path: '/SignUp/',

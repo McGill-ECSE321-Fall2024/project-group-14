@@ -137,6 +137,31 @@ export default {
   },
 
   methods: {
+    async ManageEmployees() {
+      await this.$router.push({path: '/ManageEmployees/' + this.email})
+    },
+    async ManagerHome() {
+      await this.$router.push({path: '/ManagerHome/' + this.email})
+    },
+    async ManageGames() {
+      await this.$router.push({path: '/ManageGames/' + this.email})
+    },
+    async ManageGameRequests() {
+      await this.$router.push({path: '/ManageGameRequests/' + this.email})
+    },
+    async Account() {
+      await this.$router.push({path: '/CustomerAccount/' + this.email})
+    },
+    async ViewOrders() {
+      await this.$router.push({path: '/ViewOrders/' + this.email})
+    },
+    async LogOut() {
+      alert('Successfully logged out.')
+      await this.$router.push({name: '/'})
+    },
+    async ManagePromotion() {
+      await this.$router.push({path: '/ManagePromotion/' + this.email})
+    },
     openCreatePolicyPopup() {
       this.currPolicy = {
         description: "",
