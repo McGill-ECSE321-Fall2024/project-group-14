@@ -1,39 +1,33 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
 
-public class ReplyRequestDto {
-    private String message;
-    private int id; // reviewId
+public class ReplyRequestDto{
+    private String description;
+    private int reviewId;
     private int managerId;
 
     public ReplyRequestDto() {
     }
 
-    public ReplyRequestDto(int id, String message, int managerId) {
-        if (message == null) {
-            message = "No description provided.";
-        }
-        if (id == 0) {
-            id = 4;
-        }
-        this.message = message;
-        this.id = id;
+    public ReplyRequestDto(String description, int reviewId, int managerId) {
+        this.description = description;
+        this.reviewId = reviewId;
         this.managerId = managerId;
     }
 
     public String getDescription() {
-        return message;
+        return description;
     }
 
     public void setDescription(String description) {
-        this.message = description;
+        this.description = description;
     }
 
     public int getReviewId() {
-        return id;
+        return reviewId;
     }
 
-    public void setReviewId(int id) {
-        this.id = id;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
     public int getManagerId() {

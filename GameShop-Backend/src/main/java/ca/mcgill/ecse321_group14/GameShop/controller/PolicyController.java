@@ -1,20 +1,16 @@
 package ca.mcgill.ecse321_group14.GameShop.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import ca.mcgill.ecse321_group14.GameShop.dto.PolicyRequestDto;
 import ca.mcgill.ecse321_group14.GameShop.dto.PolicyResponseDto;
 import ca.mcgill.ecse321_group14.GameShop.model.Policy;
 import ca.mcgill.ecse321_group14.GameShop.service.PolicyService;
 
 
-@CrossOrigin(origins = "*")
+
 @RestController
 public class PolicyController {
 
@@ -124,19 +120,5 @@ public class PolicyController {
             // Return 404 Not Found if the policy does not exist
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-    /**
-     * Get all policies
-     *
-     * @return List of PolicyResponseDto
-     */
-    @GetMapping("/policy")
-    public ResponseEntity<List<PolicyResponseDto>> getAllPolicies() {
-        List<Policy> policies = policyService.getAllPolicies();
-        List<PolicyResponseDto> policyResponseDtos = policies.stream()
-                .map(PolicyResponseDto::new)
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(policyResponseDtos, HttpStatus.OK);
     }
 }

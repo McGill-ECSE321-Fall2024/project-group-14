@@ -2,36 +2,29 @@
     <div>
         <div id="makeOrder">
             <div class="background">
-              <div class="navbar-container">
-                <nav class="navbar navbar-expand-lg navbar-light transparent-background">
-                  <a class="navbar-brand" href="#">
-                    <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
-                  </a>
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                      <li class="nav-item active">
-                        <a class="nav-link clickable-text" @click="Home">Home</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link clickable-text" @click="Orders">Orders</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Wishlist</a>
-                      </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link clickable-text" @click="Account">Account</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
-                      </li>
-                    </ul>
-                  </div>
-                </nav>
-              </div>
+                <div class = navbar-container>
+                    <nav class="navbar navbar-expand-lg navbar-light transparent-background">
+                        <a class="navbar-band" href="#">
+                            <img src="#" alt="Your Logo" height="60">
+                        </a>
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                <a class="nav-link clickable-text" >Home</a>
+                                </li>
+                                <li class="nav-item active">
+                                <a class="nav-link" href="#">Orders<span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link clickable-text" >Account</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link clickable-text" >Log Out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
 
                 <div class="wishlist-container">
                   <div class="luxurious-text" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px">
@@ -82,8 +75,7 @@
 
 <script>
 import axios from 'axios';
-const BASE_URL = 'http://localhost:8060/wishlist';
-const backendUrl = "http://localhost:8060"; // Hardcoded backend URL
+const BASE_URL = 'http://localhost:8080/wishlist';
 
 var axiosClient = axios.create({
   baseURL: BASE_URL,
@@ -95,8 +87,8 @@ var axiosClient = axios.create({
 export default {
   name: 'WishListManagement',
   props: {
-    customerEmail: {
-      type: String,
+    customerid: {
+      type: Number,
       required: true, // Or false if you handle fallback
     },
   },
@@ -130,11 +122,7 @@ export default {
 
     async fetchWishlists() {
         try {
-            //Fetch the Customer ID using the email
-            const customerResponse = await axios.get(`http://localhost:8060/customersEmail/${this.customerEmail}`);
-            const customerid = customerResponse.data.id;
-            this.customerid = customerid;
-            const response = await axios.get(`http://localhost:8060/wishlist/${customerid}`);
+            const response = await axios.get(`http://localhost:8080/wishlist/${this.customerid}`);
             const wishlists = response.data.wishlists;
 
             // Map game info and total price directly from backend response
@@ -156,7 +144,7 @@ export default {
     async createWishlist(gameId) {
         const customerId = this.customerid; // Use the provided customer ID prop
         try {
-            const response = await axios.post(`http://localhost:8060/wishlist/${gameId}/${customerId}`);
+            const response = await axios.post(`http://localhost:8080/wishlist/${gameId}/${customerId}`);
             console.log("Wishlist created successfully:", response.data);
 
             // Refresh the wishlists
@@ -176,7 +164,7 @@ export default {
         }
 
         try {
-            await axios.delete(`http://localhost:8060/wishlist/${gameId}/${customerId}`);
+            await axios.delete(`http://localhost:8080/wishlist/${gameId}/${customerId}`);
             console.log(`Wishlist item with Game ID ${gameId} cleared.`);
 
             // Refresh the wishlists
@@ -192,7 +180,7 @@ export default {
         console.log("Creating order for Customer ID:", customerId);
         const payload = { customerId };
         try {
-            const response = await axios.post('http://localhost:8060/order', payload);
+            const response = await axios.post('http://localhost:8080/order', payload);
             return response.data.orderId; // Return the created order ID
         } catch (error) {
             console.error("Error creating order:", error);
@@ -202,7 +190,7 @@ export default {
 
         async addGameToOrder(orderId, gameId) {
         try {
-            await axios.put(`http://localhost:8060/orderitem/${orderId}/${gameId}`);
+            await axios.put(`http://localhost:8080/orderitem/${orderId}/${gameId}`);
             console.log(`Game ID ${gameId} added to Order ID ${orderId}`);
         } catch (error) {
             console.error(`Error adding game ${gameId} to order ${orderId}:`, error);
@@ -233,37 +221,14 @@ export default {
             this.errorMessage = "Failed to add game to order.";
         }
     },
-
-    async Orders() {
-      await this.$router.push({path: '/orders/' + this.customerEmail})
-    },
-
-    async Wishlist() {
-      await this.$router.push({path: '/wishlist/' + this.customerEmail})
-    },
-
-    async Account() {
-      await this.$router.push({
-        name: "CustomerAccount",
-        params: { email: this.customerEmail },
-      });
-    },
     
-    async LogOut() {
-      alert('Successfully logged out.')
-      await this.$router.push({name: 'home'})
-    },
-
-    async Home() {
-      await this.$router.push({ path: "/CustomerHome/" + this.customerEmail });
-    },
   },
 
   // Fetch orders when the component is created
   created() {
-        console.log("Customer Email from prop:", this.customerEmail);
-        if (!this.customerEmail || typeof this.customerEmail !== 'string') {
-          console.error("Invalid Customer Email: Must be a non-empty string.");
+        console.log("Customer ID from prop:", this.customerid);
+        if (isNaN(this.customerid)) {
+            console.error("Invalid Customer ID: Not a Number");
         } else {
             this.fetchWishlists(); // Fetch wishlists instead of orders
         }
@@ -281,7 +246,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url('../../assets/gameshopBackground.jpg') center center no-repeat;
+  background: url('#') center center no-repeat;
   background-size: cover;
 }
 .navbar-container {
@@ -302,7 +267,6 @@ export default {
 
 .nav-link:hover {
   cursor: pointer;
-  color: white !important;
 }
 
 .wishlist-container {
@@ -389,12 +353,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-}
-
-.hero-section {
-  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
-  padding: 300px 0;
-  text-align: center;
 }
 
 

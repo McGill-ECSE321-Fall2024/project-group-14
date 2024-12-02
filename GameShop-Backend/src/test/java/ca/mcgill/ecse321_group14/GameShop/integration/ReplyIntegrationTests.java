@@ -43,9 +43,8 @@ public class ReplyIntegrationTests {
     private Review.Ranking ranking = Review.Ranking.FiveStar;
 
     Game game = new Game("Test Game", "Test Description", "Category", 50, 10, Game.Rating.G, "Picture");
-    Customer customer = new Customer("password", "email", "username", 123123, Date.valueOf("2015-12-07"), "address");
-    Manager manager = new Manager("password", "email", "username");
-
+    Customer customer = new Customer("password","email","username",123123, Date.valueOf("2015-12-07"), "address");
+    Manager manager = new Manager("password","email","username");
     @AfterAll
     public void clearDatabase() {
         replyRepository.deleteAll();
@@ -55,46 +54,47 @@ public class ReplyIntegrationTests {
 
     @Test
     @Order(1)
-    public void testCreateManager() {
+    public void testCreateManager(){
         manager = managerRepository.save(manager);
         assertTrue(managerRepository.existsById(manager.getId()));
-        assertTrue(manager.getId() > 0, "Manager id is not valid");
+        assertTrue(manager.getId()>0,"Manager id is not valid");
     }
-
     @Test
     @Order(2)
-    public void testCreateCustomer() {
+    public void testCreateCustomer(){
         customer = customerRepository.save(customer);
         assertTrue(customerRepository.existsById(customer.getId()));
-        assertTrue(customer.getId() > 0, "Customer id is not valid");
+        assertTrue(customer.getId()>0,"Customer id is not valid");
     }
+
 
     @Test
     @Order(3)
-    public void testCreateGame() {
+    public void testCreateGame(){
         game = gameRepository.save(game);
         assertTrue(gameRepository.existsById(game.getId()));
-        assertTrue(game.getId() > 0, "Game id is not valid");
+        assertTrue(game.getId()>0,"Game id is not valid");
     }
 
     @Test
     @Order(4)
-    public void testCreateReview() {
+    public void testCreateReview(){
         Review review = new Review(ranking, description, customer, game);
         review = reviewRepository.save(review);
         assertTrue(reviewRepository.existsById(review.getId()));
-        assertTrue(review.getId() > 0, "Review id is not valid");
+        assertTrue(review.getId()>0,"Review id is not valid");
     }
+
+
 
     @Test
     @Order(5)
-    public void testCreateReply() {
+    public void testCreateReply(){
         Review review = new Review(ranking, description, customer, game);
         review = reviewRepository.save(review);
-        ReplyRequestDto replyRequestDto = new ReplyRequestDto(review.getId(), description, manager.getId());
+        ReplyRequestDto replyRequestDto = new ReplyRequestDto(description, review.getId(), manager.getId());
 
-        ResponseEntity<ReplyResponseDto> response = client.postForEntity("/reply", replyRequestDto,
-                ReplyResponseDto.class);
+        ResponseEntity<ReplyResponseDto> response = client.postForEntity("/reply", replyRequestDto, ReplyResponseDto.class);
 
         ReplyResponseDto createdReply = response.getBody();
 
@@ -106,7 +106,7 @@ public class ReplyIntegrationTests {
 
     @Test
     @Order(6)
-    public void testGetReply() {
+    public void testGetReply(){
         ResponseEntity<ReplyResponseDto> response = client.getForEntity("/reply/" + replyId, ReplyResponseDto.class);
         ReplyResponseDto reply = response.getBody();
 
@@ -118,9 +118,10 @@ public class ReplyIntegrationTests {
     @Test
     @Order(7)
     public void testDeleteReply() {
-        ResponseEntity<Void> response = client.exchange("/reply/delete/" + replyId, HttpMethod.GET, HttpEntity.EMPTY,
-                Void.class);
+        ResponseEntity<Void> response = client.exchange("/reply/delete/" + replyId, HttpMethod.GET, HttpEntity.EMPTY, Void.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+
 
 }

@@ -1,37 +1,29 @@
 package ca.mcgill.ecse321_group14.GameShop.dto;
-
 import ca.mcgill.ecse321_group14.GameShop.model.Reply;
 
 public class ReplyResponseDto {
     private int id;
-    private int reviewId;
     private String message;
-    private int managerId;
+    private String author;
 
     public ReplyResponseDto() {
     }
 
-    public ReplyResponseDto(int id, int reviewId, String message, int managerId) {
+    public ReplyResponseDto(int id, String message, String author) {
         this.id = id;
         this.message = message;
-        this.managerId = managerId;
-        this.reviewId = reviewId;
+        this.author = author;
     }
 
     public ReplyResponseDto(Reply reply) {
 
         this.id = reply.getId();
-        this.reviewId = reply.getReview().getId();
         this.message = reply.getDescription();
-        this.managerId = reply.getManager().getId();
+        this.author = reply.getManager().getUsername();
     }
 
     public int getId() {
         return id;
-    }
-
-    public int getReviewId() {
-        return reviewId;
     }
 
     public void setId(int id) {
@@ -46,11 +38,11 @@ public class ReplyResponseDto {
         this.message = message;
     }
 
-    public int getManagerId() {
-        return managerId;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -9,7 +9,6 @@ import ca.mcgill.ecse321_group14.GameShop.repository.ReplyRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class ReplyService {
@@ -19,26 +18,29 @@ public class ReplyService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    @Autowired
+    @Autowired 
     private ManagerRepository managerRepository;
+
 
     @Transactional
     public Reply createReply(String aDescription, int reviewId, int managerId) {
-        if (aDescription == null) {
+
+        if (aDescription == null){
             throw new IllegalArgumentException("Description cannot be empty!");
         }
-        Review aReview = reviewRepository.findReviewById(reviewId);
 
-        if (aReview == null) {
+        Review aReview = reviewRepository.findReviewById(reviewId);
+        
+        if (aReview == null){
             throw new IllegalArgumentException("Review does not exist!");
         }
 
         Manager aManager = managerRepository.findManagerById(managerId);
 
-        if (aManager == null) {
+        if (aManager == null){
             throw new IllegalArgumentException("Manager does not exist!");
         }
-
+        
         Reply reply = new Reply(aDescription, aReview, aManager);
         replyRepository.save(reply);
         return reply;
@@ -63,8 +65,5 @@ public class ReplyService {
         return reply;
     }
 
-    @Transactional
-    public List<Reply> getAllReplies() {
-        return replyRepository.findAll();
-    }
+
 }

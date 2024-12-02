@@ -1,12 +1,7 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import ca.mcgill.ecse321_group14.GameShop.model.Policy;
 import ca.mcgill.ecse321_group14.GameShop.repository.PolicyRepository;
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,10 +61,5 @@ public class PolicyService {
         } catch (Exception e) {
             throw new IllegalArgumentException("An error occurred while creating the policy.", e);
         }
-    }
-    @Transactional
-    public List<Policy> getAllPolicies() {
-        return StreamSupport.stream(policyRepository.findAll().spliterator(), false)
-                            .collect(Collectors.toList());
     }
 }
