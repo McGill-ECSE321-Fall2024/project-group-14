@@ -37,6 +37,9 @@
                 <a class="nav-link clickable-text" @click="navigateTo('ManageGameRequests')">Manage Game Requests</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link clickable-text" @click="navigateTo('ManagePromotion')">Promotion</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
               </li>
               <li class="nav-item">
@@ -70,6 +73,7 @@
                       <th>Category</th>
                       <th>Description</th>
                       <th>Rating</th>
+                      <th>Quantity</th>
                       <th>View Reviews</th>
                       <th>Update</th>
                       <th>Delete</th>
@@ -118,6 +122,13 @@
                         />
                       </td>
                       <td>
+                        <input
+                            v-model="game.quantity"
+                            :readonly="editingGameId !== game.id"
+                            class="form-control"
+                        />
+                      </td>
+                      <td>
                         <button
                             class="btn btn-info btn-sm"
                             @click="viewReviews(game.id)"
@@ -151,7 +162,7 @@
                       </td>
                     </tr>
                     <tr v-if="games.length === 0">
-                      <td colspan="9" class="text-center">No games found.</td>
+                      <td colspan="10" class="text-center">No games found.</td>
                     </tr>
                     </tbody>
                   </table>
@@ -208,8 +219,8 @@ export default {
         category: game.category,
         price: game.price,
         rating: game.rating,
-        quantity: 200, // Set default quantity
-        picture: "image-url.jpg", // Placeholder picture
+        quantity: game.quantity, 
+        picture: game.picture || "default-image.jpg", // placeholder if picture is missing
       };
 
       console.log("Updating game with:", requestBody);
@@ -218,8 +229,8 @@ export default {
           .post(`${backendUrl}/game/updatebyid`, requestBody)
           .then(() => {
             alert(`Game "${game.name}" has been successfully updated.`);
-            this.editingGameId = null; // Exit editing mode
-            this.fetchAllGames(); // Refresh the game list
+            this.editingGameId = null; 
+            this.fetchAllGames(); 
           })
           .catch((error) => {
             console.error("Error updating game:", error);
@@ -267,6 +278,25 @@ export default {
           });
     },
 
+    async viewReviews(gameId) {
+  if (!gameId) {
+    console.error("Game ID is undefined!");
+    return;
+  }
+
+  console.log("Viewing reviews for Game ID:", gameId);
+
+  try {
+    await this.$router.push({
+      path: `/writeReview/${this.managerEmail}/${gameId}`,
+    });
+  } catch (error) {
+    // Update error logging here
+    console.error("Error navigating to reviews page:", error?.message || error);
+    alert("An error occurred while trying to view reviews. " + (error?.message || "Please try again later."));
+  }
+},
+
     navigateTo(route) {
       const routes = {
         Home: `/ManagerHome/${this.managerEmail}`,
@@ -276,6 +306,7 @@ export default {
         ManageGameRequests: `/ManageGameRequests/${this.managerEmail}`,
         Account: `/CustomerAccount/${this.managerEmail}`,
         ViewOrders: `/ViewOrders/${this.managerEmail}`,
+        ManagePromotions: `/ManagerPromotion/${this.managerEmail}`,
         LogOut: "/",
       };
       if (route === "LogOut") {

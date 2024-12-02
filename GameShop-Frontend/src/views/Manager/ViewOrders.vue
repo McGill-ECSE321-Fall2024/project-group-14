@@ -6,16 +6,16 @@
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
-            <img src="@/assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
           </a>
           <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -62,43 +62,44 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Customer</th>
-                      <th>Game Title</th>
-                      <th>Order Date</th>
-                      <th>Card Number</th>
-                      <th>Card Expiry</th>
-                      <th>Address</th>
-                      <th>Cancel Order</th>
-                    </tr>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Games Ordered</th>
+                        <th>Order Date</th>
+                        <th>Card Number</th>
+                        <th>Card Expiry</th>
+                        <th>Address</th>
+                        <th>Cancel Order</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(order, index) in orders" :key="index">
-                      <td>{{ order.id }}</td>
-                      <td>
-                        <div class="column-container">
-                          <label>{{ order.customerName }}</label>
-                          <label class="prettylabel">{{ order.customerEmail }}</label>
-                        </div>
-                      </td>
-                      <td>{{ order.gameTitle }}</td>
-                      <td>{{ order.orderDate }}</td>
-                      <td>{{ order.cardNumber }}</td>
-                      <td>{{ order.cardExpiry }}</td>
-                      <td>{{ order.address }}</td>
-                      <td>
-                        <button
+                      <tr v-for="(order, index) in orders" :key="index">
+                        <td>{{ order.orderId }}</td>
+                        <td>{{ order.customerEmail }}</td>
+                        <td>
+                          <ul>
+                            <li v-for="(game, gameIndex) in order.gameTitles" :key="gameIndex">
+                              {{ game }}
+                            </li>
+                          </ul>
+                        </td>
+                        <td>{{ order.orderDate }}</td>
+                        <td>{{ order.cardNumber }}</td>
+                        <td>{{ order.cardExpiry }}</td>
+                        <td>{{ order.address }}</td>
+                        <td>
+                          <button
                             class="btn btn-danger btn-sm"
-                            @click.stop="cancelOrder(order.id)"
-                        >
-                          Cancel
-                        </button>
-                      </td>
-                    </tr>
-                    <tr v-if="orders.length === 0">
-                      <td colspan="8" class="text-center">No orders found.</td>
-                    </tr>
+                            @click.stop="cancelOrder(order.orderId)"
+                          >
+                            Cancel
+                          </button>
+                        </td>
+                      </tr>
+                      <tr v-if="orders.length === 0">
+                        <td colspan="8" class="text-center">No orders found.</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -112,52 +113,104 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
-const axiosClient = axios.create({
-  baseURL: "http://localhost:8080",
-  headers: { "Access-Control-Allow-Origin": "*" },
-});
+const BASE_URL = 'http://localhost:8060/order';
+const CUSTOMER_DETAILS_API = 'http://localhost:8060/customersEmail/';
+const ORDER_ITEMS_API = 'http://localhost:8060/orderitems/';
 
 export default {
+  name: 'ManagerViewOrders',
   data() {
     return {
       orders: [],
-      managerEmail: "",
+      managerEmail: '',
     };
   },
-
   methods: {
-    fetchOrders() {
-      axiosClient
-          .get("/orders")
-          .then((response) => {
-            this.orders = response.data.map((order) => ({
-              id: order.id,
-              customerName: order.customer.name,
-              customerEmail: order.customer.email,
-              gameTitle: order.game.title,
-              orderDate: order.orderDate,
-              cardNumber: order.payment.cardNumber,
-              cardExpiry: order.payment.cardExpiry,
-              address: order.address,
-            }));
-            console.log("Fetched orders:", this.orders);
-          })
-          .catch((error) => {
-            console.error("Error fetching orders:", error);
-          });
+    async fetchOrders() {
+      try {
+        console.log("Fetching all orders...");
+        // fetch all orders
+        const response = await axios.get(`${BASE_URL}/all`);
+        const orders = response.data.orders;
+
+        // fetch additional details for each order, including customer information and order items
+        const orderDetailsPromises = orders.map((order) =>
+          Promise.all([
+            this.fetchCustomerDetails(order.customerEmail),
+            this.fetchOrderItems(order.orderId),
+          ])
+        );
+
+        const orderDetailsResults = await Promise.all(orderDetailsPromises);
+
+        // combine orders with customer details and order items
+        orders.forEach((order, index) => {
+          const [customerDetails, orderItems] = orderDetailsResults[index];
+
+          // assign the fetched customer details to the order
+          order.customerEmail = customerDetails.email || order.customerEmail;
+          order.address = customerDetails.address || 'Unknown';
+          order.cardNumber = customerDetails.cardNumber || 'Unknown';
+          order.cardExpiry = customerDetails.cardExpiryDate || 'Unknown';
+
+          // assign game titles from the fetched order items
+          order.gameTitles = orderItems.map((item) => item.gameTitle);
+
+          // assign order date if available
+          order.orderDate = order.date || 'Unknown';
+        });
+
+        this.orders = orders;
+        console.log("Orders successfully fetched and updated: ", this.orders);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+        alert('Failed to load orders.');
+      }
     },
-    cancelOrder(orderId) {
-      axiosClient
-          .delete(`/orders/${orderId}`)
-          .then(() => {
-            alert("Order has been canceled!");
-            this.fetchOrders();
-          })
-          .catch((error) => {
-            console.error("Error canceling order:", error);
-          });
+    async fetchCustomerDetails(email) {
+      try {
+        console.log(`Fetching customer details for email: ${email}`);
+        const response = await axios.get(`${CUSTOMER_DETAILS_API}${email}`);
+        console.log(`Successfully fetched customer details for email: ${email}`, response.data);
+        return response.data;
+      } catch (error) {
+        console.error(`Failed to fetch customer details for email ${email}:`, error);
+        return {
+          email: email,
+          address: 'Unknown',
+          cardNumber: 'Unknown',
+          cardExpiryDate: 'Unknown',
+        };
+      }
+    },
+    async fetchOrderItems(orderId) {
+      try {
+        console.log(`Fetching order items for orderId: ${orderId}`);
+        const response = await axios.get(`${ORDER_ITEMS_API}${orderId}`);
+        console.log(`Successfully fetched order items for orderId: ${orderId}`, response.data.orderitems);
+        return response.data.orderitems;
+      } catch (error) {
+        console.error(`Failed to fetch order items for orderId ${orderId}:`, error);
+        return [];
+      }
+    },
+    async cancelOrder(orderId) {
+      try {
+        const isConfirmed = window.confirm('Are you sure you want to cancel this order?');
+        if (!isConfirmed) {
+          return; // exit if user cancels
+        }
+
+        console.log(`Attempting to cancel order with ID: ${orderId}`);
+        await axios.delete(`${BASE_URL}/${orderId}`);
+        alert('Order has been canceled!');
+        this.fetchOrders(); // refresh orders list
+      } catch (error) {
+        console.error('Error canceling order:', error);
+        alert('Failed to cancel order.');
+      }
     },
     navigateTo(route) {
       const routes = {
@@ -168,16 +221,16 @@ export default {
         ManageGameRequests: `/ManageGameRequests/${this.managerEmail}`,
         Account: `/CustomerAccount/${this.managerEmail}`,
         ViewOrders: `/ViewOrders/${this.managerEmail}`,
-        LogOut: "/",
+        LogOut: '/',
       };
-      if (route === "LogOut") {
-        alert("Successfully logged out.");
+      if (route === 'LogOut') {
+        alert('Successfully logged out.');
       }
       this.$router.push(routes[route]);
     },
   },
   mounted() {
-    this.managerEmail = this.$route.params.email || "";
+    this.managerEmail = this.$route.params.email || '';
     this.fetchOrders();
   },
 };
@@ -223,11 +276,6 @@ export default {
 .table-scroll {
   height: 300px;
   overflow-y: auto;
-}
-
-.btn-sm {
-  padding: 5px 10px;
-  font-size: 14px;
 }
 
 .prettylabel {

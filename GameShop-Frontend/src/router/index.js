@@ -42,7 +42,7 @@ const router = createRouter({
       path: '/orders/:customerEmail',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
-      props : true
+      props: true
     },
 
     {
@@ -64,6 +64,7 @@ const router = createRouter({
       path: '/SignUp/',
       component: SignUp
     },
+
     {
       path: '/Login/',
       component: Login
