@@ -22,19 +22,22 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('Home')">Home</a>
+                <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
+                <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ViewGames')">View Games</a>
+                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="#">View Orders</a>
+                <a class="nav-link clickable-text" @click="ViewGames">View Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
+                <a class="nav-link" href="#">View Orders<span class="sr-only"></span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
               </li>
             </ul>
           </div>
@@ -106,6 +109,8 @@ export default {
   data() {
     return {
       orders: [],
+      email: this.$route.params.param1,
+      username: this.$route.params.param2,
     };
   },
   methods: {
@@ -165,17 +170,20 @@ export default {
         alert('Failed to load orders.');
       }
     },
-    navigateTo(route) {
-      const routes = {
-        Home: '/EmployeeHome',
-        Account: '/EmployeeAccount',
-        ViewGames: '/EmployeeViewGames',
-        LogOut: '/home',
-      };
-      if (route === 'LogOut') {
-        alert('Successfully logged out.');
-      }
-      this.$router.push(routes[route]);
+    async Home() {
+      await this.$router.push({path: "/EmployeeHome/" + this.email + "/" + this.username});
+    },
+    async Account() {
+      await this.$router.push({path: "/EmployeeAccount/" + this.email + "/" + this.username});
+    },
+    async SubmitGameRequest() {
+      await this.$router.push({path: "/EmployeeGameRequest/" + this.email + "/" + this.username});
+    },
+    async ViewGames() {
+      await this.$router.push({path: "/EmployeeViewGames/" + this.email + "/" + this.username});
+    },
+    async LogOut() {
+      await this.$router.push({path: "/"});
     },
   },
   mounted() {
