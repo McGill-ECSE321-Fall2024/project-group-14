@@ -3,75 +3,79 @@
     <div class="navbar-container">
       <nav class="navbar navbar-expand-lg navbar-light transparent-background">
         <a class="navbar-brand" href="#">
-          <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+          <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
         </a>
         <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link clickable-text" @click="Home">Home</a>
+            <li class="nav-item">
+              <a class="nav-link clickable-text" @click="navigateTo('Home')">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link clickable-text" @click="Orders">Orders</a>
+              <a class="nav-link clickable-text" @click="navigateTo('Orders')">Orders</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
+              <a class="nav-link clickable-text" @click="navigateTo('Wishlist')">Wishlist</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link clickable-text" @click="Account">Account</a>
+              <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+              <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
             </li>
           </ul>
         </div>
       </nav>
     </div>
-    <div class="game-container">
-      <h1 class="text-left" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px; font-size: 30px">
-        AVAILABLE GAMES
-      </h1>
-      <div style="margin-top: 15px;"></div>
+    <div class="hero-section">
+      <div class="game-container container">
+        <h1 class="text-left" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px; font-size: 30px">
+          AVAILABLE GAMES
+        </h1>
+        <div style="margin-top: 15px;"></div>
 
-      <!-- Iterate over the list of games -->
-      <div v-for="(game, index) in games" :key="game.id" class="game-box">
-        <div class="row">
-          <div class="col-md-3">
-            <!-- Add an image for each game -->
-            <img :src="getGameImage(game.picture)" alt="Game Image" class="img-fluid game-image" />
-          </div>
-          <div class="col-md-9">
-            <!-- Display game information -->
-            <h5 style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 2px">{{ game.name }}</h5>
-            <p style="font-family: 'Georgia', sans-serif">{{ game.description }}</p>
-            <p style="font-family: 'Georgia', sans-serif">Category: {{ game.category }}</p>
-            <p style="font-family: 'Georgia', sans-serif">Rating: {{ game.rating }}</p>
-            <p style="font-family: 'Georgia', sans-serif">Price: ${{ game.price }}</p>
-            <button class="btn btn-lg custom-book-button" @click="purchase(game)">Purchase</button>
-            <button
-                class="btn btn-lg custom-book-button"
-                @click="addToWishlist(game)"
-                style="margin-left: 10px;"
-            >
-              Add to Wishlist
-            </button>
-            <button
-                class="btn btn-lg custom-book-button"
-                @click="viewReviews(game.id)"
-                style="margin-left: 10px;"
-            >
-              View Reviews
-            </button>
+        <!-- Iterate over the list of games -->
+        <div v-for="(game, index) in games" :key="game.id" class="game-box card shadow">
+          <div class="row no-gutters">
+            <div class="col-md-3">
+              <!-- Add an image for each game -->
+              <img :src="getGameImage(game.picture)" alt="Game Image" class="img-fluid game-image" />
+            </div>
+            <div class="col-md-9">
+              <!-- Display game information -->
+              <div class="card-body">
+                <h5 style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 2px">{{ game.name }}</h5>
+                <p style="font-family: 'Georgia', sans-serif">{{ game.description }}</p>
+                <p style="font-family: 'Georgia', sans-serif">Category: {{ game.category }}</p>
+                <p style="font-family: 'Georgia', sans-serif">Rating: {{ game.rating }}</p>
+                <p style="font-family: 'Georgia', sans-serif">Price: ${{ game.price }}</p>
+                <button class="btn btn-lg custom-book-button" @click="purchase(game)">Purchase</button>
+                <button
+                    class="btn btn-lg custom-book-button"
+                    @click="addToWishlist(game)"
+                    style="margin-left: 10px;"
+                >
+                  Add to Wishlist
+                </button>
+                <button
+                    class="btn btn-lg custom-book-button"
+                    @click="viewReviews(game.id)"
+                    style="margin-left: 10px;"
+                >
+                  View Reviews
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -115,24 +119,18 @@ export default {
         return new URL("../../assets/default-image.jpg", import.meta.url).href; // Fallback image
       }
     },
-    async Orders() {
-      await this.$router.push({ path: "/orders/" + this.customerEmail });
-    },
-    async Wishlist() {
-      await this.$router.push({ path: "/wishlist/" + this.customerEmail });
-    },
-    async Account() {
-      await this.$router.push({
-        name: "CustomerAccount",
-        params: { email: this.customerEmail },
-      });
-    },
-    async LogOut() {
-      alert("Successfully logged out.");
-      await this.$router.push({ name: "home" });
-    },
-    async Home() {
-      await this.$router.push({ path: "/CustomerHome/" + this.customerEmail });
+    navigateTo(route) {
+      const routes = {
+        Home: `/CustomerHome/${this.customerEmail}`,
+        Orders: `/orders/${this.customerEmail}`,
+        Wishlist: `/wishlist/${this.customerEmail}`,
+        Account: `/CustomerAccount/${this.customerEmail}`,
+        LogOut: '/',
+      };
+      if (route === 'LogOut') {
+        alert("Successfully logged out.");
+      }
+      this.$router.push(routes[route]);
     },
     async purchase(game) {
       if (!game) {
@@ -207,33 +205,48 @@ export default {
 </script>
 
 <style scoped>
+.navbar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 .navbar-brand {
   margin-right: 0;
 }
 
-.transparent-background {
-  background-color: rgba(136, 136, 136, 0.4);
+.nav-link {
+  color: white !important;
 }
 
-.navbar-container {
-  top: 0;
-  z-index: 1000;
+.transparent-background {
+  background-color: rgba(255, 255, 255, 0.2); 
+}
+
+.hero-section {
+  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
+  background-attachment: fixed; 
+  padding-top: 150px;
+  padding-bottom: 150px;
+  min-height: 100vh;
+}
+
+.game-container {
+  margin: 0 auto;
+  margin-top: 50px;
+  max-width: 1000px; 
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .game-box {
   border: 1px solid #ddd;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.game-container {
-  margin-top: 100px;
-  margin-right: 40px;
-  margin-left: 40px;
-  padding: 20px;
-  border-radius: 8px;
-  border: none;
+  background-color: white;
 }
 
 .custom-book-button {

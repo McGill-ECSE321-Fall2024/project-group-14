@@ -9,13 +9,13 @@
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
           <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -57,74 +57,86 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Rating</th>
-                        <th>Update</th>
-                      </tr>
+                    <tr>
+                      <th>Id</th>
+                      <th>Title</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Rating</th>
+                      <th>Quantity</th>
+                      <th>Update</th>
+                    </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(game, index) in games" :key="game.id">
-                        <td>{{ game.id }}</td>
-                        <td>
-                          <input
+                    <tr
+                        v-for="(game, index) in games"
+                        :key="game.id"
+                        :class="{ 'selected-row': editingGameId === game.id }"
+                    >
+                      <td>{{ game.id }}</td>
+                      <td>
+                        <input
                             v-model="game.name"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <input
+                        />
+                      </td>
+                      <td>
+                        <input
                             v-model="game.price"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <input
+                        />
+                      </td>
+                      <td>
+                        <input
                             v-model="game.category"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
+                        />
+                      </td>
+                      <td>
                           <textarea
-                            v-model="game.description"
-                            :readonly="editingGameId !== game.id"
-                            class="form-control"
+                              v-model="game.description"
+                              :readonly="editingGameId !== game.id"
+                              class="form-control"
                           ></textarea>
-                        </td>
-                        <td>
-                          <input
+                      </td>
+                      <td>
+                        <input
                             v-model="game.rating"
                             :readonly="editingGameId !== game.id"
                             class="form-control"
-                          />
-                        </td>
-                        <td>
-                          <button
+                        />
+                      </td>
+                      <td>
+                        <input
+                            v-model="game.quantity"
+                            :readonly="editingGameId !== game.id"
+                            class="form-control"
+                        />
+                      </td>
+                      <td>
+                        <button
                             class="btn btn-warning btn-sm"
                             v-if="editingGameId !== game.id"
                             @click="enableEditing(game.id)"
-                          >
-                            Edit
-                          </button>
-                          <button
+                        >
+                          Edit
+                        </button>
+                        <button
                             class="btn btn-success btn-sm"
                             v-else
                             @click="saveGame(game)"
-                          >
-                            Save
-                          </button>
-                        </td>
-                      </tr>
-                      <tr v-if="games.length === 0">
-                        <td colspan="7" class="text-center">No games found.</td>
-                      </tr>
+                        >
+                          Save
+                        </button>
+                      </td>
+                    </tr>
+                    <tr v-if="games.length === 0">
+                      <td colspan="8" class="text-center">No games found.</td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -132,17 +144,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="footer-container">
-        <footer class="footer">
-          <div class="d-flex align-items-center justify-content-center">
-            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="65">
-          </div>
-          <div class="d-flex align-items-center justify-content-center">
-            <p class="text-right" style="font-size: 10px">©GameShop 2024. All Rights Reserved.</p>
-          </div>
-        </footer>
       </div>
     </div>
   </div>
@@ -195,8 +196,8 @@ export default {
         category: game.category,
         price: game.price,
         rating: game.rating,
-        quantity: 0, 
-        picture: "image-url.jpg", // placeholder ?
+        quantity: game.quantity,
+        picture: "image-url.jpg", // placeholder for picture
       };
 
       try {
@@ -255,7 +256,6 @@ export default {
 .hero-section {
   background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
   padding: 200px 0;
-  text-align: center;
   min-height: 100vh;
 }
 
@@ -279,19 +279,6 @@ export default {
   font-size: 14px;
 }
 
-.footer-container {
-  position: relative;
-  margin-top: 100px;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: rgba(136, 136, 136, 0.2);
-  padding-top: 15px;
-}
-
 .clickable-text:hover {
   cursor: pointer;
   color: white !important;
@@ -301,4 +288,3 @@ export default {
   background-color: #f0f0f0;
 }
 </style>
-

@@ -43,80 +43,93 @@
         </nav>
       </div>
 
-      <div class="table-container">
-        <div class="container mt-5">
-          <div class="row">
-            <!-- Game Request Form -->
-            <div class="col-lg-5 mb-5">
-              <div class="prettyheader">
+      <!-- Page Content -->
+      <div class="container content-container">
+        <div class="row mt-5">
+          <!-- Submit Game Request Section -->
+          <div class="col-md-5 mb-5">
+            <div class="card viewGames-container shadow">
+              <div class="card-header text-center">
                 <h3>SUBMIT GAME REQUEST</h3>
               </div>
-              <form @submit.prevent="submitGameRequest">
-                <div class="form-group">
-                  <label for="name">Game Name:</label>
-                  <input
+              <div class="card-body">
+                <form @submit.prevent="submitGameRequest">
+                  <div class="form-group">
+                    <label for="name">Game Name:</label>
+                    <input
                       type="text"
                       id="name"
                       v-model="gameRequest.name"
                       class="form-control"
                       placeholder="Enter the name of the game"
                       required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="description">Description:</label>
-                  <textarea
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea
                       id="description"
                       v-model="gameRequest.description"
                       class="form-control"
                       placeholder="Enter a description of the game"
                       required
-                  ></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="category">Category:</label>
-                  <input
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="category">Category:</label>
+                    <input
                       type="text"
                       id="category"
                       v-model="gameRequest.category"
                       class="form-control"
                       placeholder="Enter the game's category (e.g., Action, RPG)"
                       required
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary submitbutton">Submit</button>
-              </form>
-            </div>
-
-            <!-- Game Request List -->
-            <div class="col-lg-7">
-              <div class="prettyheader">
-                <h3>GAME REQUEST LIST</h3>
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block submitbutton">Submit</button>
+                </form>
               </div>
-              <table class="table table-bordered">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Game Name</th>
-                  <th>Description</th>
-                  <th>Category</th>
-                  <th>Status</th>
-                  <th>Creator ID</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="request in gameRequests" :key="request.id">
-                  <td>{{ request.id }}</td>
-                  <td>{{ request.name }}</td>
-                  <td>{{ request.description }}</td>
-                  <td>{{ request.category }}</td>
-                  <td>{{ request.status }}</td>
-                  <td>{{ request.requestCreatorId }}</td>
-                </tr>
-                </tbody>
-              </table>
             </div>
           </div>
+
+          <!-- Game Request List Section -->
+          <div class="col-md-7">
+            <div class="card viewGames-container shadow">
+              <div class="card-header text-center">
+                <h3>GAME REQUEST LIST</h3>
+              </div>
+              <div class="card-body">
+                <div class="table-scroll">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Request ID</th>
+                        <th>Game Name</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(request, index) in gameRequests" :key="request.id">
+                        <td>{{ request.id }}</td>
+                        <td>{{ request.name }}</td>
+                        <td>{{ request.category }}</td>
+                        <td>{{ request.description }}</td>
+                        <td :class="{ 'text-success': request.status === 'Approved', 'text-danger': request.status === 'Rejected' }">
+                          {{ request.status }}
+                        </td>
+                      </tr>
+                      <tr v-if="gameRequests.length === 0">
+                        <td colspan="5" class="text-center">No game requests found.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -235,43 +248,58 @@ export default {
 </script>
 
 <style scoped>
-.hero-section {
-  background: url("../../assets/gameshopBackground.jpg") center/cover no-repeat;
-  min-height: 100vh;
-}
-
 .navbar-container {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 0.6); /* Transparent background */
 }
 
-.navbar .nav-link {
-  color: white !important; /* White text for navbar links */
+.navbar-brand {
+  margin-right: 0;
 }
 
-.navbar .nav-link:hover {
-  color: #ddd !important; /* Light gray hover effect */
+.nav-link {
+  color: white !important;
 }
 
-.table-container {
-  background-color: rgba(255, 255, 255, 1);
-  padding: 2%;
+.transparent-background {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.hero-section {
+  background: url("../../assets/gameshopBackground.jpg") center/cover no-repeat;
+  padding: 200px 0;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.content-container {
+  margin-top: 100px;
+}
+
+.viewGames-container {
+  background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 25%;
-  left: 10%;
-  right: 10%;
+  padding: 20px;
 }
 
-.prettyheader {
-  font-family: "Montserrat", sans-serif;
-  color: #888;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
+.table-scroll {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.text-success {
+  color: green;
+}
+
+.text-danger {
+  color: red;
 }
 
 .submitbutton {

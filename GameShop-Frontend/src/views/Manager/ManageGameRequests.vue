@@ -81,19 +81,29 @@
                         <td :class="{ 'text-success': request.status === 'Approved', 'text-danger': request.status === 'Rejected' }">
                           {{ request.status }}
                         </td>
-                        <td v-if="request.status === 'PendingApproval'">
-                          <button
-                            class="btn btn-success btn-sm"
-                            @click.stop="approveRequest(request, index)"
-                          >
-                            Approve
-                          </button>
-                          <button
-                            class="btn btn-danger btn-sm"
-                            @click.stop="rejectRequest(request, index)"
-                          >
-                            Reject
-                          </button>
+                        <td>
+                          <div v-if="request.status === 'PendingApproval'">
+                            <button
+                              class="btn btn-success btn-sm"
+                              @click.stop="approveRequest(request, index)"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              class="btn btn-danger btn-sm"
+                              @click.stop="rejectRequest(request, index)"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                          <div v-else>
+                            <button
+                              class="btn btn-danger btn-sm"
+                              @click.stop="deleteRequest(request.id, index)"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                       <tr v-if="gameRequests.length === 0">
@@ -115,7 +125,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8060", 
+  baseURL: "http://localhost:8060",
   headers: { "Access-Control-Allow-Origin": "*" },
 });
 
@@ -160,14 +170,30 @@ export default {
     },
     async approveRequest(request, index) {
       try {
+        // update the request status to 'Approved'
         const updatedRequest = {
           ...request,
           status: "Approved",
         };
 
         await axiosClient.put(`/gameapproval/${request.id}`, updatedRequest);
-        alert(`Request ${request.id} has been approved.`);
-        this.fetchGameRequests();
+
+        // create a new game based on the approved request
+        const newGameRequest = {
+          name: request.name,
+          description: request.description,
+          category: request.category,
+          price: request.price || 0, // default price
+          rating: request.rating || 0, // default rating
+          quantity: 100, // default quantity
+          picture: request.picture || "default-image.jpg", //  
+        };
+
+        // send the new game request to the backend
+        await axiosClient.post("/game", newGameRequest);
+
+        alert(`Request ${request.id} has been approved and added to the list of games.`);
+        this.fetchGameRequests(); // refresh the game request list
       } catch (error) {
         console.error(`Error approving request ${request.id}:`, error);
         alert(`Failed to approve request ${request.id}.`);
@@ -190,6 +216,21 @@ export default {
       } catch (error) {
         console.error(`Error rejecting request ${request.id}:`, error);
         alert(`Failed to reject request ${request.id}.`);
+      }
+    },
+    async deleteRequest(requestId, index) {
+      if (!confirm(`Are you sure you want to delete request ${requestId}?`)) return;
+
+      try {
+        // delete the request from the backend
+        await axiosClient.delete(`/gameapproval/${requestId}`);
+        alert(`Request ${requestId} has been deleted.`);
+        
+        // remove the request from the local list to update the UI
+        this.gameRequests.splice(index, 1);
+      } catch (error) {
+        console.error(`Error deleting request ${requestId}:`, error);
+        alert(`Failed to delete request ${requestId}.`);
       }
     },
     navigateTo(route) {
