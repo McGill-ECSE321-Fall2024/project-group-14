@@ -25,7 +25,7 @@ public class ReviewResponseDto {
         this.ranking = review.getRanking();
         this.description = review.getDescription();
         this.customerId = review.getCustomer().getId();
-        this.gameId = review.getGame().getId();
+        this.gameId = review.getGame().getId(); 
     }
 
     public int getId() {

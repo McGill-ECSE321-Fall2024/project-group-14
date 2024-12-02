@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321_group14.GameShop.integration;
 
+
 import ca.mcgill.ecse321_group14.GameShop.dto.ReplyResponseDto;
 import ca.mcgill.ecse321_group14.GameShop.dto.ReviewRequestDto;
 import ca.mcgill.ecse321_group14.GameShop.dto.ReviewResponseDto;
@@ -38,58 +39,56 @@ public class ReviewIntegrationTests {
     @Autowired
     private GameRepository gameRepository;
 
+
     private int reviewId;
     private Review.Ranking ranking = Review.Ranking.FiveStar;
     private String description = "Test Description";
 
-    Customer customer = new Customer("password", "email", "username", 123123, Date.valueOf("2015-12-07"), "address");
+    Customer customer = new Customer("password","email","username",123123, Date.valueOf("2015-12-07"), "address");
     Game game = new Game("Test Game", "Test Description", "Category", 50, 10, Game.Rating.G, "Picture");
+
+
 
     @Test
     @Order(1)
-    public void testCreateCustomer() {
-        // create a customer to be used with the review
+    public void testCreateCustomer(){
+        //create a customer to be used with the review
         customer = customerRepository.save(customer);
         assertTrue(customerRepository.existsById(customer.getId()));
-        assertTrue(customer.getId() > 0, "Customer id is not valid");
+        assertTrue(customer.getId()>0,"Customer id is not valid");
     }
 
     @Test
     @Order(2)
-    public void testCreateGame() {
-        // create a game to be used with the review
+    public void testCreateGame(){
+        //create a game to be used with the review
         game = gameRepository.save(game);
         assertTrue(gameRepository.existsById(game.getId()));
-        assertTrue(game.getId() > 0, "Game id is not valid");
+        assertTrue(game.getId()>0,"Game id is not valid");
     }
 
-    /*
-     * @Test
-     * 
-     * @Order(3)
-     * public void testCreateReview(){
-     * ReviewRequestDto reviewRequestDto = new ReviewRequestDto(ranking,
-     * description, customer.getId(), game.getId());
-     * 
-     * ResponseEntity<ReviewResponseDto> response = client.postForEntity("/review",
-     * reviewRequestDto, ReviewResponseDto.class);
-     * 
-     * ReviewResponseDto createdReview = response.getBody();
-     * 
-     * assertNotNull(createdReview);
-     * assertEquals(HttpStatus.CREATED, response.getStatusCode());
-     * assertEquals(ranking, createdReview.getRanking());
-     * assertEquals(description, createdReview.getDescription());
-     * assertEquals(customer.getId(), createdReview.getCustomerId());
-     * assertEquals(game.getId(), createdReview.getGameId());
-     * 
-     * reviewId = createdReview.getId();
-     * }
-     */
+    @Test
+    @Order(3)
+    public void testCreateReview(){
+        ReviewRequestDto reviewRequestDto = new ReviewRequestDto(ranking, description, customer.getId(), game.getId());
+
+        ResponseEntity<ReviewResponseDto> response = client.postForEntity("/review", reviewRequestDto, ReviewResponseDto.class);
+
+        ReviewResponseDto createdReview = response.getBody();
+
+        assertNotNull(createdReview);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(ranking, createdReview.getRanking());
+        assertEquals(description, createdReview.getDescription());
+        assertEquals(customer.getId(), createdReview.getCustomerId());
+        assertEquals(game.getId(), createdReview.getGameId());
+
+        reviewId = createdReview.getId();
+    }
 
     @Test
     @Order(4)
-    public void testGetReview() {
+    public void testGetReview(){
         String url = "/review/" + reviewId;
 
         ResponseEntity<ReviewResponseDto> response = client.getForEntity(url, ReviewResponseDto.class);
@@ -103,5 +102,8 @@ public class ReviewIntegrationTests {
         assertEquals(customer.getId(), foundReview.getCustomerId());
         assertEquals(game.getId(), foundReview.getGameId());
     }
+
+
+
 
 }

@@ -8,19 +8,15 @@ import CustomerOrderView from '@/views/Customer/CustomerOrderView.vue';
 import CustomerWishListView from '@/views/Customer/CustomerWishListView.vue';
 import HomeView from '../views/HomeView.vue'
 import SignUp from '../views/SignUp.vue'
-import Login from '../views/LogIn.vue'
+import Login from '../views/Login.vue'
 import CreateAccountSuggestion from "@/views/CreateAccountSuggestion.vue";
-import CustomerHome from "@/views/Customer/CustomerHome.vue";
-import CustomerBrowseGames from "@/views/Customer/CustomerBrowseGames.vue";
+import CustomerHome from "@/views/customer/CustomerHome.vue";
+import CustomerBrowseGames from "@/views/customer/CustomerBrowseGames.vue";
 import EmployeeHome from "@/views/employee/EmployeeHome.vue";
 import EmployeeViewGames from "@/views/employee/EmployeeViewGames.vue";
 import EmployeeViewOrders from "@/views/employee/EmployeeViewOrders.vue";
 import ManagerHome from "@/views/Manager/ManagerHome.vue";
 import EmployeeGameRequest from "@/views/employee/EmployeeGameRequest.vue";
-import CustomerWriteReview from "@/views/Customer/CustomerWriteReview.vue";
-import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
-import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
-
 const router = createRouter({
   history: createWebHistory(), // Use HTML5 history mode
   routes: [
@@ -30,21 +26,20 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/ManagerPromotion/:email',
+      path: '/1',
       name: 'ManagerPromotion',
       component: ManagerPromotion,
-      props: true
     },
 
     {
-      path: '/orders/:customerEmail',
+      path: '/orders/:customerId',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
       props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
     },
 
     {
-      path: '/wishlist/:customerEmail',
+      path: '/wishlist/:customerId',
       name: 'CustomerWishListView',
       component: CustomerWishListView,
       props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
