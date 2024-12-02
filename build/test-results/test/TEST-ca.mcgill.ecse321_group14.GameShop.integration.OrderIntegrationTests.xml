@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321_group14.GameShop.integration.OrderIntegrationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-11-26T00:08:36" hostname="Dianas-MacBook-Air.local" time="0.136">
+  <properties/>
+  <testcase name="testCreateOrder()" classname="ca.mcgill.ecse321_group14.GameShop.integration.OrderIntegrationTests" time="0.085"/>
+  <testcase name="testGetOrderById()" classname="ca.mcgill.ecse321_group14.GameShop.integration.OrderIntegrationTests" time="0.013"/>
+  <testcase name="testDeleteOrder()" classname="ca.mcgill.ecse321_group14.GameShop.integration.OrderIntegrationTests" time="0.037"/>
+  <system-out><![CDATA[2024-11-25T19:08:36.079-05:00  INFO 27174 --- [GameShop] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321_group14.GameShop.integration.OrderIntegrationTests]: OrderIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-25T19:08:36.084-05:00  INFO 27174 --- [GameShop] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321_group14.GameShop.GameShopApplication for test class ca.mcgill.ecse321_group14.GameShop.integration.OrderIntegrationTests
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

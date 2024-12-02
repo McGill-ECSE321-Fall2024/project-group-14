@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.mcgill.ecse321_group14.GameShop.service.GameApprovalServiceTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-11-26T00:08:42" hostname="Dianas-MacBook-Air.local" time="0.156">
+  <properties/>
+  <testcase name="testCreateGameApprovalRequest()" classname="ca.mcgill.ecse321_group14.GameShop.service.GameApprovalServiceTests" time="0.069"/>
+  <testcase name="testUpdateGameApprovalRequest()" classname="ca.mcgill.ecse321_group14.GameShop.service.GameApprovalServiceTests" time="0.027"/>
+  <testcase name="testGetGameApprovalRequest()" classname="ca.mcgill.ecse321_group14.GameShop.service.GameApprovalServiceTests" time="0.012"/>
+  <testcase name="testDeleteGameApprovalRequest()" classname="ca.mcgill.ecse321_group14.GameShop.service.GameApprovalServiceTests" time="0.011"/>
+  <system-out><![CDATA[2024-11-25T19:08:41.700-05:00  INFO 27174 --- [GameShop] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ca.mcgill.ecse321_group14.GameShop.service.GameApprovalServiceTests]: GameApprovalServiceTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-11-25T19:08:41.712-05:00  INFO 27174 --- [GameShop] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ca.mcgill.ecse321_group14.GameShop.GameShopApplication for test class ca.mcgill.ecse321_group14.GameShop.service.GameApprovalServiceTests
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
