@@ -159,10 +159,13 @@ export default {
       employeeEmail: "",
       password: "",
       selectedEmployeeEmail: null,
-      email: this.$route.params.email || "",
+      email: "",
     };
   },
   mounted() {
+    console.log('route:', this.$route)
+    this.email = this.$route.params.email
+    console.log('email:', this.email)
     this.fetchAllEmployees();
   },
   methods: {

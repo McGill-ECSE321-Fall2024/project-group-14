@@ -150,6 +150,7 @@
     mounted() {
       this.email = this.$route.params.param1;
       this.gameId = this.$route.params.param2;
+      console.log("email", this.email);
   
       // Fetch managerId using the email from route params
       axiosClient

@@ -178,36 +178,37 @@ export default {
       }
     },
     async ManageEmployees() {
-      await this.$router.push({path: '/ManageEmployees/' + this.email})
+      await this.$router.push({path: '/ManageEmployees/' + this.managerEmail})
     },
     async ManagePolicy() {
-      await this.$router.push({path: '/ManagePolicy/' + this.email})
+      await this.$router.push({path: '/ManagePolicy/' + this.managerEmail})
     },
     async ManageGames() {
-      await this.$router.push({path: '/ManageGames/' + this.email})
+      await this.$router.push({path: '/ManageGames/' + this.managerEmail})
     },
     async ManageGameRequests() {
-      await this.$router.push({path: '/ManageGameRequests/' + this.email})
+      await this.$router.push({path: '/ManageGameRequests/' + this.managerEmail})
     },
     async Account() {
-      await this.$router.push({path: '/ManagerAccount/' + this.email})
+      await this.$router.push({path: '/ManagerAccount/' + this.managerEmail})
     },
     async ViewOrders() {
-      await this.$router.push({path: '/ViewOrders/' + this.email})
+      await this.$router.push({path: '/ViewOrders/' + this.managerEmail})
     },
     async LogOut() {
       alert('Successfully logged out.')
       await this.$router.push({name: 'home'})
     },
     async ManagePromotion() {
-      await this.$router.push({path: '/ManagerPromotion/' + this.email})
+      await this.$router.push({path: '/ManagerPromotion/' + this.managerEmail})
     },
     async Home(){
-      await this.$router.push({path: '/ManagerHome/' + this.email})
+      await this.$router.push({path: '/ManagerHome/' + this.managerEmail})
     },
   },
   mounted() {
-    this.managerEmail = this.$route.params.email || '';
+    console.log("route", this.$route);
+    this.managerEmail = this.$route.params.email;
     this.fetchOrders();
   },
 };

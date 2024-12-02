@@ -74,7 +74,7 @@ export default {
   },
   mounted() {
     this.fetchPolicy();
-    this.email = this.$route.params.email
+    this.email = this.$route.params.param1
   },
   methods: {
     async ManageEmployees() {

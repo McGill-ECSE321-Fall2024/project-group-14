@@ -139,7 +139,7 @@ export default {
       },
       isUpdate:false,
       currid:null,
-      email: this.$route.params.email || "",
+      email: this.$route.params.email,
     }
   },
 
