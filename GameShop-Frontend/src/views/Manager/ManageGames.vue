@@ -208,8 +208,8 @@ export default {
         category: game.category,
         price: game.price,
         rating: game.rating,
-        quantity: 200, // Set default quantity
-        picture: "image-url.jpg", // Placeholder picture
+        quantity: 0, // default value
+        picture: "image-url.jpg", // placeholder ?
       };
 
       console.log("Updating game with:", requestBody);
@@ -218,8 +218,8 @@ export default {
           .post(`${backendUrl}/game/updatebyid`, requestBody)
           .then(() => {
             alert(`Game "${game.name}" has been successfully updated.`);
-            this.editingGameId = null; // Exit editing mode
-            this.fetchAllGames(); // Refresh the game list
+            this.editingGameId = null; 
+            this.fetchAllGames(); 
           })
           .catch((error) => {
             console.error("Error updating game:", error);

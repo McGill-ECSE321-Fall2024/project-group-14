@@ -9,13 +9,13 @@
             <img src="@/assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
           </a>
           <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -62,43 +62,49 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Customer</th>
-                      <th>Game Title</th>
-                      <th>Order Date</th>
-                      <th>Card Number</th>
-                      <th>Card Expiry</th>
-                      <th>Address</th>
-                      <th>Cancel Order</th>
-                    </tr>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Games Ordered</th>
+                        <th>Order Date</th>
+                        <th>Card Number</th>
+                        <th>Card Expiry</th>
+                        <th>Address</th>
+                        <th>Cancel Order</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(order, index) in orders" :key="index">
-                      <td>{{ order.id }}</td>
-                      <td>
-                        <div class="column-container">
-                          <label>{{ order.customerName }}</label>
-                          <label class="prettylabel">{{ order.customerEmail }}</label>
-                        </div>
-                      </td>
-                      <td>{{ order.gameTitle }}</td>
-                      <td>{{ order.orderDate }}</td>
-                      <td>{{ order.cardNumber }}</td>
-                      <td>{{ order.cardExpiry }}</td>
-                      <td>{{ order.address }}</td>
-                      <td>
-                        <button
+                      <tr v-for="(order, index) in orders" :key="index">
+                        <td>{{ order.id }}</td>
+                        <td>
+                          <div class="column-container">
+                            <label>{{ order.customerName }}</label>
+                            <label class="prettylabel">{{ order.customerEmail }}</label>
+                          </div>
+                        </td>
+                        <td>
+                          <ul>
+                            <li v-for="(game, index) in order.games" :key="index">
+                              {{ game }}
+                            </li>
+                          </ul>
+                        </td>
+                        <td>{{ order.orderDate }}</td>
+                        <td>{{ order.cardNumber }}</td>
+                        <td>{{ order.cardExpiry }}</td>
+                        <td>{{ order.address }}</td>
+                        <td>
+                          <button
                             class="btn btn-danger btn-sm"
                             @click.stop="cancelOrder(order.id)"
-                        >
-                          Cancel
-                        </button>
-                      </td>
-                    </tr>
-                    <tr v-if="orders.length === 0">
-                      <td colspan="8" class="text-center">No orders found.</td>
-                    </tr>
+                          >
+                            Cancel
+                          </button>
+                        </td>
+                      </tr>
+                      <tr v-if="orders.length === 0">
+                        <td colspan="8" class="text-center">No orders found.</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -115,7 +121,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:8060",
   headers: { "Access-Control-Allow-Origin": "*" },
 });
 
@@ -128,36 +134,33 @@ export default {
   },
 
   methods: {
-    fetchOrders() {
-      axiosClient
-          .get("/orders")
-          .then((response) => {
-            this.orders = response.data.map((order) => ({
-              id: order.id,
-              customerName: order.customer.name,
-              customerEmail: order.customer.email,
-              gameTitle: order.game.title,
-              orderDate: order.orderDate,
-              cardNumber: order.payment.cardNumber,
-              cardExpiry: order.payment.cardExpiry,
-              address: order.address,
-            }));
-            console.log("Fetched orders:", this.orders);
-          })
-          .catch((error) => {
-            console.error("Error fetching orders:", error);
-          });
+    async fetchOrders() {
+      try {
+        const response = await axiosClient.get("/orders");
+        
+        this.orders = response.data.map((order) => ({
+          id: order.orderId,
+          customerName: order.customerName || "Unknown",
+          customerEmail: order.customerEmail || "Unknown",
+          games: order.gameTitles || [], 
+          orderDate: order.date || "Unknown",
+          cardNumber: order.cardNumber || "Unknown",
+          cardExpiry: order.cardExpiry || "Unknown",
+          address: order.address || "Unknown",
+        }));
+        console.log("Orders fetched successfully:", this.orders);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
     },
-    cancelOrder(orderId) {
-      axiosClient
-          .delete(`/orders/${orderId}`)
-          .then(() => {
-            alert("Order has been canceled!");
-            this.fetchOrders();
-          })
-          .catch((error) => {
-            console.error("Error canceling order:", error);
-          });
+    async cancelOrder(orderId) {
+      try {
+        await axiosClient.delete(`/orders/${orderId}`);
+        alert("Order has been canceled!");
+        this.fetchOrders();
+      } catch (error) {
+        console.error("Error canceling order:", error);
+      }
     },
     navigateTo(route) {
       const routes = {

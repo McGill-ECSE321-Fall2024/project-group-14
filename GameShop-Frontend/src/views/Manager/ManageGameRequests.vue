@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div id="main"></div>
     <div class="hero-section">
       <!-- Navbar -->
       <div class="navbar-container">
@@ -9,13 +8,13 @@
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
           </a>
           <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -62,49 +61,44 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Request ID</th>
-                      <th>Employee</th>
-                      <th>Title</th>
-                      <th>Category</th>
-                      <th>Description</th>
-                      <th>Picture</th>
-                      <th>Status</th>
-                    </tr>
+                      <tr>
+                        <th>Request ID</th>
+                        <th>Employee Email</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(request, index) in gameRequests" :key="index">
-                      <td>{{ request.id }}</td>
-                      <td>
-                        <div class="column-container">
-                          <label>{{ request.employeeName }}</label>
-                          <label class="prettylabel">{{ request.employeeEmail }}</label>
-                        </div>
-                      </td>
-                      <td>{{ request.title }}</td>
-                      <td>{{ request.category }}</td>
-                      <td>{{ request.description }}</td>
-                      <td>
-                        <img :src="request.picture" alt="Game Picture" class="game-picture" />
-                      </td>
-                      <td>
-                        <button
+                      <tr v-for="(request, index) in gameRequests" :key="index">
+                        <td>{{ request.id }}</td>
+                        <td>{{ request.employeeEmail || "Unknown" }}</td>
+                        <td>{{ request.name }}</td>
+                        <td>{{ request.category }}</td>
+                        <td>{{ request.description }}</td>
+                        <td :class="{ 'text-success': request.status === 'Approved', 'text-danger': request.status === 'Rejected' }">
+                          {{ request.status }}
+                        </td>
+                        <td v-if="request.status === 'PendingApproval'">
+                          <button
                             class="btn btn-success btn-sm"
-                            @click.stop="updateStatus(request.id, 'Approved')"
-                        >
-                          Accept
-                        </button>
-                        <button
+                            @click.stop="approveRequest(request, index)"
+                          >
+                            Approve
+                          </button>
+                          <button
                             class="btn btn-danger btn-sm"
-                            @click.stop="updateStatus(request.id, 'Rejected')"
-                        >
-                          Decline
-                        </button>
-                      </td>
-                    </tr>
-                    <tr v-if="gameRequests.length === 0">
-                      <td colspan="7" class="text-center">No game requests found.</td>
-                    </tr>
+                            @click.stop="rejectRequest(request, index)"
+                          >
+                            Reject
+                          </button>
+                        </td>
+                      </tr>
+                      <tr v-if="gameRequests.length === 0">
+                        <td colspan="7" class="text-center">No game requests found.</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -121,7 +115,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:8060", 
   headers: { "Access-Control-Allow-Origin": "*" },
 });
 
@@ -133,36 +127,70 @@ export default {
     };
   },
   methods: {
-    fetchGameRequests() {
-      axiosClient
-          .get("/gameapproval")
-          .then((response) => {
-            this.gameRequests = response.data.map((request) => ({
-              id: request.id,
-              employeeName: request.requestCreatorName,
-              employeeEmail: request.requestCreatorEmail,
-              title: request.name,
-              category: request.category,
-              description: request.description,
-              picture: request.picture,
-              status: request.status,
-            }));
-            console.log("Fetched game requests:", this.gameRequests);
+    async fetchGameRequests() {
+      try {
+        const response = await axiosClient.get("/gameapproval");
+        const requests = response.data;
+
+        const enrichedRequests = await Promise.all(
+          requests.map(async (request) => {
+            try {
+              const employeeResponse = await axiosClient.get(
+                `/employees/id/${request.requestCreatorId}`
+              );
+              const employee = employeeResponse.data;
+              return {
+                ...request,
+                employeeEmail: employee.email || "Unknown",
+              };
+            } catch {
+              return {
+                ...request,
+                employeeEmail: "Unknown",
+              };
+            }
           })
-          .catch((error) => {
-            console.error("Error fetching game requests:", error);
-          });
+        );
+
+        this.gameRequests = enrichedRequests;
+      } catch (error) {
+        console.error("Error fetching game requests:", error);
+        alert("Failed to fetch game requests.");
+      }
     },
-    updateStatus(requestId, status) {
-      axiosClient
-          .put(`/gameapproval/${requestId}`, { status })
-          .then(() => {
-            alert(`Request has been ${status.toLowerCase()}!`);
-            this.fetchGameRequests();
-          })
-          .catch((error) => {
-            console.error(`Error updating status to ${status}:`, error);
-          });
+    async approveRequest(request, index) {
+      try {
+        const updatedRequest = {
+          ...request,
+          status: "Approved",
+        };
+
+        await axiosClient.put(`/gameapproval/${request.id}`, updatedRequest);
+        alert(`Request ${request.id} has been approved.`);
+        this.fetchGameRequests();
+      } catch (error) {
+        console.error(`Error approving request ${request.id}:`, error);
+        alert(`Failed to approve request ${request.id}.`);
+      }
+    },
+    async rejectRequest(request, index) {
+      if (!confirm(`Are you sure you want to reject request ${request.id}?`)) return;
+
+      try {
+        // update the request status to Rejected 
+        const updatedRequest = {
+          ...request,
+          status: "Rejected",
+        };
+        
+        await axiosClient.put(`/gameapproval/${request.id}`, updatedRequest);
+
+        alert(`Request ${request.id} has been rejected.`);
+        this.fetchGameRequests();
+      } catch (error) {
+        console.error(`Error rejecting request ${request.id}:`, error);
+        alert(`Failed to reject request ${request.id}.`);
+      }
     },
     navigateTo(route) {
       const routes = {
@@ -235,12 +263,11 @@ export default {
   font-size: 14px;
 }
 
-.game-picture {
-  width: 100px;
-  height: auto;
+.text-success {
+  color: green;
 }
 
-.prettylabel {
-  color: #4e555b;
+.text-danger {
+  color: red;
 }
 </style>

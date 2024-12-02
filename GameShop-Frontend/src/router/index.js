@@ -40,17 +40,14 @@ const router = createRouter({
       path: '/orders/:customerEmail',
       name: 'CustomerOrderView',
       component: CustomerOrderView,
-      props : true
+      props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
     },
 
     {
       path: '/wishlist/:customerEmail',
       name: 'CustomerWishListView',
       component: CustomerWishListView,
-      props: true
-    },
-
-    {
+      props: route => ({ customerid: Number(route.params.customerId) }), // Use 'customerId' here
       path: '/SignUp/',
       component: SignUp
     },
