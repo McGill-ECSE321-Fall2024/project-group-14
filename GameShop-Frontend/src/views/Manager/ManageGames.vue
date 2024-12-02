@@ -280,7 +280,7 @@ export default {
 
   try {
     await this.$router.push({
-      path: `/writeReview/${this.managerEmail}/${gameId}`,
+      path: `managerWriteReply/${this.managerEmail}/${gameId}`,
     });
   } catch (error) {
     // Update error logging here
