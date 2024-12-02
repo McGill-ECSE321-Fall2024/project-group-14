@@ -78,13 +78,15 @@ export default {
     return {
       isLoggedIn: false,
       username: '',
-      email: ''
+      email: '',
+      storePolicy :''
     };
   },
 
   mounted() {
     this.email = this.$route.params.param1;
     this.username = this.$route.params.param2;
+    this.fetchPolicy();
   },
 
   methods: {
@@ -104,6 +106,25 @@ export default {
     async ViewGames() {
       await this.$router.push({path: '/EmployeeViewGames/' + this.email + '/' + this.username})
     },
+    async fetchPolicy() {
+      try {
+        const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL
+        const policies = await response.json();
+        console.log("Fetched policies:", policies);
+
+        if (policies.length > 0) {
+          // Display the first policy's description
+          this.storePolicy = `GameShop Policy: ${policies[0].description}`;
+        } else {
+          // Default message if no policies exist
+          this.storePolicy = "GameShop Policy: buy games.";
+        }
+      } catch (error) {
+        console.error("Error fetching policy:", error);
+        // Fallback message in case of an error
+        this.storePolicy = "GameShop Policy: buy games.";
+      }
+    }
   }
 };
 </script>
