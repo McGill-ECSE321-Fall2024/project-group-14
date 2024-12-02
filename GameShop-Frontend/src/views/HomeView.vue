@@ -30,10 +30,11 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 mx-auto text-center">
-            <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px" >GAMESHOP</h1>
-            <p class="luxurious-text" style="font-weight: normal; color: #fff;">buy games</p>
-            <button class="btn btn-lg mt-3 custom-login-button" @click="CreateAccountSuggestion">Browse Games</button>
-          </div>
+  <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px">GAMESHOP</h1>
+  <p class="luxurious-text" style="font-weight: normal; color: #fff;">{{ storePolicy }}</p>
+  <button class="btn btn-lg mt-3 custom-login-button" @click="CreateAccountSuggestion">Browse Games</button>
+</div>
+
         </div>
       </div>
     </div>
@@ -99,26 +100,49 @@
 </template>
 
 <script>
-
 export default {
   name: 'Home',
   data() {
     return {
       isLoggedIn: false,
+      storePolicy: "", 
     };
+  },
+  mounted() {
+    this.fetchPolicy();
   },
   methods: {
     async Login() {
-      await this.$router.push({path: '/Login/'})
+      await this.$router.push({ path: '/Login/' });
     },
     async SignUp() {
-      await this.$router.push({path: '/SignUp/'})
+      await this.$router.push({ path: '/SignUp/' });
     },
-    async CreateAccountSuggestion(){
-      await this.$router.push({name: 'CreateAccountSuggestion'})
+    async CreateAccountSuggestion() {
+      await this.$router.push({ name: 'CreateAccountSuggestion' });
     },
-  }
+    async fetchPolicy() {
+      try {
+        const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL
+        const policies = await response.json();
+        console.log("Fetched policies:", policies);
+
+        if (policies.length > 0) {
+          // Display the first policy's description
+          this.storePolicy = `GameShop Policy: ${policies[0].description}`;
+        } else {
+          // Default message if no policies exist
+          this.storePolicy = "GameShop Policy: buy games.";
+        }
+      } catch (error) {
+        console.error("Error fetching policy:", error);
+        // Fallback message in case of an error
+        this.storePolicy = "GameShop Policy: buy games.";
+      }
+    },
+  },
 };
+
 </script>
 
 <style scoped>
