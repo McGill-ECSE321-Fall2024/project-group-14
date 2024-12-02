@@ -30,7 +30,7 @@
                 <a class="nav-link clickable-text" @click="navigateTo('ManagePolicy')">Manage Policy</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="#">Manage Games</a>
+                <a class="nav-link" @click="navigateTo('ManageGames')">Manage Games</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="navigateTo('ManageGameRequests')">Manage Game Requests</a>
@@ -261,7 +261,7 @@ export default {
         ManageGameRequests: `/ManageGameRequests/${this.email}`,
         Account: `/CustomerAccount/${this.email}`,
         ViewOrders: `/ViewOrders/${this.email}`,
-        ManagePromotions: `/ManagePromotion/${this.email}`,
+        ManagePromotions: `/ManagerPromotion/${this.email}`,
         LogOut: "/",
       };
       if (route === "LogOut") {
