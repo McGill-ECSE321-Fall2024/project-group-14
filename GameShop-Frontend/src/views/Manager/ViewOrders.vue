@@ -76,18 +76,14 @@
                     <tbody>
                       <tr v-for="(order, index) in orders" :key="index">
                         <td>{{ order.orderId }}</td>
-                        <td>{{ order.customerEmail }}</td>
-                        <td>
-                          <ul>
-                            <li v-for="(game, gameIndex) in order.gameTitles" :key="gameIndex">
-                              {{ game }}
-                            </li>
-                          </ul>
+                        <td>{{ customers[index].email }}</td>
+                        <td>{{ gameTitles[index] }}
+                          
                         </td>
-                        <td>{{ order.orderDate }}</td>
-                        <td>{{ order.cardNumber }}</td>
-                        <td>{{ order.cardExpiry }}</td>
-                        <td>{{ order.address }}</td>
+                        <td>{{ order.date }}</td>
+                        <td>{{ customers[index].cardNumber  }}</td>
+                        <td>{{ customers[index].cardExpiryDate }}</td>
+                        <td>{{ customers[index].address }}</td>
                         <td>
                           <button
                             class="btn btn-danger btn-sm"
@@ -114,7 +110,7 @@
 
 <script>
 import axios from 'axios';
-
+const CBASE_URL = 'http://localhost:8060/customers';
 const BASE_URL = 'http://localhost:8060/order';
 const CUSTOMER_DETAILS_API = 'http://localhost:8060/customersEmail/';
 const ORDER_ITEMS_API = 'http://localhost:8060/orderitems/';
@@ -125,77 +121,51 @@ export default {
     return {
       orders: [],
       managerEmail: '',
+      customers: [],
+      gameTitles: [],
     };
   },
   methods: {
     async fetchOrders() {
-      try {
-        console.log("Fetching all orders...");
-        // fetch all orders
-        const response = await axios.get(`${BASE_URL}/all`);
-        const orders = response.data.orders;
+  try {
+    // Fetch all orders
+    const response = await axios.get(`${BASE_URL}/all`);
+    const orders = response.data.orders;
+    console.log('Fetched orders:', orders);
+    this.orders = orders
 
-        // fetch additional details for each order, including customer information and order items
-        const orderDetailsPromises = orders.map((order) =>
-          Promise.all([
-            this.fetchCustomerDetails(order.customerEmail),
-            this.fetchOrderItems(order.orderId),
-          ])
-        );
+    // Check if orders are returned
+    if (!orders || orders.length === 0) {
+      console.log('No orders found.');
+      this.orders = [];
+      return;
+    }
 
-        const orderDetailsResults = await Promise.all(orderDetailsPromises);
 
-        // combine orders with customer details and order items
-        orders.forEach((order, index) => {
-          const [customerDetails, orderItems] = orderDetailsResults[index];
+    //loop through orders and get game titles
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i];
+      const orderId = order.orderId;
+      const customerId= order.customerId;
+      //get customer info
+      const response1 = await axios.get(`${CBASE_URL}/id/${customerId}`);
+      console.log("resopnse1", response1);
+      const customa = response1.data;
+      console.log("customa", customa);
+      this.customers[i] = customa;
+      const response2 = await axios.get(`${BASE_URL}items/${orderId}`);
+      const orderItems = response2.data.orderitems[0];
+      this.gameTitles[i] = orderItems.gameTitle;
+    }
 
-          // assign the fetched customer details to the order
-          order.customerEmail = customerDetails.email || order.customerEmail;
-          order.address = customerDetails.address || 'Unknown';
-          order.cardNumber = customerDetails.cardNumber || 'Unknown';
-          order.cardExpiry = customerDetails.cardExpiryDate || 'Unknown';
 
-          // assign game titles from the fetched order items
-          order.gameTitles = orderItems.map((item) => item.gameTitle);
-
-          // assign order date if available
-          order.orderDate = order.date || 'Unknown';
-        });
-
-        this.orders = orders;
-        console.log("Orders successfully fetched and updated: ", this.orders);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-        alert('Failed to load orders.');
-      }
-    },
-    async fetchCustomerDetails(email) {
-      try {
-        console.log(`Fetching customer details for email: ${email}`);
-        const response = await axios.get(`${CUSTOMER_DETAILS_API}${email}`);
-        console.log(`Successfully fetched customer details for email: ${email}`, response.data);
-        return response.data;
-      } catch (error) {
-        console.error(`Failed to fetch customer details for email ${email}:`, error);
-        return {
-          email: email,
-          address: 'Unknown',
-          cardNumber: 'Unknown',
-          cardExpiryDate: 'Unknown',
-        };
-      }
-    },
-    async fetchOrderItems(orderId) {
-      try {
-        console.log(`Fetching order items for orderId: ${orderId}`);
-        const response = await axios.get(`${ORDER_ITEMS_API}${orderId}`);
-        console.log(`Successfully fetched order items for orderId: ${orderId}`, response.data.orderitems);
-        return response.data.orderitems;
-      } catch (error) {
-        console.error(`Failed to fetch order items for orderId ${orderId}:`, error);
-        return [];
-      }
-    },
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    alert('Failed to load orders.');
+    this.orders = [];
+  }
+},
+    
     async cancelOrder(orderId) {
       try {
         const isConfirmed = window.confirm('Are you sure you want to cancel this order?');
