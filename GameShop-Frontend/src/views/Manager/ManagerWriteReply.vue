@@ -61,7 +61,7 @@
                     <label for="reviewId">Enter Review ID:</label>
                     <input
                       id="reviewId"
-                      v-model.number="newReply.id"
+                      v-model.number="newReply.reviewId"
                       type="number"
                       class="form-control"
                       placeholder="Enter Review ID"
@@ -70,7 +70,7 @@
                   <div class="input-group form-group">
                     <textarea
                       id="reply-description"
-                      v-model="newReply.message"
+                      v-model="newReply.description"
                       class="form-control"
                       style="font-family: 'Georgia', sans-serif"
                       placeholder="Enter your reply to the review"
@@ -142,7 +142,7 @@
         gameData: {},
         reviews: [],
         replies: [], // Store all replies here
-        newReply: { id: null, message: "", managerId: null },
+        newReply: { reviewId: null, description: "", managerId: null },
         email: "",
         gameId: "",
       };
@@ -247,7 +247,7 @@
         });},
 
       createReply() {
-        if (!this.newReply.id || !this.newReply.message.trim()) {
+        if (!this.newReply.reviewId || !this.newReply.description.trim()) {
           alert("Please fill in all fields.");
           return;
         }
@@ -263,8 +263,8 @@
             console.log("Reply Posted Successfully: ", response.data);
             this.replies.push(response.data); // Add the new reply to the replies array
             alert("Reply posted successfully");
-            this.newReply.message = "";
-            this.newReply.id = null;
+            this.newReply.description = "";
+            this.newReply.reviewId = null;
             this.fetchReviews();
             this.fetchReplies();
           })

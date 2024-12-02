@@ -8,6 +8,7 @@ import ca.mcgill.ecse321_group14.GameShop.dto.ReplyRequestDto;
 import ca.mcgill.ecse321_group14.GameShop.dto.ReplyResponseDto;
 import ca.mcgill.ecse321_group14.GameShop.model.Reply;
 import ca.mcgill.ecse321_group14.GameShop.service.ReplyService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,16 +21,14 @@ public class ReplyController {
     @Autowired
     private ReplyService replyService;
 
-    /**
-     * Create a reply
-     * 
-     * @param replyRequestDto
-     * @return ReplyResponseDto
-     */
     @PostMapping("/reply")
     public ResponseEntity<ReplyResponseDto> createReply(@RequestBody ReplyRequestDto replyRequestDto) {
-        Reply reply = replyService.createReply(replyRequestDto.getDescription(), replyRequestDto.getReviewId(),
-                replyRequestDto.getManagerId());
+
+        String description = replyRequestDto.getDescription();
+        int id = replyRequestDto.getManagerId();
+        int reviewId = replyRequestDto.getReviewId();
+        // Proceed with original functionality
+        Reply reply = replyService.createReply(description, reviewId, id);
         return new ResponseEntity<>(new ReplyResponseDto(reply), HttpStatus.CREATED);
     }
 
