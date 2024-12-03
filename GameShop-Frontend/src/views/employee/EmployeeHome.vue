@@ -16,7 +16,7 @@
                 <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Employee">Account</a>
+                <a class="nav-link clickable-text" @click="EmployeeAccount">Account</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
@@ -90,8 +90,8 @@ export default {
   },
 
   methods: {
-    async Employee() {
-      await this.$router.push({path: '/EmployeeAccount/' + this.email + '/' + this.username})
+    async EmployeeAccount() {
+      await this.$router.push({path: '/EmployeeAccount/' + this.email })
     },
     async LogOut() {
       await this.$router.push({name: "home"})

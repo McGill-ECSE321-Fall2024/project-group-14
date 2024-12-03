@@ -2,26 +2,17 @@
   <div>
     <div id="main"></div>
     <div class="hero-section">
-      <!-- Navbar -->
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
-          <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <!-- Using @click methods for navigation -->
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -30,13 +21,13 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="#">View Games<span class="sr-only"></span></a>
+              <li class="nav-item">
+                <a class="nav-link" href="#">View Games<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
               </li>
-              <li class="nav-item">
+              <li>
                 <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
               </li>
             </ul>
@@ -212,23 +203,25 @@ export default {
       }
     },
 
-    // Navigation Methods
-    async Home() {
-      await this.$router.push({ path: `/EmployeeHome/${this.email}/${this.username}` });
-    },
     async Account() {
-      await this.$router.push({ path: `/EmployeeAccount/${this.email}/${this.username}` });
-    },
-    async SubmitGameRequest() {
-      await this.$router.push({ path: `/EmployeeGameRequest/${this.email}/${this.username}` });
-    },
-    async ViewOrders() {
-      await this.$router.push({ path: `/EmployeeViewOrders/${this.email}/${this.username}` });
+      await this.$router.push({path: '/EmployeeAccount/' + this.email })
     },
     async LogOut() {
-      alert('Successfully logged out.');
-      await this.$router.push({ name: 'home' });
-    }
+      await this.$router.push({name: "home"})
+    },
+    async SubmitGameRequest() {
+      await this.$router.push({path: '/EmployeeGameRequest/' + this.email + '/' + this.username})
+    },
+    async ViewOrders() {
+      await this.$router.push({path: '/EmployeeViewOrders/' + this.email + '/' + this.username})
+    },
+
+    async ViewGames() {
+      await this.$router.push({path: '/EmployeeViewGames/' + this.email + '/' + this.username})
+    },
+    async Home() {
+      await this.$router.push({path: '/EmployeeHome/' + this.email+ '/' + this.username })
+    },
   },
 };
 </script>

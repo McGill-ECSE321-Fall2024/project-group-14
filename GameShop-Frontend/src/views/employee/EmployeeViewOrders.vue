@@ -6,22 +6,14 @@
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
-            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -30,19 +22,20 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
               </li>
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ViewGames">View Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">View Orders<span class="sr-only"></span></a>
+                <a class="nav-link" href="#">View Orders<span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
+              <li>
                 <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
               </li>
             </ul>
           </div>
         </nav>
       </div>
+
 
       <!-- Page Content -->
       <div class="container content-container">
@@ -154,7 +147,7 @@ export default {
       await this.$router.push({path: "/EmployeeHome/" + this.email + "/" + this.username});
     },
     async Account() {
-      await this.$router.push({path: "/EmployeeAccount/" + this.email + "/" + this.username});
+      await this.$router.push({path: "/EmployeeAccount/" + this.email});
     },
     async SubmitGameRequest() {
       await this.$router.push({path: "/EmployeeGameRequest/" + this.email + "/" + this.username});

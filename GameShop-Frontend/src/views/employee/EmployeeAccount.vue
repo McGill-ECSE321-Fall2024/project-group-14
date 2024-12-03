@@ -2,39 +2,37 @@
     <div class="employeeAccount">
       <div class="background">
         <div class="navbar-container">
-          <nav class="navbar navbar-expand-lg navbar-light transparent-background">
-            <a class="navbar-brand" href="#">
-              <img src="../../assets/gameshopLogo.jpg" alt="GameShop Logo" height="60" />
-            </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="Home">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="Orders">Orders</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Account<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light transparent-background">
+          <a class="navbar-brand" href="#">
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link clickable-text" @click="Home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Account<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ViewGames">View Games</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+              </li>
+              <li>
+                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
   
         <div class="profile-box">
           <div class="container rounded bg-white mt-5 mb-5 account-box shadow">
@@ -112,15 +110,25 @@
           alert(this.errorMsg);
         }
       },
-      async Home() {
-        await this.$router.push({ path: `/EmployeeHome/${this.email}` });
-      },
-      async Orders() {
-        await this.$router.push({ path: `/orders/${this.email}` });
-      },
-      async LogOut() {
-        await this.$router.push({ name: "home" });
-      },
+      async EmployeeAccount() {
+      await this.$router.push({path: '/EmployeeAccount/' + this.email })
+    },
+    async LogOut() {
+      await this.$router.push({name: "home"})
+    },
+    async SubmitGameRequest() {
+      await this.$router.push({path: '/EmployeeGameRequest/' + this.email + '/' + this.username})
+    },
+    async ViewOrders() {
+      await this.$router.push({path: '/EmployeeViewOrders/' + this.email + '/' + this.username})
+    },
+
+    async ViewGames() {
+      await this.$router.push({path: '/EmployeeViewGames/' + this.email + '/' + this.username})
+    },
+    async Home() {
+      await this.$router.push({path: '/EmployeeHome/' + this.email+ '/' + this.username })
+    },
     },
   };
   </script>
@@ -167,5 +175,9 @@
   .nav-link {
     color: white !important;
   }
+.transparent-background {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
   </style>
   

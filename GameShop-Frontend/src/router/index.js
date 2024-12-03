@@ -22,7 +22,7 @@ import ManagerWriteReply from "@/views/Manager/ManagerWriteReply.vue";
 import ManagePolicy from '@/views/Manager/ManagePolicy.vue';
 import CustomerAccount from '@/views/Customer/CustomerAccount.vue';
 import ManagerAccount from '@/views/Manager/ManagerAccount.vue'; 
-import EmployeeAccount from '@/views/employee/EmployeeHome.vue';
+import EmployeeAccount from '@/views/employee/EmployeeAccount.vue';
 
 
 const router = createRouter({

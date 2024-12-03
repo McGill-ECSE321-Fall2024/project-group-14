@@ -5,29 +5,21 @@
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
-            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
-          <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-          >
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link clickable-text" @click="Home">Home<span class="sr-only"></span></a>
+                <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
+                <a class="nav-link" href="#">Submit Game Request<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ViewGames">View Games</a>
@@ -35,7 +27,7 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
               </li>
-              <li class="nav-item">
+              <li>
                 <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
               </li>
             </ul>
@@ -225,23 +217,24 @@ export default {
         picture: "Picture",
       };
     },
-    async Home() {
-      await this.$router.push({path: "/EmployeeHome/" + this.email + "/" + this.username});
-    },
     async Account() {
-      await this.$router.push({path: "/EmployeeAccount/" + this.email + "/" + this.username});
-    },
-    async SubmitGameRequest() {
-      await this.$router.push({path: "/EmployeeGameRequest/" + this.email + "/" + this.username});
-    },
-    async ViewOrders() {
-      await this.$router.push({path: "/EmployeeViewOrders/" + this.email + "/" + this.username});
-    },
-    async ViewGames() {
-      await this.$router.push({path: "/EmployeeViewGames/" + this.email + "/" + this.username});
+      await this.$router.push({path: '/EmployeeAccount/' + this.email })
     },
     async LogOut() {
-      await this.$router.push({path: "/"});
+      await this.$router.push({name: "home"})
+    },
+    async SubmitGameRequest() {
+      await this.$router.push({path: '/EmployeeGameRequest/' + this.email + '/' + this.username})
+    },
+    async ViewOrders() {
+      await this.$router.push({path: '/EmployeeViewOrders/' + this.email + '/' + this.username})
+    },
+
+    async ViewGames() {
+      await this.$router.push({path: '/EmployeeViewGames/' + this.email + '/' + this.username})
+    },
+    async Home() {
+      await this.$router.push({path: '/EmployeeHome/' + this.email+ '/' + this.username })
     },
   },
 };
