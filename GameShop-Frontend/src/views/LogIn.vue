@@ -131,7 +131,7 @@ export default {
             }
           })
           .catch((err) => {
-            this.errorMsg = `Failure: ${err.response ? err.response.data : err.message}`;
+            this.errorMsg = `Error logging in. Please try again.`;
             alert(this.errorMsg);
           });
     },

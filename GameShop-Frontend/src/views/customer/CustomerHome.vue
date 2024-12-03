@@ -135,6 +135,9 @@ export default {
     async BrowseGames(){
       await this.$router.push({path: '/CustomerBrowseGames/' + this.email})
     },
+    async Home(){
+      await this.$router.push({path: '/CustomerHome/' + this.email})
+    },
     async fetchPolicy() {
       try {
         const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL

@@ -290,10 +290,7 @@ export default {
     },
 
     async Account() {
-      await this.$router.push({
-        name: "CustomerAccount",
-        params: { email: this.customerEmail },
-      });
+      await this.$router.push({path: '/CustomerAccount/' + this.customerEmail})
     },
     
     async LogOut() {

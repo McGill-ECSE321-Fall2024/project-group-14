@@ -4,22 +4,14 @@
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
-            <img src="../../assets/gameshopLogo.jpg" alt="GameShop Logo" height="60" />
+            <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
           </a>
-          <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-          >
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -28,8 +20,8 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Account<span class="sr-only">(current)</span></a>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Account</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
@@ -168,17 +160,24 @@ export default {
     editInfo() {
       this.isReadonly = false;
     },
-    async Home() {
-      await this.$router.push({ path: `/CustomerHome/${this.email}` });
-    },
     async Orders() {
-      await this.$router.push({ path: `/orders/${this.email}` });
+      await this.$router.push({path: '/orders/' + this.email})
     },
     async Wishlist() {
-      await this.$router.push({ path: `/wishlist/${this.email}` });
+      await this.$router.push({path: '/wishlist/' + this.email})
+    },
+    async Account() {
+      await this.$router.push({path: '/CustomerAccount/' + this.email})
     },
     async LogOut() {
-      await this.$router.push({ name: "home" });
+      alert('Successfully logged out.')
+      await this.$router.push({name: 'home'})
+    },
+    async BrowseGames(){
+      await this.$router.push({path: '/CustomerBrowseGames/' + this.email})
+    },
+    async Home(){
+      await this.$router.push({path: '/CustomerHome/' + this.email})
     },
   },
 };
