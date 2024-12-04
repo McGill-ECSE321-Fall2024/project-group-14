@@ -163,6 +163,12 @@ export default {
   color: #888;
 }
 
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
+}
+
 .custom-box {
   border: 2px solid lightgray;
   margin: 20px;

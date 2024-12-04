@@ -13,7 +13,7 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -28,7 +28,7 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ManageGameRequests">Game Requests</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="#">Promotions (Current)</a>
               </li>
               <li class="nav-item">
@@ -274,7 +274,7 @@ export default {
 }
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .hero-section {
@@ -312,6 +312,12 @@ export default {
 .centerbuttoncontainer {
   text-align: center;
   margin-top: 10px;
+}
+
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
 }
 
 .inputrow {

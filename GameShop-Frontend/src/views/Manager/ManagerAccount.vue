@@ -12,7 +12,7 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -30,7 +30,7 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ManagePromotion">Promotions</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="#">Account (Current)</a>
               </li>
               <li class="nav-item">
@@ -104,16 +104,19 @@ export default {
   },
   methods: {
     async fetchManagerInfo() {
-      try {
-        const response = await axiosClient.get(`/managers/${this.email}`);
-        const manager = response.data;
-        this.id = manager.id;
-        this.username = manager.username;
-        this.password = manager.password || ""; 
-      } catch (error) {
-        this.errorMsg = `Error fetching manager info: ${error.response?.data || error.message}`;
-        alert(this.errorMsg);
-      }
+  try {
+    const response = await axiosClient.get(`/managers/${this.email}`);
+    const manager = response.data;
+    this.id = manager.id;
+    this.username = manager.personUsername; // Adjusted for backend field naming
+    this.password = manager.personPassword || ""; // Adjusted for backend field naming
+  } catch (error) {
+    const errorDetails =
+      error.response?.data?.message || error.response?.data || error.message || "Unknown error";
+    this.errorMsg = `Error fetching manager info: ${errorDetails}`;
+    alert(this.errorMsg);
+  }
+
     },
     async ManageEmployees() {
       await this.$router.push({ path: '/ManageEmployees/' + this.email });
@@ -190,6 +193,12 @@ export default {
 .labels {
   font-size: 14px;
   color: #444;
+}
+
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
 }
 
 .smaller-input {

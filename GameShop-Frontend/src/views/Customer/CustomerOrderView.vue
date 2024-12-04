@@ -12,10 +12,10 @@
                   </button>
                   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
-                      <li class="nav-item active">
+                      <li class="nav-item">
                         <a class="nav-link clickable-text" @click="Home">Home</a>
                       </li>
-                      <li class="nav-item">
+                      <li class="nav-item active">
                         <a class="nav-link" href="#">Orders (Current)</a>
                       </li>
                       <li class="nav-item">
@@ -26,7 +26,7 @@
                         <a class="nav-link clickable-text" @click="Account">Account</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                        <a class="nav-link clickable-text" @click="LogOut">Logout</a>
                       </li>
                     </ul>
                   </div>
@@ -105,12 +105,12 @@ export default {
   },
   data() {
     return {
-      orders: [], // List of all orders
-      orderDetails: null, // Details of a specific order
-      showCreateOrderPopup: false, // Popup visibility for creating an order
-      errorMessage: "", // Error messages for feedback
+      orders: [], 
+      orderDetails: null, 
+      showCreateOrderPopup: false, 
+      errorMessage: "", 
       currOrder: {
-        customerId: "", // Customer ID for creating an order
+        customerId: "", 
       },
     };
   },
@@ -132,8 +132,8 @@ export default {
     },
 
     async fetchOrders() {
-      const customerEmail = this.$route.params.customerEmail; // Extract customerId from route params
-      console.log("Customer Email:", customerEmail); // Debugging customerId
+      const customerEmail = this.$route.params.customerEmail; 
+      console.log("Customer Email:", customerEmail); 
 
       try {
         // fetch the Customer ID using the email
@@ -395,6 +395,12 @@ export default {
 .subheading {
   font-family: 'Montserrat', sans-serif;
   color: #888;
+}
+
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
 }
 
 .clickable-text:hover {

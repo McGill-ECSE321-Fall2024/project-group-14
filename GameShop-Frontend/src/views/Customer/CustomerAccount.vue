@@ -12,7 +12,7 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -21,11 +21,11 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="#">Account (Current)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -196,6 +196,17 @@ export default {
   color: white !important;
 }
 
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
+}
+
+.clickable-text:hover {
+  cursor: pointer;
+  color: white !important;
+}
+
 .transparent-background {
   background-color: rgba(255, 255, 255, 0.3);
 }
@@ -223,7 +234,7 @@ export default {
 }
 
 .smaller-input {
-  max-width: 300px; /* Adjust this value to make the input field width more suitable */
+  max-width: 300px; 
   margin: 0 auto;
 }
 

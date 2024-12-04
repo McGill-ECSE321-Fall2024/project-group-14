@@ -13,7 +13,7 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -22,7 +22,7 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ManagePolicy">Policies</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="#">Games (Current)</a>
               </li>
               <li class="nav-item">
@@ -337,6 +337,12 @@ async ManageEmployees() {
 .clickable-text:hover {
   cursor: pointer;
   color: white !important;
+}
+
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
 }
 
 .transparent-background {

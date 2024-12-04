@@ -33,7 +33,7 @@
                   <a class="nav-link clickable-text" @click="Account">Account</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                  <a class="nav-link clickable-text" @click="LogOut">Logout</a>
                 </li>
               </ul>
             </div>
@@ -340,10 +340,18 @@ fetchReplies() {
     text-align: center;
   }
 
-  .clickable-text:hover {
+  .navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
+}
+
+.clickable-text:hover {
   cursor: pointer;
   color: white !important;
-  }
+}
+
+
 
   </style>
   

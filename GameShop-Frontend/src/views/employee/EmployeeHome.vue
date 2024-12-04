@@ -183,6 +183,17 @@ export default {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
+}
+
+.navbar .nav-link:hover {
+  cursor: pointer;
+  color: white !important;
+}
+
 
 
 </style>

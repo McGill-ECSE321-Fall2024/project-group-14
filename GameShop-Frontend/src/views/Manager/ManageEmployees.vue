@@ -8,44 +8,45 @@
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60" />
           </a>
           <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('Home')">Home</a>
+                <a class="nav-link clickable-text" @click="Home">Home</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Employees (Current)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ManageEmployees')">Employees (Current)</a>
+                <a class="nav-link clickable-text" @click="ManagePolicy">Policies</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ManagePolicy')">Policies</a>
+                <a class="nav-link clickable-text" @click="ManageGames">Games</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link clickable-text" @click="ManageGameRequests">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ManageGames')">Games</a>
+                <a class="nav-link clickable-text" @click="ManagePromotion">Promotions</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePromotion"> Promotions</a>
+                <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ManageGameRequests')">Game Requests</a>
+                <a class="nav-link clickable-text" @click="ViewOrders">Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('ViewOrders')">Orders</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Logout</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -65,35 +66,35 @@
                 <form>
                   <div class="form-group">
                     <input
-                        id="name"
-                        v-model="name"
-                        type="text"
-                        class="form-control"
-                        placeholder="Full Name"
+                      id="name"
+                      v-model="name"
+                      type="text"
+                      class="form-control"
+                      placeholder="Full Name"
                     />
                   </div>
                   <div class="form-group">
                     <input
-                        id="employeeEmail"
-                        v-model="employeeEmail"
-                        type="email"
-                        class="form-control"
-                        placeholder="Email"
+                      id="employeeEmail"
+                      v-model="employeeEmail"
+                      type="email"
+                      class="form-control"
+                      placeholder="Email"
                     />
                   </div>
                   <div class="form-group">
                     <input
-                        id="password"
-                        v-model="password"
-                        type="password"
-                        class="form-control"
-                        placeholder="Password"
+                      id="password"
+                      v-model="password"
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
                     />
                   </div>
                   <div class="form-group mt-4">
                     <button
-                        @click.prevent="createEmployee"
-                        class="btn btn-primary btn-block hire-button"
+                      @click.prevent="createEmployee"
+                      class="btn btn-primary btn-block hire-button"
                     >
                       Hire
                     </button>
@@ -113,32 +114,32 @@
                 <div class="table-scroll">
                   <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Fire</th>
-                    </tr>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Fire</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr
+                      <tr
                         v-for="(employee, index) in employees"
                         :key="employee.personId"
                         :class="{ 'selected-row': selectedEmployeeEmail === employee.personEmail }"
-                    >
-                      <td>{{ employee.personUsername }}</td>
-                      <td>{{ employee.personEmail }}</td>
-                      <td>
-                        <button
+                      >
+                        <td>{{ employee.personUsername }}</td>
+                        <td>{{ employee.personEmail }}</td>
+                        <td>
+                          <button
                             @click="fireEmployee(employee.personId)"
                             class="btn btn-danger fire-button"
-                        >
-                          Fire
-                        </button>
-                      </td>
-                    </tr>
-                    <tr v-if="employees.length === 0">
-                      <td colspan="3" class="text-center">No employees found.</td>
-                    </tr>
+                          >
+                            Fire
+                          </button>
+                        </td>
+                      </tr>
+                      <tr v-if="employees.length === 0">
+                        <td colspan="3" class="text-center">No employees found.</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -167,7 +168,7 @@ export default {
       employeeEmail: "",
       password: "",
       selectedEmployeeEmail: null,
-      email: this.$route.params.email || "",
+      managerEmail: this.$route.params.email || "",
     };
   },
   mounted() {
@@ -213,31 +214,39 @@ export default {
         this.fetchAllEmployees();
       } catch (error) {
         console.error("Error firing employee:", error);
-        alert("Failed to fire employee.");
+        alert("Please delete all associated game requests before firing employee.");
       }
     },
-    navigateTo(route) {
-      const routes = {
-        Home: `/ManagerHome/${this.email}`,
-        ManageEmployees: `/ManageEmployees/${this.email}`,
-        ManagePolicy: `/ManagePolicy/${this.email}`,
-        ManageGames: `/ManageGames/${this.email}`,
-        ManageGameRequests: `/ManageGameRequests/${this.email}`,
-        Account: `/CustomerAccount/${this.email}`,
-        ViewOrders: `/ViewOrders/${this.email}`,
-        LogOut: "/",
-      };
-      if (route === "LogOut") {
-        alert("Successfully logged out.");
-      }
-      this.$router.push(routes[route]);
+    async Home() {
+      await this.$router.push({ path: `/ManagerHome/${this.managerEmail}` });
+    },
+    async ManagePolicy() {
+      await this.$router.push({ path: `/ManagePolicy/${this.managerEmail}` });
+    },
+    async ManageGames() {
+      await this.$router.push({ path: `/ManageGames/${this.managerEmail}` });
+    },
+    async ManageGameRequests() {
+      await this.$router.push({ path: `/ManageGameRequests/${this.managerEmail}` });
+    },
+    async ManagePromotion() {
+      await this.$router.push({ path: `/ManagerPromotion/${this.managerEmail}` });
+    },
+    async Account() {
+      await this.$router.push({ path: `/ManagerAccount/${this.managerEmail}` });
+    },
+    async ViewOrders() {
+      await this.$router.push({ path: `/ViewOrders/${this.managerEmail}` });
+    },
+    async LogOut() {
+      alert("Successfully logged out.");
+      await this.$router.push({ name: "home" });
     },
   },
 };
 </script>
 
 <style scoped>
-/* Navbar and page styles */
 .navbar-container {
   position: absolute;
   top: 0;
@@ -249,11 +258,16 @@ export default {
   margin-right: 0;
 }
 
-.clickable-text:hover {
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
+}
+
+.navbar .nav-link:hover {
   cursor: pointer;
   color: white !important;
 }
-
 
 .transparent-background {
   background-color: rgba(255, 255, 255, 0.3);

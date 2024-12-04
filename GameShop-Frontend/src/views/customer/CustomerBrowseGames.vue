@@ -31,7 +31,7 @@
               <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
+              <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Logout</a>
             </li>
           </ul>
         </div>
@@ -39,7 +39,10 @@
     </div>
     <div class="hero-section">
       <div class="game-container container">
-        <h1 class="text-left" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px; font-size: 30px">
+        <h1
+          class="text-left"
+          style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px; font-size: 30px"
+        >
           AVAILABLE GAMES
         </h1>
         <div style="margin-top: 15px;"></div>
@@ -54,30 +57,37 @@
             <div class="col-md-9">
               <!-- Display game information -->
               <div class="card-body">
-                <h5 style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 2px">{{ game.name }}</h5>
+                <h5
+                  style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 2px"
+                >
+                  {{ game.name }}
+                </h5>
                 <p style="font-family: 'Georgia', sans-serif">{{ game.description }}</p>
                 <p style="font-family: 'Georgia', sans-serif">Category: {{ game.category }}</p>
 
+                <!-- Updated Price Section -->
                 <p style="font-family: 'Georgia', sans-serif">
-                  Price: $
-                  {{
-                    (game.discountedprice && game.discountedprice !== 0)
-                      ? game.discountedprice.toFixed(2)
-                      : game.price.toFixed(2)
-                  }}
+                  <span v-if="game.discountedprice && game.discountedprice !== game.price">
+                    <s style="color: red;">$ {{ game.price.toFixed(2) }}</s>
+                    <span style="color: green;"> $ {{ game.discountedprice.toFixed(2) }}</span>
+                  </span>
+                  <span v-else>
+                    $ {{ game.price.toFixed(2) }}
+                  </span>
                 </p>
+
                 <button class="btn btn-lg custom-book-button" @click="purchase(game)">Purchase</button>
                 <button
-                    class="btn btn-lg custom-book-button"
-                    @click="addToWishlist(game)"
-                    style="margin-left: 10px;"
+                  class="btn btn-lg custom-book-button"
+                  @click="addToWishlist(game)"
+                  style="margin-left: 10px"
                 >
                   Add to Wishlist
                 </button>
                 <button
-                    class="btn btn-lg custom-book-button"
-                    @click="viewReviews(game.id)"
-                    style="margin-left: 10px;"
+                  class="btn btn-lg custom-book-button"
+                  @click="viewReviews(game.id)"
+                  style="margin-left: 10px"
                 >
                   View Reviews
                 </button>
@@ -132,9 +142,9 @@ export default {
         Orders: `/orders/${this.customerEmail}`,
         Wishlist: `/wishlist/${this.customerEmail}`,
         Account: `/CustomerAccount/${this.customerEmail}`,
-        LogOut: '/',
+        LogOut: "/",
       };
-      if (route === 'LogOut') {
+      if (route === "LogOut") {
         alert("Successfully logged out.");
       }
       this.$router.push(routes[route]);
@@ -148,7 +158,9 @@ export default {
       console.log("Selected Game Details:", game);
 
       try {
-        const customerResponse = await axios.get(`${backendUrl}/customersEmail/${this.customerEmail}`);
+        const customerResponse = await axios.get(
+          `${backendUrl}/customersEmail/${this.customerEmail}`
+        );
         const customerDetails = customerResponse.data;
         console.log("Fetched Customer Details:", customerDetails);
 
@@ -161,7 +173,9 @@ export default {
         const orderItemResponse = await axios.put(putOrderItemUrl);
 
         console.log("Game added to Order:", orderItemResponse.data);
-        alert(`Successfully purchased ${game.name}. Congratulations! ${customerDetails.username}`);
+        alert(
+          `Successfully purchased ${game.name}. Congratulations! ${customerDetails.username}`
+        );
       } catch (error) {
         console.error("Error during purchase process:", error);
         alert("An error occurred during the purchase process.");
@@ -176,7 +190,9 @@ export default {
       console.log("Selected Game for Wishlist:", game);
 
       try {
-        const customerResponse = await axios.get(`${backendUrl}/customersEmail/${this.customerEmail}`);
+        const customerResponse = await axios.get(
+          `${backendUrl}/customersEmail/${this.customerEmail}`
+        );
         const customerDetails = customerResponse.data;
         console.log("Fetched Customer Details:", customerDetails);
 
@@ -187,7 +203,7 @@ export default {
         alert(`Successfully added ${game.name} to your wishlist, ${customerDetails.username}!`);
       } catch (error) {
         console.error("Error adding game to wishlist:", error);
-        alert("An error occurred while adding the game to your wishlist.");
+        alert("It appears this game is already in your wishlist.");
       }
     },
     async viewReviews(gameId) {
@@ -223,14 +239,13 @@ export default {
   margin-right: 0;
 }
 
-
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.3); 
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .hero-section {
-  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
-  background-attachment: fixed; 
+  background: url("../../assets/gameshopBackground.jpg") center/cover no-repeat;
+  background-attachment: fixed;
   padding-top: 150px;
   padding-bottom: 150px;
   min-height: 100vh;
@@ -239,7 +254,7 @@ export default {
 .game-container {
   margin: 0 auto;
   margin-top: 50px;
-  max-width: 1000px; 
+  max-width: 1000px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -273,6 +288,12 @@ export default {
 
 .game-image:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
 }
 
 .clickable-text:hover {

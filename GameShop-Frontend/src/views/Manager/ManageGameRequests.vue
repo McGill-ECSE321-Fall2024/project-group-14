@@ -12,7 +12,7 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
@@ -24,7 +24,7 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ManageGames">Games</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="#">Game Requests (Current)</a>
               </li>
               <li class="nav-item">
@@ -96,7 +96,7 @@
                               class="btn btn-danger btn-sm"
                               @click.stop="deleteRequest(request.id, index)"
                             >
-                              Delete
+                              Delete Request
                             </button>
                           </div>
                         </td>
@@ -164,36 +164,39 @@ export default {
       }
     },
     async approveRequest(request, index) {
-      try {
-        // update the request status to 'Approved'
-        const updatedRequest = {
-          ...request,
-          status: "Approved",
-        };
+      
+  try {
+    // Update the request status to 'Approved'
+    const updatedRequest = {
+      ...request,
+      status: "Approved",
+    };
 
-        await axiosClient.put(`/gameapproval/${request.id}`, updatedRequest);
+    // Send the updated request to the backend
+    await axiosClient.put(`/gameapproval/${request.id}`, updatedRequest);
 
-        // create a new game based on the approved request
-        const newGameRequest = {
-          name: request.name,
-          description: request.description,
-          category: request.category,
-          price: request.price || 0, // default price
-          rating: request.rating || 0, // default rating
-          quantity: 100, // default quantity
-          picture: request.picture || "default-image.jpg", //  
-        };
+    // Create a new game based on the approved request
+    const newGame = {
+      name: request.name,
+      description: request.description,
+      category: request.category,
+      price: request.price || 0, // Default price
+      rating: request.rating || 0, // Default rating
+      quantity: 100, // Default quantity
+      picture: request.picture || "default-image.jpg", // Default picture if missing
+    };
 
-        // send the new game request to the backend
-        await axiosClient.post("/game", newGameRequest);
+    await axiosClient.post("/game", newGame);
 
-        alert(`Request ${request.id} has been approved and added to the list of games.`);
-        this.fetchGameRequests(); // refresh the game request list
-      } catch (error) {
-        console.error(`Error approving request ${request.id}:`, error);
-        alert(`Failed to approve request ${request.id}.`);
-      }
-    },
+    // Notify success and refresh the request list
+    alert(`Request ${request.id} has been approved. Please edit game info in Games. `);
+    this.fetchGameRequests(); // Refresh the list of game requests
+  } catch (error) {
+    console.error(`Error approving request ${request.id}:`, error);
+    alert("Failed to approve the request. Please try again.");
+  }
+},
+
     async rejectRequest(request, index) {
       if (!confirm(`Are you sure you want to reject request ${request.id}?`)) return;
 
@@ -284,6 +287,12 @@ export default {
 .nav-link:hover {
    cursor: pointer;
  }
+
+ .navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
+}
 
 .transparent-background {
   background-color: rgba(255, 255, 255, 0.3);

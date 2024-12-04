@@ -256,5 +256,12 @@ export default {
   justify-content: space-around; 
 }
 
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
+}
+
+
 
 </style>
