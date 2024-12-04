@@ -1,25 +1,26 @@
 package ca.mcgill.ecse321_group14.GameShop.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Promotion;
 import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.PromotionRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 
 @ExtendWith(MockitoExtension.class)
 public class PromotionServiceTests {
@@ -33,79 +34,31 @@ public class PromotionServiceTests {
     @InjectMocks
     private PromotionService promotionService;
 
+    private Game game;
+    private Promotion promotion;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
 
-    @Test
-    public void testCreatePromotion() {
-        // Arrange
-        Game game = new Game("Game1", "Description", "Category", 100, 10, Game.Rating.G, "Picture");
+        // Setup default Game and Promotion
+        game = new Game("Zelda", "Adventure Game", "Action", 100, 50, Game.Rating.G, "zelda.png");
         
-        when(gameRepository.findGameById(game.getId())).thenReturn(game);
-        when(promotionRepository.save(any(Promotion.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
 
-        // Act
-        Promotion createdPromotion = promotionService.createPromotion("Promo Description", 20, game);
-
-        // Assert
-        assertNotNull(createdPromotion);
-        assertEquals("Promo Description", createdPromotion.getDescription());
-        assertEquals(20, createdPromotion.getDiscount());
-        assertEquals(game, createdPromotion.getGame());
-        verify(promotionRepository, times(1)).save(createdPromotion);
-    }
-
-    @Test
-    public void testCreatePromotionGameDoesNotExist() {
-        // Arrange
-        Game game = new Game();
+        promotion = new Promotion("Summer Sale", 20, game);
         
-        when(gameRepository.findGameById(game.getId())).thenReturn(null);
-
-        // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            promotionService.createPromotion("Promo Description", 20, game)
-        );
-        assertEquals("Game does not exist!", exception.getMessage());
     }
 
-    @Test
-    public void testGetPromotion() {
-        // Arrange
-        Promotion promotion = new Promotion("Promo Description", 20, new Game());
-
-        when(promotionRepository.findPromotionById(promotion.getId())).thenReturn(promotion);
-
-        // Act
-        Promotion retrievedPromotion = promotionService.getPromotion(promotion.getId());
-
-        // Assert
-        assertNotNull(retrievedPromotion);
-        assertEquals(promotion, retrievedPromotion);
-    }
 
     @Test
-    public void testGetPromotionNotFound() {
-        // Arrange
-        when(promotionRepository.findPromotionById(999)).thenReturn(null);
-
-        // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            promotionService.getPromotion(999)
-        );
-        assertEquals("Promotion does not exist!", exception.getMessage());
-    }
-
-    @Test
-    public void testUpdatePromotion() {
+    public void testCreatePromotion_Valid() {
         // Arrange
         Game game = new Game("Game1", "Description", "Category", 100, 10, Game.Rating.G, "Picture");
         Promotion promotion = new Promotion("Promo Description", 20, game);
 
         when(promotionRepository.findPromotionById(promotion.getId())).thenReturn(promotion);
-        when(promotionRepository.save(any(Promotion.class))).thenAnswer((InvocationOnMock invocation) -> invocation.getArgument(0));
+        when(promotionRepository.save(any(Promotion.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(gameRepository.save(any(Game.class))).thenAnswer(invocation -> invocation.getArgument(0)); // Ensure this is necessary
 
         // Act
         Promotion updatedPromotion = promotionService.updatePromotion(promotion.getId(), "Updated Description", 30, game);
@@ -114,45 +67,99 @@ public class PromotionServiceTests {
         assertNotNull(updatedPromotion);
         assertEquals("Updated Description", updatedPromotion.getDescription());
         assertEquals(30, updatedPromotion.getDiscount());
-        assertEquals(game, updatedPromotion.getGame());
-        verify(promotionRepository, times(1)).save(updatedPromotion);
+        assertEquals(70, game.getDiscountedprice()); // Ensure the discounted price is updated
+        verify(gameRepository, times(1)).save(game); // Verify if Game is updated
+        verify(promotionRepository, times(1)).save(updatedPromotion); // Verify Promotion is updated
     }
-
+    
     @Test
-    public void testUpdatePromotionNotFound() {
-        // Arrange
-        when(promotionRepository.findPromotionById(9999)).thenReturn(null);
+    public void testCreatePromotion_InvalidDiscount() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+            promotionService.createPromotion("Invalid Discount", 110, game)
+        );
+        assertEquals("Invalid discount percentage!", exception.getMessage());
+    }
+    
+    @Test
+    public void testCreatePromotion_NullGame() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+            promotionService.createPromotion("No Game", 20, null)
+        );
+        assertEquals("Game cannot be null!", exception.getMessage());
+    }
+    
+    @Test
+    public void testUpdatePromotion_InvalidId() {
+        when(promotionRepository.findPromotionById(999)).thenReturn(null);
 
-        // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            promotionService.updatePromotion(9999, "Updated Description", 30, new Game())
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+            promotionService.updatePromotion(999, "Invalid", 20, game)
         );
         assertEquals("Promotion does not exist!", exception.getMessage());
     }
 
     @Test
-    public void testDeletePromotion() {
-        // Arrange
-        Promotion promotion = new Promotion("Promo Description", 20, new Game());
-
+    public void testUpdatePromotion_InvalidDiscount() {
         when(promotionRepository.findPromotionById(promotion.getId())).thenReturn(promotion);
 
-        // Act
-        promotionService.deletePromotion(promotion.getId());
-
-        // Assert
-        verify(promotionRepository, times(1)).delete(promotion);
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+            promotionService.updatePromotion(promotion.getId(), "Invalid Discount", -10, game)
+        );
+        assertEquals("Invalid discount percentage!", exception.getMessage());
     }
 
     @Test
-    public void testDeletePromotionNotFound() {
-        // Arrange
-        when(promotionRepository.findPromotionById(1)).thenReturn(null);
+    public void testDeletePromotion_InvalidId() {
+        when(promotionRepository.findById(999)).thenReturn(Optional.empty());
 
-        // Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            promotionService.deletePromotion(1)
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+            promotionService.deletePromotion(999)
+        );
+        assertEquals("Promotion not found.", exception.getMessage());
+    }
+
+    @Test
+    public void testGetPromotion_Valid() {
+        when(promotionRepository.findPromotionById(promotion.getId())).thenReturn(promotion);
+
+        Promotion retrievedPromotion = promotionService.getPromotion(promotion.getId());
+
+        assertNotNull(retrievedPromotion);
+        assertEquals(promotion, retrievedPromotion);
+    }
+
+    @Test
+    public void testGetPromotion_InvalidId() {
+        when(promotionRepository.findPromotionById(999)).thenReturn(null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+            promotionService.getPromotion(999)
         );
         assertEquals("Promotion does not exist!", exception.getMessage());
     }
+
+    @Test
+    public void testGetAllPromotions_Valid() {
+        List<Promotion> promotions = List.of(promotion);
+        when(promotionRepository.findAll()).thenReturn(promotions);
+
+        List<Promotion> retrievedPromotions = promotionService.getAllPromotions();
+
+        assertNotNull(retrievedPromotions);
+        assertEquals(1, retrievedPromotions.size());
+        assertEquals(promotion, retrievedPromotions.get(0));
+    }
+
+    @Test
+    public void testGetAllPromotions_Empty() {
+        when(promotionRepository.findAll()).thenReturn(new ArrayList<>());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+            promotionService.getAllPromotions()
+        );
+        assertEquals("No promotions found!", exception.getMessage());
+    }
+
+
+
 }

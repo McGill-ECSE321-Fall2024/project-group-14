@@ -24,7 +24,7 @@ public class PromotionService {
     public void deletePromotion(int id) {
         Promotion promotion = promotionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Promotion not found."));
-
+        
         Game game = promotion.getGame();
         game.setDiscountedprice(0);; // Reset to original price
         gameRepository.save(game);
