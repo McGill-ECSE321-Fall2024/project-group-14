@@ -369,23 +369,6 @@ export default {
   margin-right: 0;
 }
 
-.luxurious-text {
-  font-family: 'Georgia', sans-serif;
-  color: #888;
-}
-
-.navbar-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.hero-section {
-  background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
-  padding: 300px 0;
-  text-align: center;
-}
 
 
 </style>

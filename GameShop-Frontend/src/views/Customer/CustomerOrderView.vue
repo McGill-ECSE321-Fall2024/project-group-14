@@ -386,7 +386,6 @@ export default {
   color: white;
 }
 
-
 .luxurious-text {
   font-family: 'Georgia', sans-serif;
   font-weight: bold;
@@ -403,22 +402,11 @@ export default {
   color: white !important;
 }
 
-.navbar-brand {
-  margin-right: 0;
-}
 
 .luxurious-text {
   font-family: 'Georgia', sans-serif;
   color: #888;
 }
-
-.navbar-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
 
 
 
