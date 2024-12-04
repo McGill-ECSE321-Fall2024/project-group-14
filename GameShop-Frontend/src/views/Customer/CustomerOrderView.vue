@@ -16,7 +16,7 @@
                         <a class="nav-link clickable-text" @click="Home">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Orders</a>
+                        <a class="nav-link" href="#">Orders (Current)</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
@@ -44,8 +44,8 @@
                             <th scope="col" class="text-center subheading">Order Date</th>
                             <th scope="col" class="text-center subheading">Game Info</th>
                             <th scope="col" class="text-center subheading">Total Price</th>
-                            <th scope="col" class="text-center subheading">Paid ?</th>
-                            <th scope="col" class="text-center subheading">Pay</th>
+                           
+                            
                             <th scope="col" class="text-center subheading">Cancel</th>
                           </tr>
                         </thead>
@@ -63,12 +63,8 @@
                             <td class="text-center" style="background: white; min-width: 90px">
                               <input class="form-control text-center" :value="`$${order?.totalPrice?.toFixed(2) || '0.00'}`" readonly>
                             </td>
-                            <td class="text-center" style="background: white; min-width: 90px">
-                              <input class="form-control text-center" :value="order?.paid ? 'Yes' : 'No'" readonly>
-                            </td>
-                            <td class="text-center" style="background: white; min-width: 90px">
-                              <button class="btn payButton" @click="payOrder(order?.orderId)":disabled="order?.paid">Pay</button>
-                            </td>
+                            
+                           
                             <td class="text-center" style="background: white; min-width: 90px">
                               <button class="btn cancelButton" :class="order.paid ? 'refunButton' : 'cancelButton'" @click="order.paid ? refundOrder(order?.orderId) : deleteOrder(order?.orderId)"> {{ order.paid ? 'Refund' : 'Cancel' }}</button>
                             </td>
@@ -345,13 +341,9 @@ export default {
 
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
-.nav-link:hover {
-  cursor: pointer;
-  color: white !important;
-}
 
 .orders-container {
   background-color: rgba(255, 255, 255, 1);
@@ -378,19 +370,7 @@ export default {
   margin-bottom: 10px;
 }
 
-.payButton {
-  width: 100%;
-  background-color: white;
-  border: 2px solid #0055FF;
-  color: #0055FF;
-}
 
-.payButton:hover {
-  width: 100%;
-  background-color: #0055FF;
-  border: 2px solid #0055FF;
-  color: white;
-}
 
 .cancelButton {
   width: 100%;

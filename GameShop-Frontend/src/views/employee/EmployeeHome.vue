@@ -13,22 +13,22 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Home<span class="sr-only"> (Current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="EmployeeAccount">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
+                <a class="nav-link clickable-text" @click="SubmitGameRequest">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewGames">View Games</a>
+                <a class="nav-link clickable-text" @click="ViewGames">Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                <a class="nav-link clickable-text" @click="ViewOrders">Orders</a>
               </li>
               <li>
-                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -108,7 +108,7 @@ export default {
     },
     async fetchPolicy() {
       try {
-        const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL
+        const response = await fetch("http://localhost:8060/policy"); // 
         const policies = await response.json();
         console.log("Fetched policies:", policies);
 
@@ -152,6 +152,8 @@ export default {
 }
 
 
+
+
 .navbar-container {
   position: absolute;
   top: 0;
@@ -178,8 +180,9 @@ export default {
 }
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
 }
+
 
 
 </style>

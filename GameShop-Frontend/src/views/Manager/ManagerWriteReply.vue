@@ -16,28 +16,28 @@
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageEmployees">Manage Employees</a>
+                <a class="nav-link clickable-text" @click="ManageEmployees">Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePolicy">Manage Policy</a>
+                <a class="nav-link clickable-text" @click="ManagePolicy">Policies</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGames">Manage Games</a>
+                <a class="nav-link clickable-text" @click="ManageGames">Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGameRequests">Manage Game Requests</a>
+                <a class="nav-link clickable-text" @click="ManageGameRequests">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePromotion">Promotion</a>
+                <a class="nav-link clickable-text" @click="ManagePromotion">Promotions</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                <a class="nav-link clickable-text" @click="ViewOrders">Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -141,7 +141,7 @@
       return {
         gameData: {},
         reviews: [],
-        replies: [], // Store all replies here
+        replies: [], // store all replies here
         newReply: { reviewId: null, description: "", managerId: null },
         email: "",
         gameId: "",
@@ -152,18 +152,18 @@
       this.gameId = this.$route.params.param2;
       console.log("email", this.email);
   
-      // Fetch managerId using the email from route params
+      // fetch managerId using the email from route params
       axiosClient
         .get(`/managers/${this.email}`)
         .then((response) => {
           console.log("Manager Response: ", response.data);
-          this.newReply.managerId = response.data.id; // Map the manager ID
+          this.newReply.managerId = response.data.id; // map the manager ID
         })
         .catch((err) => {
           console.error("Failed to fetch manager ID:", err);
         });
   
-      // Fetch game details
+      // fetch game details
       axiosClient
         .get(`/game/${this.gameId}`)
         .then((response) => {
@@ -173,7 +173,7 @@
           console.error("Failed to fetch game data:", err);
         });
   
-      // Fetch reviews
+      // fetch reviews
       axiosClient
         .get(`/game/${this.gameId}/reviews`)
         .then((response) => {
@@ -183,7 +183,7 @@
           console.error("Failed to fetch reviews:", err);
         });
   
-      // Fetch all replies
+      // fetch all replies
       axiosClient
         .get("/replies")
         .then((response) => {
@@ -252,7 +252,7 @@
           return;
         }
   
-        // Log the raw data object for debugging
+        // log the raw data object for debugging
         console.log("Reply: ", this.newReply);
         const plainReply = JSON.parse(JSON.stringify(this.newReply));
         console.log("Payload before POST: ", plainReply);
@@ -261,7 +261,7 @@
           .post("/reply", plainReply)
           .then((response) => {
             console.log("Reply Posted Successfully: ", response.data);
-            this.replies.push(response.data); // Add the new reply to the replies array
+            this.replies.push(response.data); // add the new reply to the replies array
             alert("Reply posted successfully");
             this.newReply.description = "";
             this.newReply.reviewId = null;
@@ -325,10 +325,13 @@
  .transparent-background {
    background-color: rgba(255, 255, 255, 0.3);
  }
+
  
- .nav-link:hover {
-   cursor: pointer;
- }
+ .clickable-text:hover {
+  cursor: pointer;
+  color: white !important;
+}
+ 
  
  .card {
    width: 100%;
@@ -370,4 +373,3 @@
    text-align: center;
  }
  </style>
- 

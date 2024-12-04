@@ -1,6 +1,7 @@
 <template>
-  <div class="customerAccount">
-    <div class="background">
+  <div>
+    <div class="hero-section">
+      <!-- Navbar -->
       <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
@@ -21,7 +22,7 @@
                 <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Account</a>
+                <a class="nav-link" href="#">Account (Current)</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
@@ -31,57 +32,52 @@
         </nav>
       </div>
 
-      <div class="profile-box">
-        <div class="container rounded bg-white mt-5 mb-5 account-box shadow">
-          <div class="row">
-            <div class="col-md-3 border-right">
-              <div class="d-flex flex-column align-items-center justify-content-center text-center p-3 py-5 image-pos">
-                <img class="rounded-circle" width="100%" src="../../assets/gameshopLogo.jpg" alt="Profile Photo" />
+      <!-- Page Content -->
+      <div class="container content-container">
+        <div class="row mt-5 justify-content-center">
+          <div class="col-md-8 col-lg-6">
+            <div class="card account-details-container shadow">
+              <div class="card-header text-center">
+                <h3>ACCOUNT DETAILS</h3>
               </div>
-            </div>
-            <div class="col-md-9">
-              <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h4 class="text-right" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px">
-                    ACCOUNT DETAILS
-                  </h4>
+              <div class="card-body">
+                <div class="d-flex justify-content-center mb-4">
+                  <img class="rounded-circle profile-picture" src="../../assets/gameshopLogo.jpg" alt="Profile Photo">
                 </div>
-                <div class="image-pos">
-                  <div class="row mt-3">
-                    <div class="col-md-6">
-                      <label class="labels">Username</label>
-                      <input class="form-control" id="username" v-model="username" :readonly="isReadonly" />
-                    </div>
-                    <div class="col-md-6">
-                      <label class="labels">Email</label>
-                      <input class="form-control" id="email" v-model="email" readonly />
-                    </div>
-                    <div class="col-md-6">
-                      <label class="labels">Card Number</label>
-                      <input class="form-control" id="cardNumber" v-model="cardNumber" :readonly="isReadonly" />
-                    </div>
-                    <div class="col-md-6">
-                      <label class="labels">Card Expiry Date</label>
-                      <input class="form-control" id="cardExpiryDate" type="date" v-model="cardExpiryDate" :readonly="isReadonly" />
-                    </div>
-                    <div class="col-md-12">
-                      <label class="labels">Address</label>
-                      <input class="form-control" id="address" v-model="address" :readonly="isReadonly" />
-                    </div>
-                    <div class="col-md-6">
-                      <label class="labels">Enter Your Password To Make Changes</label>
-                      <input class="form-control" id="password" type="password" v-model="password" :readonly="isReadonly" />
-                    </div>
+                <div class="row mt-3 justify-content-center">
+                  <div class="col-md-8 mb-3 text-center">
+                    <label class="labels">Username</label>
+                    <input class="form-control smaller-input" id="username" v-model="username" :readonly="isReadonly" />
+                  </div>
+                  <div class="col-md-8 mb-3 text-center">
+                    <label class="labels">Email</label>
+                    <input class="form-control smaller-input" id="email" v-model="email" readonly />
+                  </div>
+                  <div class="col-md-8 mb-3 text-center">
+                    <label class="labels">Card Number</label>
+                    <input class="form-control smaller-input" id="cardNumber" v-model="cardNumber" :readonly="isReadonly" />
+                  </div>
+                  <div class="col-md-8 mb-3 text-center">
+                    <label class="labels">Card Expiry Date</label>
+                    <input class="form-control smaller-input" id="cardExpiryDate" type="date" v-model="cardExpiryDate" :readonly="isReadonly" />
+                  </div>
+                  <div class="col-md-8 mb-3 text-center">
+                    <label class="labels">Address</label>
+                    <input class="form-control smaller-input" id="address" v-model="address" :readonly="isReadonly" />
+                  </div>
+                  <div class="col-md-8 mb-3 text-center">
+                    <label class="labels">Enter Your Password To Make Changes</label>
+                    <input class="form-control smaller-input" id="password" type="password" v-model="password" :readonly="isReadonly" />
                   </div>
                 </div>
                 <div class="mt-5 text-center">
-                  <div class="row">
-                    <div class="col-md-6">
+                  <div class="row justify-content-center">
+                    <div class="col-md-5">
                       <button @click="editInfo" type="button" class="btn btn-primary btn-block mb-2 editbutton">
                         Edit Profile
                       </button>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                       <button @click="saveInfo" type="button" class="btn btn-primary btn-block mb-2 savebutton">
                         Save Profile
                       </button>
@@ -112,7 +108,7 @@ export default {
     return {
       email: this.$route.params.param1,
       username: "",
-      password: "", // Added password field
+      password: "",
       cardNumber: "",
       cardExpiryDate: "",
       address: "",
@@ -131,7 +127,7 @@ export default {
         const customer = response.data;
         this.id = customer.id;
         this.username = customer.username;
-        this.password = customer.password || "";  // Ensure password is fetched correctly
+        this.password = customer.password || "";
         this.cardNumber = customer.cardNumber;
         this.cardExpiryDate = customer.cardExpiryDate;
         this.address = customer.address;
@@ -145,7 +141,7 @@ export default {
         const customerRequest = {
           username: this.username,
           email: this.email,
-          password: this.password, // Ensure password is included in the request
+          password: this.password,
           cardNumber: this.cardNumber,
           cardExpiryDate: this.cardExpiryDate,
           address: this.address,
@@ -161,35 +157,29 @@ export default {
       this.isReadonly = false;
     },
     async Orders() {
-      await this.$router.push({path: '/orders/' + this.email})
+      await this.$router.push({path: '/orders/' + this.email});
     },
     async Wishlist() {
-      await this.$router.push({path: '/wishlist/' + this.email})
+      await this.$router.push({path: '/wishlist/' + this.email});
     },
     async Account() {
-      await this.$router.push({path: '/CustomerAccount/' + this.email})
+      await this.$router.push({path: '/CustomerAccount/' + this.email});
     },
     async LogOut() {
-      alert('Successfully logged out.')
-      await this.$router.push({name: 'home'})
+      alert('Successfully logged out.');
+      await this.$router.push({name: 'home'});
     },
-    async BrowseGames(){
-      await this.$router.push({path: '/CustomerBrowseGames/' + this.email})
+    async BrowseGames() {
+      await this.$router.push({path: '/CustomerBrowseGames/' + this.email});
     },
-    async Home(){
-      await this.$router.push({path: '/CustomerHome/' + this.email})
+    async Home() {
+      await this.$router.push({path: '/CustomerHome/' + this.email});
     },
   },
 };
 </script>
 
 <style scoped>
-.background {
-  background: url("../../assets/gameshopBackground.jpg") center center no-repeat;
-  background-size: cover;
-  height: 100vh;
-}
-
 .navbar-container {
   position: absolute;
   top: 0;
@@ -197,24 +187,51 @@ export default {
   right: 0;
 }
 
-.profile-box {
-  position: absolute;
-  top: 15%;
-  left: 20%;
-  right: 20%;
+.navbar-brand {
+  margin-right: 0;
 }
 
-.account-box {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
+.nav-link:hover {
+  cursor: pointer;
+  color: white !important;
+}
+
+.transparent-background {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.hero-section {
+  background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
+  padding: 200px 0;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.content-container {
+  margin-top: 100px;
+}
+
+.account-details-container {
+  background-color: white;
   border-radius: 10px;
+  padding: 20px;
 }
 
-.image-pos {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.labels {
+  font-size: 14px;
+  color: #444;
+}
+
+.smaller-input {
+  max-width: 300px; /* Adjust this value to make the input field width more suitable */
+  margin: 0 auto;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .editbutton,
@@ -230,12 +247,5 @@ export default {
   color: white;
 }
 
-.labels {
-  font-size: 12px;
-  color: #444;
-}
 
-.nav-link {
-  color: white !important;
-}
 </style>

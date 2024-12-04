@@ -15,19 +15,19 @@
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Account<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Account<span class="sr-only"> (Current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
+                <a class="nav-link clickable-text" @click="SubmitGameRequest">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewGames">View Games</a>
+                <a class="nav-link clickable-text" @click="ViewGames">Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                <a class="nav-link clickable-text" @click="ViewOrders">Orders</a>
               </li>
               <li>
-                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -89,7 +89,7 @@
       return {
         email: this.$route.params.param1,
         username: "",
-        password: "", // Added password field
+        password: "", // added password field
         errorMsg: "",
         id: null,
       };
@@ -104,7 +104,7 @@
           const employee = response.data;
           this.id = employee.id;
           this.username = employee.username;
-          this.password = employee.password || "";  // Ensure password is fetched correctly
+          this.password = employee.password || "";  // ensure password is fetched correctly
         } catch (error) {
           this.errorMsg = `Error fetching employee info: ${error.response?.data || error.message}`;
           alert(this.errorMsg);
@@ -172,11 +172,13 @@
     color: #444;
   }
   
-  .nav-link {
-    color: white !important;
-  }
+  .clickable-text:hover {
+  cursor: pointer;
+  color: white !important;
+}
+
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
   </style>

@@ -27,6 +27,9 @@
                   <a class="nav-link clickable-text" @click="Orders">Orders</a>
                 </li>
                 <li class="nav-item">
+                <a class="nav-link clickable-text" @click="Wishlist">Wishlist</a>
+              </li>
+                <li class="nav-item">
                   <a class="nav-link clickable-text" @click="Account">Account</a>
                 </li>
                 <li class="nav-item">
@@ -154,7 +157,7 @@ import HomeView from "../HomeView.vue";
       this.email = this.$route.params.param1;
       this.gameId = this.$route.params.param2;
   
-      // Fetch game data
+      // fetch game data
   
       axiosClient
         .get(`/game/${this.gameId}`)
@@ -166,7 +169,7 @@ import HomeView from "../HomeView.vue";
           alert(`Game Fetch Error: ${err.response?.data || err.message}`);
         });
   
-      // Fetch reviews
+      // fetch reviews
       this.fetchReviews();
     },
     methods: {
@@ -176,7 +179,7 @@ import HomeView from "../HomeView.vue";
     .then((response) => {
       console.log("Fetched reviews successfully");
       this.reviews = response.data.reviews || [];
-      this.fetchReplies(); // Fetch replies for the reviews
+      this.fetchReplies(); // fetch replies for the reviews
     })
     .catch((err) => {
       console.error("Error fetching reviews:", err);
@@ -201,9 +204,9 @@ fetchReplies() {
   createReview() {
     this.newReview.gameId = parseInt(this.gameId, 10);
 
-    // Fetch customer ID by email
+    // fetch customer ID by email
     axiosClient
-      .get(`/customersEmail/${this.email}`) // Assuming you have an endpoint to fetch customer by email
+      .get(`/customersEmail/${this.email}`) // assuming you have an endpoint to fetch customer by email
       .then((response) => {
         const customer = response.data;
         console.log("Fetched customer:", customer);
@@ -216,9 +219,9 @@ fetchReplies() {
       })
       .then((response) => {
         console.log("Review created successfully:", response.data);
-        this.reviews.push(response.data); // Add the new review to the list
+        this.reviews.push(response.data); // add the new review to the list
         alert("Review created successfully!");
-        this.fetchReviews(); // Refresh the reviews
+        this.fetchReviews(); // refresh the reviews
       })
       .catch((err) => {
         console.error("Error creating review:", err);
@@ -336,6 +339,12 @@ fetchReplies() {
   td {
     text-align: center;
   }
+
+  .clickable-text:hover {
+  cursor: pointer;
+  color: white !important;
+  }
+
   </style>
   
   

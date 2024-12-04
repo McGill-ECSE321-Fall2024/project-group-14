@@ -19,7 +19,7 @@
                 <a class="nav-link clickable-text" @click="Orders">Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Wishlist</a>
+                <a class="nav-link" href="#">Wishlist (Current)</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Account">Account</a>
@@ -96,23 +96,23 @@ export default {
   props: {
     customerEmail: {
       type: String,
-      required: true, // Or false if you handle fallback
+      required: true, // or false if you handle fallback
     },
   },
   data() {
     return {
-        wishlists: [], // Renamed from orders to reflect wishlist context
-        wishlistDetails: null, // Details of a specific wishlist item
-        errorMessage: "", // Error messages for feedback
+        wishlists: [], // renamed from orders to reflect wishlist context
+        wishlistDetails: null, // details of a specific wishlist item
+        errorMessage: "", // error messages for feedback
         currWishlist: {
-            customerId: "", // Customer ID for adding to the wishlist
-            gameId: "", // Game ID to add to the wishlist
+            customerId: "", // customer ID for adding to the wishlist
+            gameId: "", // game ID to add to the wishlist
         },
         };
     },
 
   methods: {
-    // Open the create order popup
+    // open the create order popup
     openCreateOrderPopup() {
       this.currOrder = {
         customerId: "",
@@ -121,7 +121,7 @@ export default {
       this.errorMessage = "";
     },
 
-    // Close the create order popup
+    // close the create order popup
     closeCreateOrderPopup() {
       this.showCreateOrderPopup = false;
       this.errorMessage = "";
@@ -129,19 +129,19 @@ export default {
 
     async fetchWishlists() {
         try {
-            //Fetch the Customer ID using the email
+            //fetch the Customer ID using the email
             const customerResponse = await axios.get(`http://localhost:8060/customersEmail/${this.customerEmail}`);
             const customerid = customerResponse.data.id;
             this.customerid = customerid;
             const response = await axios.get(`http://localhost:8060/wishlist/${customerid}`);
             const wishlists = response.data.wishlists;
 
-            // Map game info and total price directly from backend response
+            // map game info and total price directly from backend response
             this.wishlists = wishlists.map(wishlist => ({
                 gameId: wishlist.gameId,
                 customerId: wishlist.customerId,
-                gameInfo: wishlist.gameName || 'N/A', // Use gameName for display
-                totalPrice: wishlist.price || 0,      // Use price field for total price
+                gameInfo: wishlist.gameName || 'N/A', // use gameName for display
+                totalPrice: wishlist.price || 0,      // use price field for total price
             }));
             this.errorMessage = "";
             console.log("Wishlist Response:", response.data.wishlists);
@@ -153,12 +153,12 @@ export default {
     },
 
     async createWishlist(gameId) {
-        const customerId = this.customerid; // Use the provided customer ID prop
+        const customerId = this.customerid; // use the provided customer ID prop
         try {
             const response = await axios.post(`http://localhost:8060/wishlist/${gameId}/${customerId}`);
             console.log("Wishlist created successfully:", response.data);
 
-            // Refresh the wishlists
+            // refresh the wishlists
             this.fetchWishlists();
         } catch (error) {
             this.errorMessage = error.response?.data?.message || "Failed to create wishlist.";
@@ -167,18 +167,18 @@ export default {
     },
 
     async clearWishlist(gameId) {
-        const customerId = this.customerid; // Use the provided customer ID prop
+        const customerId = this.customerid; // use the provided customer ID prop
         const isConfirmed = window.confirm("Are you sure you want to clear this wishlist item?");
         if (!isConfirmed) {
             console.log("Wishlist clearing aborted by the user.");
-            return; // Exit if the user cancels
+            return; // exit if the user cancels
         }
 
         try {
             await axios.delete(`http://localhost:8060/wishlist/${gameId}/${customerId}`);
             console.log(`Wishlist item with Game ID ${gameId} cleared.`);
 
-            // Refresh the wishlists
+            // refresh the wishlists
             this.fetchWishlists();
         } catch (error) {
             this.errorMessage = error.response?.data?.message || `Failed to clear wishlist for Game ID ${gameId}.`;
@@ -192,7 +192,7 @@ export default {
         const payload = { customerId };
         try {
             const response = await axios.post('http://localhost:8060/order', payload);
-            return response.data.orderId; // Return the created order ID
+            return response.data.orderId; // return the created order ID
         } catch (error) {
             console.error("Error creating order:", error);
             throw error;
@@ -213,19 +213,19 @@ export default {
         console.log("Adding Game ID to Order:", gameId);
 
         try {
-            // Step 1: Create an Order for the Customer
+            // step 1: Create an Order for the Customer
             const orderId = await this.createOrder(customerId);
             console.log("Created Order ID:", orderId);
 
-            // Step 2: Add the Single Game to the Order
+            // step 2: Add the Single Game to the Order
             await this.addGameToOrder(orderId, gameId);
             console.log(`Game ID ${gameId} successfully added to Order ID ${orderId}!`);
 
-            // Step 3: Remove the Game from the Wishlist
+            // step 3: Remove the Game from the Wishlist
             await this.clearWishlist(gameId);
             console.log(`Game ID ${gameId} removed from Wishlist.`);
             
-            // Optionally refresh wishlists or other related data
+            // optionally refresh wishlists or other related data
             this.fetchWishlists();
         } catch (error) {
             console.error("Error adding game to order:", error);
@@ -253,13 +253,13 @@ export default {
     },
   },
 
-  // Fetch orders when the component is created
+  // fetch orders when the component is created
   created() {
         console.log("Customer Email from prop:", this.customerEmail);
         if (!this.customerEmail || typeof this.customerEmail !== 'string') {
           console.error("Invalid Customer Email: Must be a non-empty string.");
         } else {
-            this.fetchWishlists(); // Fetch wishlists instead of orders
+            this.fetchWishlists(); // fetch wishlists instead of orders
         }
     },
 };
@@ -291,13 +291,9 @@ export default {
 
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
-.nav-link:hover {
-  cursor: pointer;
-  color: white !important;
-}
 
 .wishlist-container {
   background-color: rgba(255, 255, 255, 1);

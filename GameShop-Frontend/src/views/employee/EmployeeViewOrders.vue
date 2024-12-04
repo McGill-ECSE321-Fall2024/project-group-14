@@ -20,13 +20,13 @@
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
+                <a class="nav-link clickable-text" @click="SubmitGameRequest">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewGames">View Games</a>
+                <a class="nav-link clickable-text" @click="ViewGames">Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">View Orders<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Orders<span class="sr-only"> (Current)</span></a>
               </li>
               <li>
                 <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
@@ -177,12 +177,9 @@ export default {
   margin-right: 0;
 }
 
-.nav-link {
-  color: white !important;
-}
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .hero-section {
@@ -200,6 +197,11 @@ export default {
   background-color: white;
   border-radius: 10px;
   padding: 20px;
+}
+
+.clickable-text:hover {
+  cursor: pointer;
+  color: white !important;
 }
 
 .table-scroll {

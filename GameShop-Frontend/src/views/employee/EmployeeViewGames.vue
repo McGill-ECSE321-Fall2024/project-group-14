@@ -19,16 +19,16 @@
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="SubmitGameRequest">Submit Game Request</a>
+                <a class="nav-link clickable-text" @click="SubmitGameRequest">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">View Games<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Games<span class="sr-only"> (Current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                <a class="nav-link clickable-text" @click="ViewOrders">Orders</a>
               </li>
               <li>
-                <a class="nav-link clickable-text" @click="LogOut">Log Out</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -238,12 +238,9 @@ export default {
   margin-right: 0;
 }
 
-.nav-link {
-  color: white !important;
-}
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .hero-section {

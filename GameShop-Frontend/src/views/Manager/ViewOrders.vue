@@ -17,28 +17,28 @@
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageEmployees">Manage Employees</a>
+                <a class="nav-link clickable-text" @click="ManageEmployees">Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePolicy">Manage Policy</a>
+                <a class="nav-link clickable-text" @click="ManagePolicy">Policies</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGames">Manage Games</a>
+                <a class="nav-link clickable-text" @click="ManageGames">Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGameRequests">Manage Game Requests</a>
+                <a class="nav-link clickable-text" @click="ManageGameRequests">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePromotion">Promotion</a>
+                <a class="nav-link clickable-text" @click="ManagePromotion">Promotions</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">View Orders</a>>
+                <a class="nav-link" href="#">Orders (Current)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -226,9 +226,14 @@ export default {
   margin-right: 0;
 }
 
-.nav-link {
+.clickable-text:hover {
+  cursor: pointer;
   color: white !important;
 }
+
+.nav-link:hover {
+   cursor: pointer;
+ }
 
 .transparent-background {
   background-color: rgba(255, 255, 255, 0.2);

@@ -14,7 +14,7 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#">Home (Current)</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Orders">Orders</a>
@@ -27,7 +27,7 @@
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
@@ -140,7 +140,7 @@ export default {
     },
     async fetchPolicy() {
       try {
-        const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL
+        const response = await fetch("http://localhost:8060/policy"); 
         const policies = await response.json();
         console.log("Fetched policies:", policies);
 
@@ -167,9 +167,6 @@ export default {
   margin-right: 0;
 }
 
-.nav-link {
-  color: white !important;
-}
 
 .hero-section {
   background: url('../../assets/gameshopBackground.jpg') center/cover no-repeat;
@@ -202,7 +199,7 @@ export default {
 }
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .navbar-container {
@@ -229,10 +226,11 @@ export default {
   cursor: pointer;
   color: white !important;
 }
+
 .img-fluid {
-  max-height: 150px; /* Keep the image height uniform */
-  object-fit: contain; /* Ensures the image fits without cropping */
-  width: 100%; /* Ensure full width */
+  max-height: 150px; 
+  object-fit: contain; 
+  width: 100%; 
 }
 
 .col-md-3 {
@@ -242,8 +240,8 @@ export default {
   justify-content: flex-start;
   text-align: center;
   padding: 15px;
-  min-height: 450px; /* Set a consistent height for all cards */
-  box-sizing: border-box; /* Ensures padding doesn't affect height */
+  min-height: 450px; 
+  box-sizing: border-box; 
 }
 
 .col-md-3 p {
@@ -255,7 +253,8 @@ export default {
 .row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; /* Adds spacing between columns */
+  justify-content: space-around; 
 }
+
 
 </style>

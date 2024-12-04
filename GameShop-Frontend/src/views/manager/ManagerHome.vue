@@ -14,42 +14,41 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#">Home (Current)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageEmployees">Manage Employees</a>
+                <a class="nav-link clickable-text" @click="ManageEmployees">Employees</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePolicy">Manage Policy</a>
+                <a class="nav-link clickable-text" @click="ManagePolicy">Policies</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGames">Manage Games</a>
+                <a class="nav-link clickable-text" @click="ManageGames">Games</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManageGameRequests">Manage Game Requests</a>
+                <a class="nav-link clickable-text" @click="ManageGameRequests">Game Requests</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ManagePromotion">Promotion</a>
+                <a class="nav-link clickable-text" @click="ManagePromotion">Promotions</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="Account">Account</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="ViewOrders">View Orders</a>
+                <a class="nav-link clickable-text" @click="ViewOrders">Orders</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="LogOut">LogOut</a>
+                <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
         </nav>
       </div>
 
-      <div class="container" style="margin-top: 70px;">
+      <div class="container" style="margin-top: 7px;">
         <div class="row">
           <div class="col-md-12 mx-auto text-center">
   <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px">GAMESHOP MANAGER PORTAL</h1>
-  <p class="luxurious-text" style="font-weight: normal; color: #fff;">{{ storePolicy }}</p>
  
 </div>
         </div>
@@ -107,20 +106,20 @@ export default {
     },
     async fetchPolicy() {
       try {
-        const response = await fetch("http://localhost:8060/policy"); // Update with the correct backend URL
+        const response = await fetch("http://localhost:8060/policy"); 
         const policies = await response.json();
         console.log("Fetched policies:", policies);
 
         if (policies.length > 0) {
-          // Display the first policy's description
+          // display the first policy's description
           this.storePolicy = `GameShop Policy: ${policies[0].description}`;
         } else {
-          // Default message if no policies exist
+          // default message if no policies exist
           this.storePolicy = "GameShop Policy: buy games.";
         }
       } catch (error) {
         console.error("Error fetching policy:", error);
-        // Fallback message in case of an error
+        // fallback message in case of an error
         this.storePolicy = "GameShop Policy: buy games.";
       }
     }
@@ -134,7 +133,8 @@ export default {
   margin-right: 0;
 }
 
-.nav-link {
+.clickable-text:hover {
+  cursor: pointer;
   color: white !important;
 }
 
@@ -170,7 +170,7 @@ export default {
 }
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .navbar-container {

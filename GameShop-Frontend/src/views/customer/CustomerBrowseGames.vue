@@ -216,12 +216,9 @@ export default {
   margin-right: 0;
 }
 
-.nav-link {
-  color: white !important;
-}
 
 .transparent-background {
-  background-color: rgba(255, 255, 255, 0.2); 
+  background-color: rgba(255, 255, 255, 0.3); 
 }
 
 .hero-section {
@@ -270,4 +267,10 @@ export default {
 .game-image:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
+.clickable-text:hover {
+  cursor: pointer;
+  color: white !important;
+}
+
 </style>
