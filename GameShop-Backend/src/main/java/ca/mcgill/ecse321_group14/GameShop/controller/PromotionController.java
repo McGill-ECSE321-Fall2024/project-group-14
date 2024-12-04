@@ -43,14 +43,13 @@ public class PromotionController {
      */
     @PutMapping("/{gameId}")
     public ResponseEntity<PromotionResponseDto> createPromotion(
-            @RequestBody PromotionRequestDto promotionRequestDto, 
-            @PathVariable int gameId) {
+            @PathVariable int gameId,
+            @RequestBody PromotionRequestDto promotionRequestDto) {
         try {
-            Game game = gameService.getGameById(gameId);
             Promotion promotion = promotionService.createPromotion(
-                    promotionRequestDto.getDescription(), 
-                    promotionRequestDto.getDiscount(), 
-                    game
+                promotionRequestDto.getDescription(),
+                promotionRequestDto.getDiscount(),
+                gameService.getGameById(gameId)
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(new PromotionResponseDto(promotion));
         } catch (IllegalArgumentException e) {
@@ -66,12 +65,12 @@ public class PromotionController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePromotion(@PathVariable int id) {
-        Promotion promotion = promotionService.getPromotion(id);
-        if (promotion == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if not found
+        try {
+            promotionService.deletePromotion(id);;
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        promotionService.deletePromotion(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Return 204 if deleted
     }
 
 
@@ -83,13 +82,14 @@ public class PromotionController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<PromotionResponseDto> getPromotion(@PathVariable int id) {
-        try{
+        try {
             Promotion promotion = promotionService.getPromotion(id);
-            return ResponseEntity.ok(new PromotionResponseDto(promotion)); // Return 200 OK if found
+            return ResponseEntity.ok(new PromotionResponseDto(promotion));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
 
     /**
      * Update a promotion
@@ -100,8 +100,8 @@ public class PromotionController {
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<PromotionResponseDto> updatePromotion(
-            @RequestBody PromotionRequestDto promotionRequestDto, 
-            @PathVariable int id) {
+            @PathVariable int id,
+            @RequestBody PromotionRequestDto promotionRequestDto) {
         try {
             Game game = null;
             if (promotionRequestDto.getGameId() != 0) {
@@ -111,14 +111,14 @@ public class PromotionController {
                 }
             }
             Promotion promotion = promotionService.updatePromotion(
-                    id, 
-                    promotionRequestDto.getDescription(), 
-                    promotionRequestDto.getDiscount(), 
-                    game
+                id,
+                promotionRequestDto.getDescription(),
+                promotionRequestDto.getDiscount(),
+                game
             );
-            return ResponseEntity.ok(new PromotionResponseDto(promotion)); // Return 200 OK if updated
+            return ResponseEntity.ok(new PromotionResponseDto(promotion));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 if update failed
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 

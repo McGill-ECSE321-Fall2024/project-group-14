@@ -27,6 +27,7 @@ public class Order
   private int id;
   private LocalDate orderDate;
   private boolean isPaid;
+  
 
   //Order Associations
   @ManyToOne

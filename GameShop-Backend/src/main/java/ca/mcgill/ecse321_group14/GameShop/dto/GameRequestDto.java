@@ -21,6 +21,8 @@ public class GameRequestDto {
 //    @NotNull(message = "Picture cannot be empty")
     private String picture;
 
+    private Integer discountedprice;
+
     private Integer personId;
 
     public GameRequestDto() {
@@ -78,6 +80,14 @@ public class GameRequestDto {
 
     public String getDescription() {
         return description;
+    }
+
+    public Integer getDiscountedprice() {
+        return discountedprice;
+    }
+
+    public void setDiscountedprice(Integer discountedprice) {
+        this.discountedprice = discountedprice;
     }
 
     public void setDescription(String description) {

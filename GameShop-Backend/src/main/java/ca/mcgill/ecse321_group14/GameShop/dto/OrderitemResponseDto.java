@@ -6,7 +6,7 @@ public class OrderitemResponseDto {
     private int orderitemId;
     private int orderId;
     private String gameTitle;
-    private int price;
+    private int priceAtPurchase;
 
     public OrderitemResponseDto() {
     }
@@ -15,7 +15,7 @@ public class OrderitemResponseDto {
         this.orderitemId = orderitem.getKey().getGame().getId();
         this.orderId = orderitem.getKey().getOrder().getId();
         this.gameTitle = orderitem.getKey().getGame().getName();
-        this.price = orderitem.getKey().getGame().getPrice();
+        this.priceAtPurchase = orderitem.getPriceAtPurchase();
     }
 
     public int getOrderitemId() {
@@ -38,8 +38,10 @@ public class OrderitemResponseDto {
         return gameTitle;
     }
 
-    public int getPrice(){
-        return price;
+    public int getpriceAtPurchase(){
+        return priceAtPurchase;
     }
+    
+
 
 }

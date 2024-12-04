@@ -23,12 +23,21 @@ public class OrderitemService {
 
     @Transactional
     public Orderitem createOrderitem(Game game, Order order) {
+        
         Orderitem orderitem = finOrderitem(order, game);
         if (orderitem != null) {
             return orderitem;
         }
         else{
             Orderitem newOrderitem = new Orderitem(new Orderitem.Key(game, order));
+            System.out.println("Game Name: " + game.getName());
+            System.out.println("Game Discounted Price: " + game.getDiscountedprice());
+            System.out.println("Game Original Price: " + game.getPrice());
+            if (game.getDiscountedprice() != 0){
+                newOrderitem.setPriceAtPurchase(game.getDiscountedprice());
+            } else {
+                newOrderitem.setPriceAtPurchase(game.getPrice());
+            };
             return orderitemRepository.save(newOrderitem);
         }
     }

@@ -17,6 +17,7 @@ public class GameResponseDto {
     private Rating rating;
     private String picture;
     private List<Review> reviews;
+    private int discountedprice;
 
     // Default constructor
     public GameResponseDto() {}
@@ -32,11 +33,20 @@ public class GameResponseDto {
         this.rating = game.getRating();
         this.picture = game.getPicture();
         this.reviews = game.getReviews();
+        this.discountedprice = game.getDiscountedprice();
     }
 
     // Getters and Setters
     public int getId() {
         return id;
+    }
+
+    public int getDiscountedprice() {
+        return discountedprice;
+    }
+
+    public void setDiscountedprice(int discountedprice) {
+        this.discountedprice = discountedprice;
     }
 
     public void setId(int id) {

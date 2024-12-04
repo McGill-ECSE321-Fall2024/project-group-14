@@ -168,7 +168,7 @@ export default {
           order.gameInfo = orderItems.map(item => item.gameTitle).join(', ');
 
           // Calculate total price
-          order.totalPrice = orderItems.reduce((sum, item) => sum + (item.price || 0), 0); // Assuming each item has a `price` field
+          order.totalPrice = orderItems.reduce((sum, item) => sum + (item.priceAtPurchase || 0), 0); // Assuming each item has a `price` field
         });
 
         // Update the orders list with game info and total price

@@ -57,8 +57,15 @@
                 <h5 style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 2px">{{ game.name }}</h5>
                 <p style="font-family: 'Georgia', sans-serif">{{ game.description }}</p>
                 <p style="font-family: 'Georgia', sans-serif">Category: {{ game.category }}</p>
-                <p style="font-family: 'Georgia', sans-serif">Rating: {{ game.rating }}</p>
-                <p style="font-family: 'Georgia', sans-serif">Price: ${{ game.price }}</p>
+
+                <p style="font-family: 'Georgia', sans-serif">
+                  Price: $
+                  {{
+                    (game.discountedprice && game.discountedprice !== 0)
+                      ? game.discountedprice.toFixed(2)
+                      : game.price.toFixed(2)
+                  }}
+                </p>
                 <button class="btn btn-lg custom-book-button" @click="purchase(game)">Purchase</button>
                 <button
                     class="btn btn-lg custom-book-button"

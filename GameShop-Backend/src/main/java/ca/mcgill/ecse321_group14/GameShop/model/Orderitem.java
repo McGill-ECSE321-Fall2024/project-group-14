@@ -11,14 +11,23 @@ public class Orderitem {
     @EmbeddedId
     private Key key;
 
+    private int priceAtPurchase;
     public Orderitem () {}
 
-    public Orderitem(Key key){
+    public Orderitem(Key key) {
         this.key = key;
     }
 
     public Key getKey() {
         return key;
+    }
+
+    public int getPriceAtPurchase() {
+        return priceAtPurchase;
+    }
+
+    public void setPriceAtPurchase(int priceAtPurchase) {
+        this.priceAtPurchase = priceAtPurchase;
     }
 
     @Embeddable
@@ -44,6 +53,7 @@ public class Orderitem {
         public Order getOrder() {
             return order;
         }
+
         
         @Override
         public boolean equals(Object o) {

@@ -42,6 +42,7 @@ public class Game {
   @Enumerated(EnumType.STRING)
   private Rating rating;
   private String picture;
+  private int discountedprice;
 
   // Game Associations
   @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -87,6 +88,13 @@ public class Game {
     return wasSet;
   }
 
+  public int getDiscountedprice() {
+    return discountedprice != 0 ? discountedprice : price;
+  }
+
+  public void setDiscountedprice(int discountedprice) {
+    this.discountedprice = discountedprice;
+  }
   public boolean setCategory(String aCategory) {
     boolean wasSet = false;
     category = aCategory;

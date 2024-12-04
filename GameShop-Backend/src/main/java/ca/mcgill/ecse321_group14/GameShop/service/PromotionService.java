@@ -22,10 +22,13 @@ public class PromotionService {
 
     @Transactional
     public void deletePromotion(int id) {
-        Promotion promotion = promotionRepository.findPromotionById(id);
-        if (promotion == null) {
-            throw new IllegalArgumentException("Promotion does not exist!");
-        }
+        Promotion promotion = promotionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Promotion not found."));
+
+        Game game = promotion.getGame();
+        game.setDiscountedprice(0);; // Reset to original price
+        gameRepository.save(game);
+
         promotionRepository.delete(promotion);
     }
 
@@ -39,40 +42,51 @@ public class PromotionService {
     }
 
     @Transactional
-    public Promotion updatePromotion(int id, String aDescription, int aDiscount, Game aGame) {
+    public Promotion updatePromotion(int id, String description, int discount, Game game) {
         Promotion promotion = promotionRepository.findPromotionById(id);
         if (promotion == null) {
             throw new IllegalArgumentException("Promotion does not exist!");
         }
-        try {
-            promotion.setDescription(aDescription);
-            promotion.setDiscount(aDiscount);
-            promotion.setGame(aGame);
-            promotionRepository.save(promotion);
-            return promotion;
+    
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Invalid discount percentage!");
         }
-        catch (Exception e) {
-            throw new IllegalArgumentException(e);
+    
+        // Update promotion details
+        promotion.setDescription(description);
+        promotion.setDiscount(discount);
+        promotion.setGame(game);
+    
+        if (game != null) {
+            // Calculate the new discounted price and update the Game entity
+            int discountedPrice = (int)(game.getPrice() * (1 - discount / 100.0));
+            game.setDiscountedprice(discountedPrice);
+            gameRepository.save(game);
         }
+    
+        return promotionRepository.save(promotion);
     }
     @Transactional
-    public Promotion createPromotion(String aDescription, int aDiscount, Game aGame) {
-        String error = "";
-        if (gameRepository.findGameById(aGame.getId()) == null) {
-            error += "Game does not exist!";
+    public Promotion createPromotion(String description, int discount, Game game) {
+        if (game == null) {
+            throw new IllegalArgumentException("Game cannot be null!");
         }
-        if (!error.isEmpty()) {
-            throw new IllegalArgumentException(error);
-        }
-        try {
-            Promotion promotion = new Promotion(aDescription, aDiscount, aGame);
-            promotionRepository.save(promotion);
-            return promotion;
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
 
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Invalid discount percentage!");
+        }
+
+        // Calculate the discounted price
+        int discountedPrice = (int) (game.getPrice() * (1 - discount / 100.0));
+
+        // Update the discounted price in the Game entity
+        game.setDiscountedprice(discountedPrice);
+        gameRepository.save(game); // Save the updated Game entity
+
+        // Create and save the promotion
+        Promotion promotion = new Promotion(description, discount, game);
+        return promotionRepository.save(promotion);
+    }
     @Transactional
     public List<Promotion> getAllPromotions(){
        List<Promotion> promotions = promotionRepository.findAll();
