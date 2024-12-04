@@ -7,7 +7,7 @@ The goal of this project is to develop a web-based application for an independen
 * Owner: approve employee game requests; manage store employees; review customers' order history.
 * Games: games have different categories, ratings (R, G, PG-13, etc.) and reviews where discussion can occur.
 
-# How to Run the Test:
+# How to Run the Project:
 
 * First, clone the repository to your local machine.
 * Navigate to the application.properties file located in the src/main/resources folder. Update the following lines to match your local PostgreSQL database settings:
@@ -16,14 +16,20 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/xxx
 spring.datasource.username=xxx
 spring.datasource.password=xxx
 ```
-* Once your database is set up and the properties are updated, you can run the tests using
-```./gradlew clean test ```
-or
-```./gradlew test```
+* Once your database is set up and the properties are updated, you can run the build using
+```./gradlew build -xtest ```
 
 NOTE: You will have to create a new database for our test to run, so please do so by using ``` CREATE DATABASE xxx ```
 
-During the development process for this application, our team will follow the main software engineering activities: specification, development, validation, and evolution.
+* Next, navigate to the backend folder: ```cd GameShop-Backend```
+* Start the backend service: ``` ./gradlew bootRun ```
+* The backend service will be available at: http://localhost:8060. To change the backend server port, edit the server.port property in the application.properties file.
+* Next, navigate to frontend folder: ```cd GameShop-Frontend```
+* Install dependencies: ```npm install```
+* Start the development server : ```npm run dev```
+* Open your browser and go to: http://localhost:8087. To change the frontend port, modify the port property in the vite.config.js file.
+
+NOTE: Ensure that PostgreSQL is running locally before starting the backend service. If you encounter issues, double-check that the database credentials match your PostgreSQL setup. The backend and frontend ports are configurable via their respective configuration files.During the development process for this application, our team will follow the main software engineering activities: specification, development, validation, and evolution.
 
 # The Team 👥 
 | Name  | Github | Major | Year | Fun Fact |
