@@ -183,7 +183,7 @@ import HomeView from "../HomeView.vue";
     })
     .catch((err) => {
       console.error("Error fetching reviews:", err);
-      alert(`Review Fetch Error: ${err.response?.data || err.message}`);
+      
     });
 },
 fetchReplies() {

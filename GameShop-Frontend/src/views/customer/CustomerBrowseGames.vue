@@ -125,7 +125,7 @@ export default {
         this.games = response.data.games;
       } catch (error) {
         console.error("Error fetching games:", error);
-        alert("Failed to load games.");
+        
       }
     },
     getGameImage(pictureName) {

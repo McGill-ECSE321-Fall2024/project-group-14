@@ -201,11 +201,11 @@ export default {
         if (policies.length > 0) {
           this.storePolicies = policies;
         } else {
-          this.storePolicies = [{ description: "buy games." }];
+          this.storePolicies = [{ description: "Buy Games." }];
         }
       } catch (error) {
         console.error("Error fetching policies:", error);
-        this.storePolicies = [{ description: "buy games." }];
+        this.storePolicies = [{ description: "Buy Games." }];
       }
     },
   },
