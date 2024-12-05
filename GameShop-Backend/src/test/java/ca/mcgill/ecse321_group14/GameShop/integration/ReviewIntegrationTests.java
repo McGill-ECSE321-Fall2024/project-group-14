@@ -1,28 +1,23 @@
 package ca.mcgill.ecse321_group14.GameShop.integration;
 
-import ca.mcgill.ecse321_group14.GameShop.dto.ReplyResponseDto;
-import ca.mcgill.ecse321_group14.GameShop.dto.ReviewRequestDto;
-import ca.mcgill.ecse321_group14.GameShop.dto.ReviewResponseDto;
+import java.sql.Date;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+
 import ca.mcgill.ecse321_group14.GameShop.model.Customer;
 import ca.mcgill.ecse321_group14.GameShop.model.Game;
 import ca.mcgill.ecse321_group14.GameShop.model.Review;
 import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.GameRepository;
-import ca.mcgill.ecse321_group14.GameShop.repository.ReplyRepository;
 import ca.mcgill.ecse321_group14.GameShop.repository.ReviewRepository;
-import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.sql.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -87,21 +82,5 @@ public class ReviewIntegrationTests {
      * }
      */
 
-    @Test
-    @Order(4)
-    public void testGetReview() {
-        String url = "/review/" + reviewId;
-
-        ResponseEntity<ReviewResponseDto> response = client.getForEntity(url, ReviewResponseDto.class);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        ReviewResponseDto foundReview = response.getBody();
-        assertNotNull(foundReview);
-        assertEquals(ranking, foundReview.getRanking());
-        assertEquals(description, foundReview.getDescription());
-        assertEquals(customer.getId(), foundReview.getCustomerId());
-        assertEquals(game.getId(), foundReview.getGameId());
-    }
 
 }

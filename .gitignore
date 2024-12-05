@@ -1,3 +1,5 @@
 node_modules
 GameShop-Backend/src/main/resources/application.properties
 GameShop-Frontend/package-lock.json
+build/tmp/.cache/expanded/zip_ff7bf8f04f99dc306508d1c81e47a68b/META-INF/maven/org.jacoco/org.jacoco.agent/target/antrun/build-main.xml
+*.xml

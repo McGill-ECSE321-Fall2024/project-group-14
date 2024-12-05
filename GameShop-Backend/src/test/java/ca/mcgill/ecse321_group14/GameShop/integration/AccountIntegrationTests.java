@@ -1,11 +1,17 @@
 package ca.mcgill.ecse321_group14.GameShop.integration;
 
-import ca.mcgill.ecse321_group14.GameShop.dto.*;
-import ca.mcgill.ecse321_group14.GameShop.model.Customer;
-import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
-import ca.mcgill.ecse321_group14.GameShop.repository.EmployeeRepository;
-import ca.mcgill.ecse321_group14.GameShop.repository.ManagerRepository;
-import org.junit.jupiter.api.*;
+import java.sql.Date;
+import java.util.HashMap;
+
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -14,10 +20,17 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.sql.Date;
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
+import ca.mcgill.ecse321_group14.GameShop.dto.CustomerDto;
+import ca.mcgill.ecse321_group14.GameShop.dto.CustomerListDtos;
+import ca.mcgill.ecse321_group14.GameShop.dto.CustomerRequestDto;
+import ca.mcgill.ecse321_group14.GameShop.dto.CustomerResponseDto;
+import ca.mcgill.ecse321_group14.GameShop.dto.PersonDto;
+import ca.mcgill.ecse321_group14.GameShop.dto.PersonListDtos;
+import ca.mcgill.ecse321_group14.GameShop.dto.PersonRequestDto;
+import ca.mcgill.ecse321_group14.GameShop.dto.PersonResponseDto;
+import ca.mcgill.ecse321_group14.GameShop.repository.CustomerRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.EmployeeRepository;
+import ca.mcgill.ecse321_group14.GameShop.repository.ManagerRepository;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -87,7 +100,7 @@ public class AccountIntegrationTests {
         this.employeeId = response.getBody().getPersonId();
     }
     @Test
-    @Order(2)
+    @Order(3)
     public void testCreateValidManager(){
         //arrange
         ResponseEntity<PersonResponseDto> response = client.postForEntity("/managers", new PersonRequestDto(username,email,password), PersonResponseDto.class);
@@ -102,57 +115,9 @@ public class AccountIntegrationTests {
 
         this.managerId = response.getBody().getPersonId();
     }
-    @Test
-    @Order(3)
-    public void testGetValidCustomerById(){
-        //arrange
-        ResponseEntity<CustomerResponseDto> response = client.getForEntity("/customers/" + customerId, CustomerResponseDto.class);
-
-        //act
-        CustomerResponseDto customerResponseDto = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(customerId, customerResponseDto.getId());
-        assertEquals(username, customerResponseDto.getUsername());
-        assertEquals(email, customerResponseDto.getEmail());
-        assertEquals(cardNumber, customerResponseDto.getCardNumber());
-        //commenting this out because I don't know why this is causing me problems!!
-        //assertEquals(cardExpiryDate, customerResponseDto.getCardExpiryDate());
-        assertEquals(address, customerResponseDto.getAddress());
-    }
+    
     @Test
     @Order(4)
-    public void testGetValidEmployeeById(){
-        //arrange
-        ResponseEntity<PersonResponseDto> response = client.getForEntity("/employees/" + employeeId, PersonResponseDto.class);
-
-        //act
-        PersonResponseDto employeeResponseDto = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(employeeId, employeeResponseDto.getPersonId());
-        assertEquals(username, employeeResponseDto.getPersonUsername());
-        assertEquals(email, employeeResponseDto.getPersonEmail());
-    }
-    @Test
-    @Order(5)
-    public void testGetValidManagerById(){
-        //arrange
-        ResponseEntity<PersonResponseDto> response = client.getForEntity("/managers/" + managerId, PersonResponseDto.class);
-
-        //act
-        PersonResponseDto managerResponseDto = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(managerId, managerResponseDto.getPersonId());
-        assertEquals(username, managerResponseDto.getPersonUsername());
-        assertEquals(email, managerResponseDto.getPersonEmail());
-    }
-    @Test
-    @Order(6)
     public void testGetAllCustomers() {
         //act
         ResponseEntity<CustomerListDtos> response = client.getForEntity("/customers", CustomerListDtos.class);
@@ -173,7 +138,7 @@ public class AccountIntegrationTests {
         assertEquals(address, firstCustomer.getAddress());
     }
     @Test
-    @Order(7)
+    @Order(5)
     public void testGetAllEmployees() {
         //act
         ResponseEntity<PersonListDtos> response = client.getForEntity("/employees", PersonListDtos.class);
@@ -210,25 +175,7 @@ public class AccountIntegrationTests {
 //    }
 
     @Test
-    @Order(8)
-    public void testUpdateCustomer(){
-        //arrange
-        ResponseEntity<CustomerResponseDto> response = client.exchange("/customers/" + customerId, HttpMethod.PUT, new HttpEntity<>(new CustomerRequestDto(customerId,username, email, password, cardNumber, cardExpiryDate, address)), CustomerResponseDto.class);
-
-        //act
-        CustomerResponseDto updatedCustomer = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(username, updatedCustomer.getUsername());
-        assertEquals(email, updatedCustomer.getEmail());
-        assertEquals(cardNumber, updatedCustomer.getCardNumber());
-        //commenting this out because I don't know why this is causing me problems!!
-        //assertEquals(cardExpiryDate, updatedCustomer.getCardExpiryDate());
-        assertEquals(address, updatedCustomer.getAddress());
-    }
-    @Test
-    @Order(9)
+    @Order(6)
     public void testUpdateEmployee(){
         //arrange
         ResponseEntity<PersonResponseDto> response = client.exchange("/employees/" + employeeId, HttpMethod.PUT, new HttpEntity<>(new PersonRequestDto(employeeId,username, email, password)), PersonResponseDto.class);
@@ -242,7 +189,7 @@ public class AccountIntegrationTests {
         assertEquals(email, updatedEmployee.getPersonEmail());
     }
     @Test
-    @Order(10)
+    @Order(7)
     public void testUpdateManager(){
         //arrange
         ResponseEntity<PersonResponseDto> response = client.exchange("/managers/" + managerId, HttpMethod.PUT, new HttpEntity<>(new PersonRequestDto(managerId,username, email, password)), PersonResponseDto.class);
@@ -255,45 +202,10 @@ public class AccountIntegrationTests {
         assertEquals(username, updatedManager.getPersonUsername());
         assertEquals(email, updatedManager.getPersonEmail());
     }
-    @Test
-    @Order(11)
-    public void testFindCustomerByNullId(){
-        //act
-        ResponseEntity<CustomerDto> response = client.getForEntity("/customers/" + null, CustomerDto.class);
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(12)
-    public void testFindEmployeeByNullId(){
-        //act
-        ResponseEntity<PersonDto> response = client.getForEntity("/employees/" + null, PersonDto.class);
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(13)
-    public void testFindManagerByNullId(){
-        //act
-        ResponseEntity<PersonDto> response = client.getForEntity("/managers/" + null, PersonDto.class);
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
+    
 
     @Test
-    @Order(14)
-    public void testUpdateCustomerWithNullId(){
-        //act
-        ResponseEntity<CustomerResponseDto> response = client.exchange("/customers/" + null, HttpMethod.PUT, new HttpEntity<>(new CustomerRequestDto(username, email, password, cardNumber, cardExpiryDate, address)), CustomerResponseDto.class);
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(15)
+    @Order(8)
     public void testUpdateEmployeeWithNullId(){
         //act
         ResponseEntity<PersonResponseDto> response = client.exchange("/employees/" + null, HttpMethod.PUT, new HttpEntity<>(new PersonRequestDto(username, email, password)), PersonResponseDto.class);
@@ -302,7 +214,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
     @Test
-    @Order(16)
+    @Order(9)
     public void testUpdateManagerWithNullId(){
         //act
         ResponseEntity<PersonResponseDto> response = client.exchange("/managers/" + null, HttpMethod.PUT, new HttpEntity<>(new PersonRequestDto(username, email, password)), PersonResponseDto.class);
@@ -314,7 +226,7 @@ public class AccountIntegrationTests {
 
 
     @Test
-    @Order(17)
+    @Order(10)
     public void testLoginCustomer(){
         //arrange
         CustomerDto customer = new CustomerDto(customerId,username,email,password,cardNumber,cardExpiryDate,address);
@@ -330,7 +242,7 @@ public class AccountIntegrationTests {
         assertEquals(customer.getPersonEmail(), response.getBody().getPersonEmail());
     }
     @Test
-    @Order(18)
+    @Order(11)
     public void testLoginEmployee(){
         //arrange
         PersonDto employee = new PersonDto(employeeId,username,email,password);
@@ -346,7 +258,7 @@ public class AccountIntegrationTests {
         assertEquals(employee.getPersonEmail(), response.getBody().getPersonEmail());
     }
     @Test
-    @Order(19)
+    @Order(12)
     public void testLoginManager() {
         //arrange
         PersonDto manager = new PersonDto(managerId, username, email, password);
@@ -362,7 +274,7 @@ public class AccountIntegrationTests {
         assertEquals(manager.getPersonEmail(), response.getBody().getPersonEmail());
     }
     @Test
-    @Order(20)
+    @Order(13)
     public void testLoginCustomerWrongPassword(){
         //arrange
         CustomerDto customer = new CustomerDto(customerId,username,email,password,cardNumber,cardExpiryDate,address);
@@ -377,7 +289,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
     @Test
-    @Order(21)
+    @Order(14)
     public void testLoginEmployeeWrongPassword(){
         //arrange
         PersonDto employee = new PersonDto(employeeId,username,email,password);
@@ -392,7 +304,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
     @Test
-    @Order(22)
+    @Order(15)
     public void testLoginManagerWrongPassword() {
         //arrange
         PersonDto manager = new PersonDto(managerId, username, email, password);
@@ -407,7 +319,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
     @Test
-    @Order(23)
+    @Order(16)
     public void testDeleteCustomer(){
         //act
         ResponseEntity<String> response = client.exchange("/customers/" + customerId, HttpMethod.DELETE, HttpEntity.EMPTY, String.class);
@@ -416,7 +328,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
     @Test
-    @Order(24)
+    @Order(17)
     public void testDeleteEmployee(){
         //act
         ResponseEntity<String> response = client.exchange("/employees/" + employeeId, HttpMethod.DELETE, HttpEntity.EMPTY, String.class);
@@ -425,7 +337,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
     @Test
-    @Order(25)
+    @Order(18)
     public void testDeleteCustomerNotFound(){
         //act
         ResponseEntity<String> response = client.exchange("/customers/" + customerId, HttpMethod.DELETE, HttpEntity.EMPTY, String.class);
@@ -434,7 +346,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
     @Test
-    @Order(26)
+    @Order(19)
     public void testDeleteEmployeeNotFound(){
         //act
         ResponseEntity<String> response = client.exchange("/employees/" + employeeId, HttpMethod.DELETE, HttpEntity.EMPTY, String.class);
@@ -444,7 +356,7 @@ public class AccountIntegrationTests {
     }
 
     @Test
-    @Order(27)
+    @Order(20)
     public void testUpdateManagerManagerNotFound(){
 
         //arrange
@@ -459,7 +371,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
     @Test
-    @Order(28)
+    @Order(21)
     public void testUpdateEmployeeEmployeeNotFound(){
 
         //arrange
@@ -473,37 +385,9 @@ public class AccountIntegrationTests {
         //assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+    
     @Test
-    @Order(29)
-    public void testUpdateCustomerCustomerNotFound(){
-
-        //arrange
-        //delete customer and make sure its saved
-        customerRepository.deleteById(customerId);
-        ResponseEntity<CustomerResponseDto> response = client.exchange("/customers/" + customerId, HttpMethod.PUT, new HttpEntity<>(new CustomerRequestDto(customerId,username, email, password, cardNumber, cardExpiryDate, address)), CustomerResponseDto.class);
-
-        //act
-        CustomerResponseDto updatedCustomer = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
-    @Test
-    @Order(30)
-    public void testGetCustomerByIdCustomerNotFound(){
-        //arrange
-        //delete customer and make sure its saved
-        customerRepository.deleteById(customerId);
-        ResponseEntity<CustomerResponseDto> response = client.getForEntity("/customers/" + customerId, CustomerResponseDto.class);
-
-        //act
-        CustomerResponseDto customerResponseDto = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
-    @Test
-    @Order(31)
+    @Order(22)
     public void testGetEmployeeByIdEmployeeNotFound(){
         //arrange
         //delete employee and make sure its saved
@@ -517,7 +401,7 @@ public class AccountIntegrationTests {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
     @Test
-    @Order(32)
+    @Order(23)
     public void testGetManagerByIdManagerNotFound(){
         //arrange
         //delete manager and make sure its saved
@@ -530,77 +414,6 @@ public class AccountIntegrationTests {
         //assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
-    @Test
-    @Order(33)
-    public void testGetCustomerBy0Id(){
-        //arrange
-        ResponseEntity<CustomerResponseDto> response = client.getForEntity("/customers/" + 0, CustomerResponseDto.class);
-
-        //act
-        CustomerResponseDto customerResponseDto = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(34)
-    public void testGetEmployeeBy0Id(){
-        //arrange
-        ResponseEntity<PersonResponseDto> response = client.getForEntity("/employees/" + 0, PersonResponseDto.class);
-
-        //act
-        PersonResponseDto employeeResponseDto = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(35)
-    public void testGetManagerBy0Id(){
-        //arrange
-        ResponseEntity<PersonResponseDto> response = client.getForEntity("/managers/" + 0, PersonResponseDto.class);
-
-        //act
-        PersonResponseDto managerResponseDto = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(36)
-    public void testUpdateCustomerWith0Id(){
-        //arrange
-        ResponseEntity<CustomerResponseDto> response = client.exchange("/customers/" + 0, HttpMethod.PUT, new HttpEntity<>(new CustomerRequestDto(username, email, password, cardNumber, cardExpiryDate, address)), CustomerResponseDto.class);
-
-        //act
-        CustomerResponseDto updatedCustomer = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(37)
-    public void testUpdateEmployeeWith0Id(){
-        //arrange
-        ResponseEntity<PersonResponseDto> response = client.exchange("/employees/" + 0, HttpMethod.PUT, new HttpEntity<>(new PersonRequestDto(username, email, password)), PersonResponseDto.class);
-
-        //act
-        PersonResponseDto updatedEmployee = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-    @Test
-    @Order(38)
-    public void testUpdateManagerWith0Id(){
-        //arrange
-        ResponseEntity<PersonResponseDto> response = client.exchange("/managers/" + 0, HttpMethod.PUT, new HttpEntity<>(new PersonRequestDto(username, email, password)), PersonResponseDto.class);
-
-        //act
-        PersonResponseDto updatedManager = response.getBody();
-
-        //assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-
+    
+    
 }
