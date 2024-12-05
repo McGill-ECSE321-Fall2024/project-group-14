@@ -169,7 +169,7 @@ export default {
         console.log("Games fetched successfully:", this.games);
       } catch (error) {
         console.error("Error fetching games:", error);
-        alert("Failed to fetch games.");
+        
       }
     },
 

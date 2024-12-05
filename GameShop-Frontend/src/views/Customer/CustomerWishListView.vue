@@ -132,7 +132,7 @@ export default {
         });
       } catch (error) {
         console.error("Error fetching wishlist or promotions:", error.message);
-        alert("Failed to fetch wishlist.");
+      
       }
     },
 

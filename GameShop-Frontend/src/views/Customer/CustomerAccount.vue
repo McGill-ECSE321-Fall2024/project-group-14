@@ -66,7 +66,7 @@
                     <input class="form-control smaller-input" id="address" v-model="address" :readonly="isReadonly" />
                   </div>
                   <div class="col-md-8 mb-3 text-center">
-                    <label class="labels">Enter Your Password To Make Changes</label>
+                    <label class="labels">Enter Your Password To Save Changes</label>
                     <input class="form-control smaller-input" id="password" type="password" v-model="password" :readonly="isReadonly" />
                   </div>
                 </div>
@@ -150,7 +150,7 @@ export default {
         alert("Account details updated successfully.");
         this.isReadonly = true;
       } catch (error) {
-        alert(`Error saving info: ${error.response?.data || error.message}`);
+        alert(`Please enter your password to make changes.`);
       }
     },
     editInfo() {

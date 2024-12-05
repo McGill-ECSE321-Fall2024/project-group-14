@@ -221,13 +221,25 @@ export default {
     },
 
     async deletePromotion(id) {
-      try {
-        await axios.delete(`${BASE_URL}/${id}`);
-        this.fetchPromotions(); // refresh the list after deletion
-      } catch (error) {
-        this.errorMessage = `Could not delete promotion with ID ${id}.`;
-      }
-    },
+  try {
+    const confirmation = window.confirm("Are you sure you want to delete this promotion?");
+    if (!confirmation) {
+      return; 
+    }
+
+    await axios.delete(`${BASE_URL}/${id}`);
+    alert(`Promotion with ID ${id} has been successfully deleted.`);
+    
+
+    // Refresh the list of promotions after successful deletion
+    this.fetchPromotions();
+  } catch (error) {
+    console.error(`Error deleting promotion with ID ${id}:`, error.response || error.message);
+    this.errorMessage = error.response?.data?.message || `Could not delete promotion with ID ${id}.`;
+    alert(this.errorMessage);
+  }
+},
+
     
     async Home() {
       await this.$router.push({ path: `/ManagerHome/${this.email}` });

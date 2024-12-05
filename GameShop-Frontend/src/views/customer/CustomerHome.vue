@@ -35,9 +35,9 @@
       </div>
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mx-auto text-center">
+          <div class="col-md- mx-auto text-center">
             <h1 class="text-center" style="font-family: 'Montserrat', serif; color: #fff; letter-spacing: 5px; font-size: 45px" >GAMESHOP</h1>
-            <p class="luxurious-text" style="font-weight: normal; color: #fff;">{{ storePolicy }}</p>
+          
             <button class="btn btn-lg mt-3 custom-login-button" @click="BrowseGames">Browse Games</button>
           </div>
         </div>
@@ -262,6 +262,10 @@ export default {
   pointer-events: none; 
 }
 
+.clickable-text:hover {
+  cursor: pointer;
+  color: white !important;
+}
 
 
 </style>

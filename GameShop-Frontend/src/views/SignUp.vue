@@ -62,10 +62,10 @@
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link clickable-text" @click="Login">LogIn</a>
+                <a class="nav-link clickable-text" @click="Login">Login</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="#">SignUp<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">SignUp<span class="sr-only"> (Current)</span></a>
               </li>
             </ul>
           </div>
@@ -220,6 +220,12 @@ export default {
 .card-header {
   background: white;
   border-bottom: white;
+}
+
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
 }
 
 

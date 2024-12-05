@@ -193,7 +193,7 @@ export default {
         this.games = response.data.games || [];
       } catch (error) {
         console.error("Error fetching games:", error);
-        alert("Failed to fetch games.");
+        
       }
     },
 
@@ -260,7 +260,7 @@ export default {
                   })
                   .catch((error) => {
                     console.error("Error deleting game:", error);
-                    alert("Failed to delete the game.");
+                    alert("Please cancel all associated game orders before deleting game.");
                   });
             }
           })

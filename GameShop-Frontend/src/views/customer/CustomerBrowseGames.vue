@@ -31,7 +31,7 @@
               <a class="nav-link clickable-text" @click="navigateTo('Account')">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Logout</a>
+              <a class="nav-link clickable-text" @click="navigateTo('LogOut')">Log Out</a>
             </li>
           </ul>
         </div>
@@ -203,7 +203,7 @@ export default {
         alert(`Successfully added ${game.name} to your wishlist, ${customerDetails.username}!`);
       } catch (error) {
         console.error("Error adding game to wishlist:", error);
-        alert("It appears this game is already in your wishlist.");
+        alert("An error occurred while adding the game to your wishlist.");
       }
     },
     async viewReviews(gameId) {
@@ -290,15 +290,8 @@ export default {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.navbar .nav-item.active > .nav-link {
-  cursor: default;
-  color: white !important; 
-  pointer-events: none; 
-}
-
 .clickable-text:hover {
   cursor: pointer;
   color: white !important;
 }
-
 </style>

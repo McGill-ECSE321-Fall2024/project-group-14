@@ -1,7 +1,8 @@
 <template>
-    <div class="employeeAccount">
-      <div class="background">
-        <div class="navbar-container">
+  <div>
+    <div class="hero-section">
+      <!-- Navbar -->
+      <div class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-light transparent-background">
           <a class="navbar-brand" href="#">
             <img src="../../assets/gameshopLogo.jpg" alt="Your Logo" height="60">
@@ -15,7 +16,7 @@
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="#">Account<span class="sr-only"> (Current)</span></a>
+                <a class="nav-link" href="#">Account (Current)</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="SubmitGameRequest">Game Requests</a>
@@ -26,44 +27,38 @@
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="ViewOrders">Orders</a>
               </li>
-              <li>
+              <li class="nav-item">
                 <a class="nav-link clickable-text" @click="LogOut">Logout</a>
               </li>
             </ul>
           </div>
         </nav>
       </div>
-  
-        <div class="profile-box">
-          <div class="container rounded bg-white mt-5 mb-5 account-box shadow">
-            <div class="row">
-              <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center justify-content-center text-center p-3 py-5 image-pos">
-                  <img class="rounded-circle" width="100%" src="../../assets/gameshopLogo.jpg" alt="Profile Photo" />
-                </div>
+
+      <!-- Page Content -->
+      <div class="container content-container">
+        <div class="row mt-5 justify-content-center">
+          <div class="col-md-8 col-lg-6">
+            <div class="card account-details-container shadow">
+              <div class="card-header text-center">
+                <h3>ACCOUNT DETAILS</h3>
               </div>
-              <div class="col-md-9">
-                <div class="p-3 py-5">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right" style="font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px">
-                      ACCOUNT DETAILS
-                    </h4>
+              <div class="card-body">
+                <div class="d-flex justify-content-center mb-4">
+                  <img class="rounded-circle profile-picture" src="../../assets/gameshopLogo.jpg" alt="Profile Photo">
+                </div>
+                <div class="row mt-3 justify-content-center">
+                  <div class="col-md-8 mb-3">
+                    <label class="labels">Username</label>
+                    <input class="form-control smaller-input" id="username" v-model="username" readonly />
                   </div>
-                  <div class="image-pos">
-                    <div class="row mt-3">
-                      <div class="col-md-6">
-                        <label class="labels">Username</label>
-                        <input class="form-control" id="username" v-model="username" readonly />
-                      </div>
-                      <div class="col-md-6">
-                        <label class="labels">Email</label>
-                        <input class="form-control" id="email" v-model="email" readonly />
-                      </div>
-                      <div class="col-md-6">
-                        <label class="labels">Password</label>
-                        <input class="form-control" id="password" type="password" v-model="password" readonly />
-                      </div>
-                    </div>
+                  <div class="col-md-8 mb-3">
+                    <label class="labels">Email</label>
+                    <input class="form-control smaller-input" id="email" v-model="email" readonly />
+                  </div>
+                  <div class="col-md-8">
+                    <label class="labels">Password</label>
+                    <input class="form-control smaller-input" id="password" v-model="password" readonly />
                   </div>
                 </div>
               </div>
@@ -72,107 +67,92 @@
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
   
-  <script>
-  import axios from "axios";
-  
-  const backendUrl = "http://localhost:8060";
-  const axiosClient = axios.create({
-    baseURL: backendUrl,
-    headers: { "Access-Control-Allow-Origin": "*" },
-  });
-  
-  export default {
-    name: "EmployeeAccount",
-    data() {
-      return {
-        email: this.$route.params.param1,
-        username: "",
-        password: "", // added password field
-        errorMsg: "",
-        id: null,
-      };
+<script>
+import axios from "axios";
+
+const backendUrl = "http://localhost:8060";
+const axiosClient = axios.create({
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": "*" },
+});
+
+export default {
+  name: "EmployeeAccount",
+  data() {
+    return {
+      email: this.$route.params.param1,
+      username: "",
+      password: "", 
+      errorMsg: "",
+      id: null,
+    };
+  },
+  created() {
+    this.fetchEmployeeInfo();
+  },
+  methods: {
+    async fetchEmployeeInfo() {
+      try {
+        const response = await axiosClient.get(`/employees/${this.email}`);
+        const employee = response.data;
+        this.id = employee.id;
+        this.username = employee.username;
+        this.password = employee.password || ""; 
+      } catch (error) {
+        this.errorMsg = `Error fetching employee info: ${
+          error.response?.data?.message || error.message
+        }`;
+        alert(this.errorMsg);
+      }
     },
-    created() {
-      this.fetchEmployeeInfo();
-    },
-    methods: {
-      async fetchEmployeeInfo() {
-        try {
-          const response = await axiosClient.get(`/employees/${this.email}`);
-          const employee = response.data;
-          this.id = employee.id;
-          this.username = employee.username;
-          this.password = employee.password || "";  // ensure password is fetched correctly
-        } catch (error) {
-          this.errorMsg = `Error fetching employee info: ${error.response?.data || error.message}`;
-          alert(this.errorMsg);
-        }
-      },
-      async EmployeeAccount() {
-      await this.$router.push({path: '/EmployeeAccount/' + this.email })
+    async EmployeeAccount() {
+      await this.$router.push({ path: "/EmployeeAccount/" + this.email });
     },
     async LogOut() {
-      await this.$router.push({name: "home"})
+      await this.$router.push({ name: "home" });
     },
     async SubmitGameRequest() {
-      await this.$router.push({path: '/EmployeeGameRequest/' + this.email + '/' + this.username})
+      await this.$router.push({
+        path: "/EmployeeGameRequest/" + this.email + "/" + this.username,
+      });
     },
     async ViewOrders() {
-      await this.$router.push({path: '/EmployeeViewOrders/' + this.email + '/' + this.username})
+      await this.$router.push({
+        path: "/EmployeeViewOrders/" + this.email + "/" + this.username,
+      });
     },
-
     async ViewGames() {
-      await this.$router.push({path: '/EmployeeViewGames/' + this.email + '/' + this.username})
+      await this.$router.push({
+        path: "/EmployeeViewGames/" + this.email + "/" + this.username,
+      });
     },
     async Home() {
-      await this.$router.push({path: '/EmployeeHome/' + this.email+ '/' + this.username })
+      await this.$router.push({
+        path: "/EmployeeHome/" + this.email + "/" + this.username,
+      });
     },
-    },
-  };
-  </script>
+  },
+};
+</script>
+
   
-  <style scoped>
-  .background {
-    background: url("../../assets/gameshopBackground.jpg") center center no-repeat;
-    background-size: cover;
-    height: 100vh;
-  }
-  
-  .navbar-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .profile-box {
-    position: absolute;
-    top: 15%;
-    left: 20%;
-    right: 20%;
-  }
-  
-  .account-box {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .image-pos {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .labels {
-    font-size: 12px;
-    color: #444;
-  }
-  
-  .clickable-text:hover {
+<style scoped>
+.navbar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.navbar-brand {
+  margin-right: 0;
+}
+
+.clickable-text:hover {
   cursor: pointer;
   color: white !important;
 }
@@ -181,17 +161,43 @@
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+.hero-section {
+  background: url("@/assets/gameshopBackground.jpg") center/cover no-repeat;
+  padding: 200px 0;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.content-container {
+  margin-top: 100px;
+}
+
+.account-details-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.labels {
+  font-size: 14px;
+  color: #444;
+}
+
 .navbar .nav-item.active > .nav-link {
   cursor: default;
-  color: white !important; 
-  pointer-events: none; 
-}
-
-.navbar .nav-link:hover {
-  cursor: pointer;
   color: white !important;
+  pointer-events: none;
 }
 
+.smaller-input {
+  max-width: 300px;
+  margin: 0 auto;
+}
 
-  </style>
-  
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+</style>

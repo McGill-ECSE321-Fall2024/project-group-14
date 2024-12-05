@@ -62,7 +62,7 @@
                 <a class="nav-link clickable-text" @click="Home">Home</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="#">LogIn<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Login<span class="sr-only"> (Current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link clickable-text" @click="SignUp">SignUp</a>
@@ -223,6 +223,12 @@ export default {
   background: white;
   border-top: white;
   cursor: pointer;
+}
+
+.navbar .nav-item.active > .nav-link {
+  cursor: default;
+  color: white !important; 
+  pointer-events: none; 
 }
 
 

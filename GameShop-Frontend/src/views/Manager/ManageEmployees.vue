@@ -196,7 +196,7 @@ export default {
           personPassword: this.password,
         };
         await axiosClient.post("/employees", employeeRequest);
-        alert("Employee successfully created!");
+        alert("Employee successfully hired!");
         this.name = "";
         this.employeeEmail = "";
         this.password = "";
