@@ -29,6 +29,8 @@ NOTE: You will have to create a new database for our test to run, so please do s
 * Start the development server : ```npm run dev```
 * Open your browser and go to: http://localhost:8087. To change the frontend port, modify the port property in the vite.config.js file.
 
+**An account for the manager is given here: Email: manager@gameshop.com, Password: password**
+
 NOTE: Ensure that PostgreSQL is running locally before starting the backend service. If you encounter issues, double-check that the database credentials match your PostgreSQL setup. The backend and frontend ports are configurable via their respective configuration files.During the development process for this application, our team will follow the main software engineering activities: specification, development, validation, and evolution.
 
 # The Team 👥 
